@@ -1,0 +1,157 @@
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { Plus, Loader2, Pencil, Trash2, BadgeCheck, Clock, X as XIcon } from "lucide-react";
+import toast from "react-hot-toast";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
+import api from "@/api/client";
+import { useAuthStore } from "@/store/authStore";
+import { INR, formatArea, CATEGORY_LABEL } from "@/utils/format";
+
+const STATUS_META = {
+  pending_verification: { l: "Pending review", c: "bg-yellow-100 text-yellow-800", Icon: Clock },
+  published: { l: "Live", c: "bg-emerald-100 text-emerald-800", Icon: BadgeCheck },
+  rejected: { l: "Rejected", c: "bg-red-100 text-red-800", Icon: XIcon },
+  sold: { l: "Sold", c: "bg-[#0F2340] text-white", Icon: BadgeCheck },
+  rented: { l: "Rented", c: "bg-[#0F2340] text-white", Icon: BadgeCheck },
+  verified: { l: "Verified", c: "bg-emerald-100 text-emerald-800", Icon: BadgeCheck },
+};
+
+const SellerDashboard = () => {
+  const user = useAuthStore((s) => s.user);
+  const [items, setItems] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const reload = () => {
+    setLoading(true);
+    api
+      .get("/seller/properties")
+      .then(({ data }) => setItems(data || []))
+      .finally(() => setLoading(false));
+  };
+  useEffect(() => reload(), []);
+
+  const counts = items.reduce(
+    (acc, p) => ({ ...acc, [p.status]: (acc[p.status] || 0) + 1 }),
+    {}
+  );
+
+  const remove = async (id) => {
+    if (!window.confirm("Delete this listing?")) return;
+    try {
+      await api.delete(`/seller/properties/${id}`);
+      toast.success("Listing deleted");
+      reload();
+    } catch (err) {
+      toast.error("Could not delete");
+    }
+  };
+
+  return (
+    <div className="min-h-screen bg-[#fafaf7]">
+      <Navbar />
+      <section className="bg-white border-b border-[#e6e4dd]">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8 py-8 flex items-end justify-between gap-4 flex-wrap">
+          <div>
+            <h1 className="font-display text-2xl md:text-3xl font-bold text-[#0F2340]" data-testid="seller-dashboard-title">
+              Hello, {user?.name?.split(" ")[0] || "Seller"}
+            </h1>
+            <p className="text-sm text-[#5b6371] mt-1">
+              Manage your listings, track enquiries, and create new properties.
+            </p>
+          </div>
+          <Link to="/seller/listings/new" className="btn-primary" data-testid="new-listing-btn">
+            <Plus size={15} /> New Listing
+          </Link>
+        </div>
+      </section>
+
+      <section className="max-w-7xl mx-auto px-6 lg:px-8 py-8">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-8">
+          <Stat label="Total" value={items.length} />
+          <Stat label="Live" value={counts.published || 0} accent />
+          <Stat label="Pending review" value={counts.pending_verification || 0} />
+          <Stat label="Rejected" value={counts.rejected || 0} />
+        </div>
+
+        {loading ? (
+          <div className="py-12 flex justify-center">
+            <Loader2 className="animate-spin text-[#0D7A6B]" />
+          </div>
+        ) : items.length === 0 ? (
+          <div className="card p-10 text-center">
+            <p className="text-[#5b6371]">You have no listings yet.</p>
+            <Link to="/seller/listings/new" className="btn-primary mt-4">
+              <Plus size={15} /> Create your first listing
+            </Link>
+          </div>
+        ) : (
+          <div className="space-y-3">
+            {items.map((p) => {
+              const meta = STATUS_META[p.status] || {};
+              const Icon = meta.Icon;
+              return (
+                <div key={p.id} className="card p-5 flex flex-col md:flex-row md:items-center gap-4" data-testid={`seller-listing-${p.id}`}>
+                  <div className="w-full md:w-28 h-24 md:h-20 rounded overflow-hidden bg-[#fafaf7]">
+                    {p.images?.[0]?.url && (
+                      <img src={p.images[0].url} alt="" className="w-full h-full object-cover" />
+                    )}
+                  </div>
+                  <div className="flex-1">
+                    <div className="flex items-center gap-2 flex-wrap">
+                      <span className="chip">{CATEGORY_LABEL[p.category]}</span>
+                      <span className={`text-xs px-2.5 py-1 rounded-full font-medium inline-flex items-center gap-1 ${meta.c || ""}`}>
+                        {Icon ? <Icon size={11} /> : null} {meta.l || p.status}
+                      </span>
+                    </div>
+                    <div className="font-display font-semibold text-[#0F2340] mt-1.5">
+                      {p.title}
+                    </div>
+                    <div className="text-xs text-[#5b6371] mt-1">
+                      {INR(p.price)} · {formatArea(p.area)} · {p.location?.city || "—"}
+                    </div>
+                    {p.status === "rejected" && p.rejection_reason && (
+                      <div className="text-xs text-red-700 mt-2 bg-red-50 p-2 rounded">
+                        Reason: {p.rejection_reason}
+                      </div>
+                    )}
+                  </div>
+                  <div className="flex gap-2">
+                    <Link to={`/properties/${p.id}`} className="btn-outline !py-2 !px-3">
+                      View
+                    </Link>
+                    <Link to={`/seller/listings/${p.id}/edit`} className="btn-outline !py-2 !px-3" data-testid={`edit-${p.id}`}>
+                      <Pencil size={14} />
+                    </Link>
+                    <button onClick={() => remove(p.id)} className="btn-outline !py-2 !px-3 !text-[#c0392b]" data-testid={`delete-${p.id}`}>
+                      <Trash2 size={14} />
+                    </button>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        )}
+      </section>
+      <Footer />
+    </div>
+  );
+};
+
+const Stat = ({ label, value, accent }) => (
+  <div
+    className={
+      accent
+        ? "p-4 rounded-lg overflow-hidden bg-[#0D7A6B] text-white border border-[#0D7A6B]"
+        : "card p-4"
+    }
+  >
+    <div className={`text-xs uppercase tracking-wider ${accent ? "text-white/85" : "text-[#5b6371]"}`}>
+      {label}
+    </div>
+    <div className={`font-display text-3xl font-bold mt-1 ${accent ? "text-white" : "text-[#0F2340]"}`}>
+      {value}
+    </div>
+  </div>
+);
+
+export default SellerDashboard;
