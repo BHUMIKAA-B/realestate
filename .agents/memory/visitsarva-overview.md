@@ -16,6 +16,13 @@ description: Key architectural decisions, env var setup, and buyer feature patte
 
 **Why:** Replit has no local MongoDB process; user initially entered localhost URL causing 500s. Proxy pattern avoids CORS issues in the preview iframe.
 
+## Replit preview setup (critical)
+- Port mapping in `.replit`: `localPort = 5000` must map to `externalPort = 80` so the preview pane shows the frontend
+- CRA devServer must have `allowedHosts: 'all'` in `craco.config.js` devServer config — otherwise `.replit.dev` domain gets "Invalid Host header" rejection
+- react-leaflet must be pinned to v4.2.1 — v5 breaks with CRA/React 18 ("render is not a function" context error)
+
+**Why:** Replit preview iframe uses the `.replit.dev` hostname; CRA's webpack-dev-server rejects unknown hosts by default.
+
 ## Brand tokens (index.css)
 - `--vs-teal: #0D7A6B` (primary action)
 - `--vs-navy: #0F2340` (headings/emphasis)
@@ -28,7 +35,7 @@ description: Key architectural decisions, env var setup, and buyer feature patte
 - Filter: `?verified_only=1` → backend adds `query["is_featured"] = True`
 
 ## Map view pattern
-- `PropertyMapView` uses react-leaflet (already in deps); green marker = verified, blue = standard
+- `PropertyMapView` uses react-leaflet v4.2.1 (pinned); green marker = verified, blue = standard
 - URL param `?view=map` initializes PropertiesList in map mode (lazy-reads from params on mount)
 - Properties without lat/lng are excluded from map display but counted
 
