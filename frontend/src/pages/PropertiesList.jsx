@@ -30,7 +30,10 @@ const PropertiesList = () => {
   const [total, setTotal] = useState(0);
   const [loading, setLoading] = useState(true);
   const [smartSummary, setSmartSummary] = useState(null);
-  const [viewMode, setViewMode] = useState("grid"); // "grid" | "map"
+  // Honour ?view=map from URL (e.g. linked from BuyerHome Map View tool)
+  const [viewMode, setViewMode] = useState(
+    () => params.get("view") === "map" ? "map" : "grid"
+  );
   const [emiOpen, setEmiOpen] = useState(false);
 
   const filters = useMemo(
@@ -240,9 +243,7 @@ const PropertiesList = () => {
             >
               <option value="">Any</option>
               {[1, 2, 3, 4, 5].map((n) => (
-                <option key={n} value={n}>
-                  {n}+ BHK
-                </option>
+                <option key={n} value={n}>{`${n}+ BHK`}</option>
               ))}
             </select>
           </FilterGroup>
