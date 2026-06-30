@@ -61,6 +61,17 @@ let webpackConfig = {
 };
 
 webpackConfig.devServer = (devServerConfig) => {
+  // Proxy /api requests to the FastAPI backend
+  devServerConfig.proxy = {
+    "/api": {
+      target: "http://localhost:8000",
+      changeOrigin: true,
+    },
+  };
+
+  // Allow all hosts (required for Replit's proxied preview)
+  devServerConfig.allowedHosts = "all";
+
   // Add health check endpoints if enabled
   if (config.enableHealthCheck && setupHealthEndpoints && healthPluginInstance) {
     const originalSetupMiddlewares = devServerConfig.setupMiddlewares;

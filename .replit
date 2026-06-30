@@ -6,6 +6,7 @@ expertMode = true
 
 [userenv.shared]
 N8N_WEBHOOK_URL = "https://bhumikaa16.app.n8n.cloud/webhook/visitsarva-chat"
+REACT_APP_BACKEND_URL = ""
 
 [workflows]
 runButton = "Project"
