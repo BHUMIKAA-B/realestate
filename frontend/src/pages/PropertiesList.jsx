@@ -112,9 +112,7 @@ const PropertiesList = () => {
             >
               <option value="">All</option>
               {PROPERTY_CATEGORIES.map((c) => (
-                <option key={c.value} value={c.value}>
-                  {c.label}
-                </option>
+                <option key={c.value} value={c.value} label={c.label} />
               ))}
             </select>
           </FilterGroup>
@@ -160,9 +158,7 @@ const PropertiesList = () => {
             >
               <option value="">Any</option>
               {[1, 2, 3, 4, 5].map((n) => (
-                <option key={n} value={n}>
-                  {n}+ BHK
-                </option>
+                <option key={n} value={n} label={`${n}+ BHK`} />
               ))}
             </select>
           </FilterGroup>

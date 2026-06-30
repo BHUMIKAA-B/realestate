@@ -8,6 +8,7 @@ import {
 } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import EMICalculator from "@/components/EMICalculator";
 import api from "@/api/client";
 import { INR, formatArea, CATEGORY_LABEL } from "@/utils/format";
 
@@ -153,6 +154,12 @@ const PropertyDetail = () => {
                     <span key={a} className="chip">{a}</span>
                   ))}
                 </div>
+              </Section>
+            )}
+
+            {p.category !== "rental" && p.price > 0 && (
+              <Section title="EMI Calculator">
+                <EMICalculator priceINR={p.price} />
               </Section>
             )}
 
