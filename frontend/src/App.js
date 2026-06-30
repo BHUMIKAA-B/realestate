@@ -18,6 +18,8 @@ import ListingEdit from "@/pages/ListingEdit";
 import SellerEnquiries from "@/pages/SellerEnquiries";
 import AdminDashboard from "@/pages/AdminDashboard";
 import NotFound from "@/pages/NotFound";
+import ChatPage from "@/pages/ChatPage";
+import ChatBot from "@/components/ChatBot";
 import { RequireAuth } from "@/components/RequireAuth";
 
 function App() {
@@ -104,8 +106,12 @@ function App() {
           />
           <Route path="/admin" element={<Navigate to="/admin/dashboard" replace />} />
 
+          <Route path="/chat" element={<ChatPage />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
+
+        {/* Floating chatbot bubble — visible on all pages except /chat */}
+        <ChatBot />
       </BrowserRouter>
       <Toaster
         position="top-right"

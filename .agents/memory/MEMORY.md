@@ -1,1 +1,0 @@
-- [VisitSarva project overview](visitsarva-overview.md) — React+FastAPI real estate app; brand tokens, proxy setup, buyer features added

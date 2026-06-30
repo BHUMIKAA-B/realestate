@@ -3,7 +3,6 @@ from __future__ import annotations
 
 import os
 from urllib.parse import urlparse
-
 from motor.motor_asyncio import AsyncIOMotorClient
 
 _client: AsyncIOMotorClient | None = None
@@ -11,29 +10,22 @@ _db = None
 
 
 def _resolve_db_name() -> str:
-    """Resolve database name from DB_NAME env var or MONGO_URL path, with a safe default."""
-    explicit = os.environ.get("DB_NAME", "").strip()
-    if explicit:
-        return explicit
-    # Try to extract from the URL path, e.g. mongodb+srv://host/dbname
-    url = os.environ.get("MONGO_URL", "")
-    try:
-        parsed = urlparse(url)
-        path = (parsed.path or "").lstrip("/").split("?")[0].strip()
+    """Return DB name from DB_NAME env var, MONGO_URL path, or default."""
+    if os.environ.get("DB_NAME"):
+        return os.environ["DB_NAME"]
+    mongo_url = os.environ.get("MONGO_URL", "")
+    if mongo_url:
+        path = urlparse(mongo_url).path.lstrip("/")
         if path:
-            return path
-    except Exception:
-        pass
+            return path.split("?")[0] or "visitsarva"
     return "visitsarva"
 
 
 def get_db():
     global _client, _db
     if _db is None:
-        mongo_url = os.environ["MONGO_URL"]
-        db_name = _resolve_db_name()
-        _client = AsyncIOMotorClient(mongo_url)
-        _db = _client[db_name]
+        _client = AsyncIOMotorClient(os.environ["MONGO_URL"])
+        _db = _client[_resolve_db_name()]
     return _db
 
 

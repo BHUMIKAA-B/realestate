@@ -21,7 +21,6 @@ async def list_properties(
     max_price: Optional[float] = None,
     bedrooms: Optional[int] = None,
     furnishing: Optional[str] = None,
-    verified_only: Optional[str] = None,
     sort_by: str = "newest",
     page: int = 1,
     limit: int = 12,
@@ -41,8 +40,6 @@ async def list_properties(
         query["bedrooms"] = bedrooms
     if furnishing:
         query["furnishing"] = furnishing
-    if verified_only == "1":
-        query["is_featured"] = True
 
     sort_map = {
         "newest": [("created_at", -1)],
