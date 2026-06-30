@@ -30,8 +30,8 @@ author = "agent"
 
 [[workflows.workflow.tasks]]
 task = "shell.exec"
-args = "cd backend && pip install -r requirements.txt -q && uvicorn server:app --host 0.0.0.0 --port 8000 --reload"
-waitForPort = 8000
+args = "cd backend && pip install -r requirements.txt -q && uvicorn server:app --host 0.0.0.0 --port 8001 --reload"
+waitForPort = 8001
 
 [workflows.workflow.metadata]
 outputType = "console"
@@ -50,12 +50,8 @@ outputType = "webview"
 
 [[ports]]
 localPort = 5000
-externalPort = 5000
-
-[[ports]]
-localPort = 5001
-externalPort = 3001
-
-[[ports]]
-localPort = 8000
 externalPort = 80
+
+[[ports]]
+localPort = 8001
+externalPort = 8001

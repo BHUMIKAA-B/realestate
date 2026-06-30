@@ -64,7 +64,7 @@ webpackConfig.devServer = (devServerConfig) => {
   // Proxy /api requests to the FastAPI backend
   devServerConfig.proxy = {
     "/api": {
-      target: "http://localhost:8000",
+      target: "http://localhost:8001",
       changeOrigin: true,
     },
   };
