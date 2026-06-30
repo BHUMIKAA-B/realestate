@@ -69,6 +69,8 @@ webpackConfig.devServer = (devServerConfig) => {
     },
   };
 
+  devServerConfig.port = 3000;
+
   // Allow all hosts (required for Replit's proxied preview)
   devServerConfig.allowedHosts = "all";
 

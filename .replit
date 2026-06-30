@@ -42,16 +42,28 @@ author = "agent"
 
 [[workflows.workflow.tasks]]
 task = "shell.exec"
-args = "cd frontend && PORT=5000 yarn start"
-waitForPort = 5000
+args = "cd frontend && PORT=3000 yarn start"
+waitForPort = 3000
 
 [workflows.workflow.metadata]
 outputType = "webview"
 
 [[ports]]
+localPort = 3000
+externalPort = 3000
+
+[[ports]]
 localPort = 5000
+externalPort = 5000
+
+[[ports]]
+localPort = 5001
+externalPort = 3001
+
+[[ports]]
+localPort = 8000
 externalPort = 80
 
 [[ports]]
 localPort = 8001
-externalPort = 8001
+externalPort = 3002
