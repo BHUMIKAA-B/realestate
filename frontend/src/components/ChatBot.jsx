@@ -87,14 +87,10 @@ export default function ChatBot({ forceOpen = false, fullPage = false }) {
     setMessages((prev) => [...prev, { role: "bot", text: "", typing: true }]);
 
     try {
-      const userContext = user
-        ? { id: user.id, email: user.email, full_name: user.full_name, role: user.role }
-        : null;
-
       const { data } = await api.post("/chat/message", {
         message: trimmed,
         session_id: sessionId,
-        user_context: userContext,
+        // user context is derived server-side from the JWT — not sent from client
       });
 
       if (!sessionId) setSessionId(data.session_id);
@@ -114,7 +110,7 @@ export default function ChatBot({ forceOpen = false, fullPage = false }) {
     } finally {
       setLoading(false);
     }
-  }, [loading, sessionId, user]);
+  }, [loading, sessionId]);
 
   const handleKeyDown = (e) => {
     if (e.key === "Enter" && !e.shiftKey) {
@@ -238,7 +234,7 @@ function ChatWindow({
   return (
     <>
       {/* Messages */}
-      <div className={`flex-1 overflow-y-auto px-4 py-4 space-y-3 ${fullPage ? "min-h-0" : "max-h-[380px]"}`}>
+      <div aria-live="polite" aria-label="Chat messages" className={`flex-1 overflow-y-auto px-4 py-4 space-y-3 ${fullPage ? "min-h-0" : "max-h-[380px]"}`}>
         {messages.map((msg, i) =>
           msg.role === "bot" ? (
             <BotMessage key={i} text={msg.text} typing={msg.typing} />

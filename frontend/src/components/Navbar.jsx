@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Menu, X, LogOut, User, LayoutDashboard, Bookmark, Inbox, ChevronDown } from "lucide-react";
+import { Menu, X, LogOut, User, LayoutDashboard, Bookmark, Inbox, ChevronDown, MessageCircle } from "lucide-react";
 import ThemeToggle from '@/components/ThemeToggle';
 import Logo from "@/components/Logo";
 import NotificationsDropdown from "@/components/NotificationsDropdown";
@@ -103,6 +103,9 @@ const Navbar = () => {
           <Link to="/services" className="text-sm text-[#1a1f2e] hover:text-[#0D7A6B] transition-colors">
             Documents
           </Link>
+          <Link to="/chat" className="text-sm text-[#1a1f2e] hover:text-[#0D7A6B] transition-colors flex items-center gap-1">
+            <MessageCircle size={14} /> Assistant
+          </Link>
         </nav>
 
         <div className="hidden lg:flex items-center gap-3 shrink-0">
@@ -192,6 +195,7 @@ const Navbar = () => {
             <Link to="/properties" onClick={() => setOpen(false)} className="text-sm py-2 border-t border-[#e6e4dd] mt-2 pt-3">Browse all</Link>
             <Link to="/construction" onClick={() => setOpen(false)} className="text-sm py-2">Construction</Link>
             <Link to="/services" onClick={() => setOpen(false)} className="text-sm py-2">Documents</Link>
+            <Link to="/chat" onClick={() => setOpen(false)} className="text-sm py-2 flex items-center gap-2"><MessageCircle size={14} className="text-[#0D7A6B]" /> AI Assistant</Link>
             <div className="border-t border-[#e6e4dd] pt-3 flex flex-col gap-2">
               {!isAuthed ? (
                 <>

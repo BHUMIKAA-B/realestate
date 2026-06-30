@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Sparkles, Bookmark, Inbox, ArrowRight, Loader2 } from "lucide-react";
+import { Sparkles, Bookmark, Inbox, ArrowRight, Loader2, MessageCircle } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import AISearchBar from "@/components/AISearchBar";
@@ -46,6 +46,9 @@ const BuyerHome = () => {
             </Link>
             <Link to="/services" className="chip">
               Document Services
+            </Link>
+            <Link to="/chat" className="chip chip-active">
+              <MessageCircle size={12} /> AI Assistant
             </Link>
           </div>
         </div>

@@ -8,9 +8,9 @@ from typing import Optional
 
 import httpx
 from fastapi import APIRouter, Depends, HTTPException
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
-from auth import get_current_user
+from auth import get_current_user_optional
 
 log = logging.getLogger("visitsarva")
 router = APIRouter(prefix="/api/chat", tags=["chat"])
@@ -22,17 +22,9 @@ N8N_WEBHOOK_URL = os.environ.get("N8N_WEBHOOK_URL", "")
 # Schemas
 # ---------------------------------------------------------------------------
 
-class UserContext(BaseModel):
-    id: Optional[str] = None
-    email: Optional[str] = None
-    full_name: Optional[str] = None
-    role: Optional[str] = None
-
-
 class ChatMessageRequest(BaseModel):
-    message: str
-    session_id: Optional[str] = None
-    user_context: Optional[UserContext] = None
+    message: str = Field(..., min_length=1, max_length=2000, strip_whitespace=True)
+    session_id: Optional[str] = Field(None, max_length=64)
 
 
 class ChatMessageResponse(BaseModel):
@@ -45,9 +37,15 @@ class ChatMessageResponse(BaseModel):
 # ---------------------------------------------------------------------------
 
 @router.post("/message", response_model=ChatMessageResponse)
-async def send_message(body: ChatMessageRequest):
-    """Forward a user message to n8n and return the reply."""
+async def send_message(
+    body: ChatMessageRequest,
+    current_user: Optional[dict] = Depends(get_current_user_optional),
+):
+    """Forward a user message to n8n and return the reply.
 
+    User context is derived server-side from the verified JWT token —
+    the client cannot supply or spoof identity fields.
+    """
     if not N8N_WEBHOOK_URL:
         raise HTTPException(
             status_code=503,
@@ -56,10 +54,20 @@ async def send_message(body: ChatMessageRequest):
 
     session_id = body.session_id or str(uuid.uuid4())
 
+    # Build user context from server-verified token only
+    user_context = None
+    if current_user:
+        user_context = {
+            "id": str(current_user.get("id") or current_user.get("_id") or ""),
+            "email": current_user.get("email"),
+            "full_name": current_user.get("full_name"),
+            "role": current_user.get("role"),
+        }
+
     payload = {
         "message": body.message,
         "session_id": session_id,
-        "user": body.user_context.model_dump() if body.user_context else None,
+        "user": user_context,
         "source": "visitsarva-web",
     }
 
@@ -67,7 +75,6 @@ async def send_message(body: ChatMessageRequest):
         async with httpx.AsyncClient(timeout=30.0) as client:
             resp = await client.post(N8N_WEBHOOK_URL, json=payload)
             resp.raise_for_status()
-            data = resp.json()
     except httpx.TimeoutException:
         log.error("n8n webhook timed out")
         raise HTTPException(status_code=504, detail="Chatbot service timed out. Please try again.")
@@ -78,22 +85,37 @@ async def send_message(body: ChatMessageRequest):
         log.exception("Unexpected error calling n8n: %s", exc)
         raise HTTPException(status_code=502, detail="Could not reach chatbot service.")
 
-    # n8n can return { "reply": "..." } or { "output": "..." } or plain text
+    # Parse reply — n8n may return JSON or plain text
+    reply = _extract_reply(resp)
+
+    return ChatMessageResponse(reply=reply, session_id=session_id)
+
+
+def _extract_reply(resp: httpx.Response) -> str:
+    """Extract the reply string from whatever n8n returns."""
+    # Try JSON first
+    try:
+        data = resp.json()
+    except Exception:
+        # Not JSON — treat raw text as the reply
+        return resp.text.strip() or "I received your message but couldn't parse a reply."
+
     if isinstance(data, dict):
-        reply = (
+        return (
             data.get("reply")
             or data.get("output")
             or data.get("text")
             or data.get("message")
             or str(data)
         )
-    elif isinstance(data, list) and data:
+    if isinstance(data, list) and data:
         first = data[0]
-        reply = (
-            first.get("reply") or first.get("output") or first.get("text") or str(first)
-            if isinstance(first, dict) else str(first)
-        )
-    else:
-        reply = str(data)
-
-    return ChatMessageResponse(reply=reply, session_id=session_id)
+        if isinstance(first, dict):
+            return (
+                first.get("reply")
+                or first.get("output")
+                or first.get("text")
+                or str(first)
+            )
+        return str(first)
+    return str(data)
