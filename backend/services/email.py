@@ -16,12 +16,31 @@ async def send_email(
     html: str,
     text: Optional[str] = None,
 ) -> bool:
-    """Send an email. Returns True if dispatched, False if logged-only or failed."""
+    """Send an email via Resend. Returns True if dispatched.
+
+    RESEND_NOTIFY_EMAIL: if set, all enquiry emails also go there.
+    This works around Resend test-mode which only allows sending
+    to the account owner until a domain is verified at resend.com/domains.
+    """
     api_key = os.environ.get("RESEND_API_KEY")
-    sender = os.environ.get("EMAIL_FROM", "VisitSarva <noreply@visitsarva.in>")
+    sender = os.environ.get("EMAIL_FROM", "VisitSarva <onboarding@resend.dev>")
+    notify_override = os.environ.get("RESEND_NOTIFY_EMAIL", "").strip()
+
     if not api_key:
         log.info("[email:log-only] to=%s subject=%s", to, subject)
         return False
+
+    # Build recipient list — always include the override so test-mode works
+    recipients: list[str] = []
+    if notify_override:
+        recipients.append(notify_override)
+        if to.lower() != notify_override.lower() and to not in recipients:
+            # Attempt delivery to actual seller too; Resend will reject in
+            # test-mode but will succeed once the domain is verified.
+            recipients.append(to)
+    else:
+        recipients.append(to)
+
     try:
         async with httpx.AsyncClient(timeout=10.0) as cl:
             r = await cl.post(
@@ -32,7 +51,7 @@ async def send_email(
                 },
                 json={
                     "from": sender,
-                    "to": [to],
+                    "to": recipients,
                     "subject": subject,
                     "html": html,
                     "text": text or "",
@@ -40,7 +59,28 @@ async def send_email(
             )
             if r.status_code >= 400:
                 log.warning("Resend error %s: %s", r.status_code, r.text)
+                # Retry with only the override if we tried multiple recipients
+                # (Resend test-mode rejects multi-recipient lists)
+                if notify_override and len(recipients) > 1 and r.status_code == 403:
+                    r2 = await cl.post(
+                        "https://api.resend.com/emails",
+                        headers={
+                            "Authorization": f"Bearer {api_key}",
+                            "Content-Type": "application/json",
+                        },
+                        json={
+                            "from": sender,
+                            "to": [notify_override],
+                            "subject": subject,
+                            "html": html,
+                            "text": text or "",
+                        },
+                    )
+                    if r2.status_code < 400:
+                        log.info("Email delivered to notify override %s", notify_override)
+                        return True
                 return False
+            log.info("Email sent to %s", recipients)
             return True
     except Exception as e:
         log.warning("Email send failed: %s", e)

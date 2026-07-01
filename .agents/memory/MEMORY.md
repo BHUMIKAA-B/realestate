@@ -1,0 +1,3 @@
+- [Notification stack](notification-stack.md) — Twilio WhatsApp + Resend email for enquiry alerts; Resend in test-mode requires domain verification or RESEND_NOTIFY_EMAIL override.
+- [Chatbot architecture](chatbot-arch.md) — rule-based intent router + live MongoDB search; emergentintegrations not pip-installable here so no LLM dependency.
+- [Proxy fix](proxy-fix.md) — setupProxy.js (CRA native) replaces craco proxy; @emergentbase/visual-edits middleware blocks POSTs in craco.

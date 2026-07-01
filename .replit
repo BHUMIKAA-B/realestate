@@ -7,6 +7,9 @@ expertMode = true
 [userenv.shared]
 N8N_WEBHOOK_URL = "https://bhumikaa16.app.n8n.cloud/webhook/visitsarva-chat"
 REACT_APP_BACKEND_URL = ""
+CLIENT_URL = "https://e6a1242b-0a09-47a0-9f15-f0281382524f-00-2wz05hry77ay3.pike.replit.dev"
+EMAIL_FROM = "VisitSarva <onboarding@resend.dev>"
+RESEND_NOTIFY_EMAIL = "bhumibalamurali@gmail.com"
 
 [workflows]
 runButton = "Project"

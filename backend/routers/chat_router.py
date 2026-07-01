@@ -52,11 +52,11 @@ _PROPERTY_QUERY = re.compile(
 )
 
 CITY_ALIASES = {
-    "bangalore": "bangalore", "bengaluru": "bangalore", "blr": "bangalore",
-    "hyderabad": "hyderabad", "hyd": "hyderabad",
+    "bangalore": "bangalore", "bengaluru": "bangalore",
+    "hyderabad": "hyderabad",
     "mumbai": "mumbai", "bombay": "mumbai",
     "pune": "pune",
-    "delhi": "delhi", "new delhi": "delhi",
+    "delhi": "delhi",
     "gurgaon": "gurgaon", "gurugram": "gurgaon",
     "noida": "noida",
     "chennai": "chennai", "madras": "chennai",
@@ -66,13 +66,23 @@ CITY_ALIASES = {
     "kochi": "kochi", "cochin": "kochi",
 }
 
+# Pre-compiled word-boundary patterns for city + category detection
+_CITY_RE = {
+    alias: re.compile(r"\b" + re.escape(alias) + r"\b", re.I)
+    for alias in CITY_ALIASES
+}
+
 CATEGORY_MAP = {
     "apartment": "apartment", "flat": "apartment",
     "villa": "residential", "house": "residential", "bungalow": "residential",
-    "plot": "plot", "land": "plot",
+    "plot": "plot",
     "shop": "commercial", "office": "commercial", "commercial": "commercial",
-    "rent": "rental", "rental": "rental",
+    "rental": "rental",
     "agriculture": "agriculture", "farm": "agriculture",
+}
+_CAT_RE = {
+    kw: re.compile(r"\b" + re.escape(kw) + r"\b", re.I)
+    for kw in CATEGORY_MAP
 }
 
 
@@ -107,16 +117,17 @@ def _parse_query(text: str) -> dict:
         hi = float(m.group(3)) * (1_00_00_000 if "crore" in m.group(2) else 1_00_000)
         q["price"] = {"$gte": int(lo), "$lte": int(hi)}
 
-    # City
-    for alias, canonical in CITY_ALIASES.items():
-        if alias in t:
+    # City — word-boundary aware
+    for alias, pattern in _CITY_RE.items():
+        if pattern.search(t):
+            canonical = CITY_ALIASES[alias]
             q["location.city"] = {"$regex": canonical[:4], "$options": "i"}
             break
 
-    # Category
-    for kw, cat in CATEGORY_MAP.items():
-        if kw in t:
-            q["category"] = cat
+    # Category — word-boundary aware
+    for kw, pattern in _CAT_RE.items():
+        if pattern.search(t):
+            q["category"] = CATEGORY_MAP[kw]
             break
 
     # Furnishing
@@ -140,13 +151,19 @@ def _fmt_price(price: int | float) -> str:
     return RS + f"{int(price):,}"
 
 
-async def _search_properties(text: str, limit: int = 5) -> list[dict]:
-    """Return matching published properties from MongoDB."""
+async def _search_properties(text: str, limit: int = 5) -> tuple[list[dict], bool]:
+    """Return (properties, is_exact_match) from MongoDB.
+
+    is_exact_match=True means filters were applied and results match them.
+    is_exact_match=False means we fell back to latest published listings.
+    """
     q = _parse_query(text)
     proj = {
         "_id": 0, "id": 1, "title": 1, "price": 1,
         "location": 1, "bedrooms": 1, "category": 1, "area": 1,
     }
+    # Exact match: filters beyond status=published exist
+    has_filters = len(q) > 1
     props = (
         await db.properties()
         .find(q, proj)
@@ -154,8 +171,10 @@ async def _search_properties(text: str, limit: int = 5) -> list[dict]:
         .limit(limit)
         .to_list(length=limit)
     )
+    if props and has_filters:
+        return props, True
+    # Broad fallback — latest published
     if not props:
-        # Broad fallback
         props = (
             await db.properties()
             .find({"status": "published"}, proj)
@@ -163,7 +182,7 @@ async def _search_properties(text: str, limit: int = 5) -> list[dict]:
             .limit(limit)
             .to_list(length=limit)
         )
-    return props
+    return props, False
 
 
 def _format_properties(props: list[dict]) -> str:
@@ -193,17 +212,23 @@ def _format_properties(props: list[dict]) -> str:
 # ---------------------------------------------------------------------------
 
 async def _handle_property_search(text: str) -> str:
-    props = await _search_properties(text)
+    props, is_exact = await _search_properties(text)
     formatted = _format_properties(props)
     if not formatted:
         return (
-            "I couldn't find listings matching your exact criteria right now. "
+            "I couldn't find any listings right now. "
             "Try broadening your search - a higher budget or a different area. "
             "You can also use the **Browse** page to filter properties yourself."
         )
     count = len(props)
     plural = "s" if count > 1 else ""
-    intro = f"Here {'are' if count > 1 else 'is'} {count} matching listing{plural} from our database:\n\n"
+    if is_exact:
+        intro = f"Here {'are' if count > 1 else 'is'} {count} matching listing{plural}:\n\n"
+    else:
+        intro = (
+            "I couldn't find exact matches for your criteria, but here are some "
+            f"recent listing{plural} you might like:\n\n"
+        )
     outro = (
         "\n\n**Tap any listing** to view full details and send an enquiry "
         "directly to the owner - no broker, no commission."
@@ -311,7 +336,7 @@ async def _dispatch(text: str) -> str:
         return await _handle_property_search(t)
 
     # Generic fallback - try a property search anyway
-    props = await _search_properties(t)
+    props, _ = await _search_properties(t)
     if props:
         return await _handle_property_search(t)
 

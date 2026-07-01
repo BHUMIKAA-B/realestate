@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import logging
 import os
+import re
 from typing import Optional
 
 import httpx
@@ -28,10 +29,28 @@ async def send_whatsapp(to_phone: str, message: str) -> bool:
         log.debug("Twilio not configured — skipping WhatsApp notification")
         return False
 
-    # Normalize phone: ensure whatsapp: prefix and country code
-    phone = to_phone.strip().replace(" ", "").replace("-", "")
-    if not phone.startswith("+"):
-        phone = "+91" + phone.lstrip("0")
+    # Ensure whatsapp: prefix on From (strip it first to avoid duplication)
+    from_number = from_number.removeprefix("whatsapp:")
+    from_number = f"whatsapp:{from_number}"
+
+    # Normalize To phone to E.164 then add whatsapp: prefix
+    # Strip all common separators and any existing whatsapp: prefix
+    phone = to_phone.strip()
+    phone = phone.removeprefix("whatsapp:")
+    phone = re.sub(r"[\s\-().]+", "", phone)   # remove spaces, dashes, parens, dots
+    if phone.startswith("+"):
+        # Already has country code — use as-is
+        pass
+    elif phone.startswith("91") and len(phone) == 12:
+        # Looks like 91XXXXXXXXXX — add + prefix
+        phone = "+" + phone
+    elif len(phone) == 10 and phone.isdigit():
+        # 10-digit Indian mobile number
+        phone = "+91" + phone
+    else:
+        # Unrecognised format — log and skip
+        log.warning("WhatsApp: cannot normalise phone '%s', skipping", to_phone)
+        return False
     to_wa = f"whatsapp:{phone}"
 
     url = f"https://api.twilio.com/2010-04-01/Accounts/{account_sid}/Messages.json"
