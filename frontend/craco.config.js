@@ -62,12 +62,9 @@ let webpackConfig = {
 
 webpackConfig.devServer = (devServerConfig) => {
   // Proxy /api requests to the FastAPI backend
-  devServerConfig.proxy = {
-    "/api": {
-      target: "http://localhost:8001",
-      changeOrigin: true,
-    },
-  };
+  // NOTE: /api proxy is handled by src/setupProxy.js (CRA native),
+  // which loads before any craco/visual-edits middleware and correctly
+  // forwards all HTTP methods (GET, POST, PUT, DELETE).
 
   devServerConfig.port = 3000;
 

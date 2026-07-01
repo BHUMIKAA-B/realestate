@@ -198,7 +198,7 @@ const PropertyDetail = () => {
         {/* ── RIGHT SIDEBAR ── */}
         <aside className="lg:col-span-4">
           <div className="sticky top-24">
-            <SidebarTabs propertyId={p.id} price={p.price} isForSale={isForSale} />
+            <SidebarTabs key={p.id} propertyId={p.id} price={p.price} isForSale={isForSale} />
           </div>
         </aside>
       </div>
