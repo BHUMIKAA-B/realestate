@@ -5,6 +5,7 @@ import auth as auth_utils
 from models import EnquiryCreate, new_id, now_iso
 from routers.cms_router import push_notification
 from services.email import send_email, tpl_new_enquiry, tpl_welcome
+from services.whatsapp import send_whatsapp
 
 router = APIRouter(prefix="/api", tags=["enquiries"])
 
@@ -50,7 +51,21 @@ async def create_enquiry(
             subject, html = tpl_new_enquiry(
                 prop.get("title", ""), payload.name, payload.phone, payload.email, payload.message
             )
+            # Email notification
             await send_email(seller["email"], subject, html)
+            # WhatsApp notification (fires if Twilio is configured)
+            seller_phone = seller.get("phone", "")
+            if seller_phone:
+                wa_msg = (
+                    f"🏠 *New Enquiry — VisitSarva*\n\n"
+                    f"Property: {prop.get('title', '')}\n"
+                    f"From: {payload.name}\n"
+                    f"Phone: {payload.phone}\n"
+                    f"Email: {payload.email}\n"
+                    f"Message: {payload.message or '(none)'}\n\n"
+                    f"Reply to the buyer on VisitSarva → /seller/enquiries"
+                )
+                await send_whatsapp(seller_phone, wa_msg)
     doc.pop("_id", None)
     return doc
 
