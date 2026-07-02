@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Menu, X, LogOut, User, LayoutDashboard, Bookmark, Inbox, ChevronDown, MessageCircle } from "lucide-react";
-import ThemeToggle from '@/components/ThemeToggle';
+import { Menu, X, LogOut, LayoutDashboard, Bookmark, Inbox, ChevronDown, MessageCircle } from "lucide-react";
 import Logo from "@/components/Logo";
 import NotificationsDropdown from "@/components/NotificationsDropdown";
 import { useAuthStore } from "@/store/authStore";
@@ -19,6 +18,7 @@ const Navbar = () => {
   const [open, setOpen] = useState(false);
   const [sectorsOpen, setSectorsOpen] = useState(false);
   const [menu, setMenu] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const sectorRef = useRef(null);
   const userRef = useRef(null);
   const navigate = useNavigate();
@@ -30,8 +30,15 @@ const Navbar = () => {
       if (sectorRef.current && !sectorRef.current.contains(e.target)) setSectorsOpen(false);
       if (userRef.current && !userRef.current.contains(e.target)) setMenu(false);
     };
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20);
+    };
     document.addEventListener("mousedown", handleClick);
-    return () => document.removeEventListener("mousedown", handleClick);
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      document.removeEventListener("mousedown", handleClick);
+      window.removeEventListener("scroll", handleScroll);
+    };
   }, []);
 
   const handleLogout = () => {
@@ -50,71 +57,87 @@ const Navbar = () => {
   return (
     <header
       data-testid="navbar"
-      className="sticky top-0 z-40 bg-white border-b border-[#e6e4dd]"
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+        scrolled
+          ? "bg-[#0A0908]/95 backdrop-blur-2xl border-b border-[#2A2623]"
+          : "bg-transparent"
+      }`}
     >
-      <div className="max-w-7xl mx-auto px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
-        <Link to="/" className="flex items-center gap-2.5 shrink-0" data-testid="navbar-logo">
-          <Logo size={32} />
+      <div className="max-w-[80rem] mx-auto px-6 lg:px-12 h-20 flex items-center justify-between gap-4">
+        {/* Logo */}
+        <Link to="/" className="flex items-center gap-3 shrink-0 group" data-testid="navbar-logo">
+          <Logo size={36} color="#C89B5F" />
           <div className="leading-tight">
-            <div className="font-display font-bold text-lg text-[#0F2340]">
+            <span className="font-display font-medium text-xl tracking-tight text-[#F5F0EA] group-hover:text-[#C89B5F] transition-colors duration-300">
               VisitSarva
-            </div>
-            <div className="text-[10px] tracking-[0.18em] uppercase text-[#0D7A6B] font-medium">
+            </span>
+            <div className="text-[10px] tracking-[0.2em] uppercase text-[#A39B92] font-medium mt-0.5">
               Zero Brokerage
             </div>
           </div>
         </Link>
 
         {/* Desktop nav */}
-        <nav className="hidden lg:flex items-center gap-7 flex-1 justify-center">
+        <nav className="hidden lg:flex items-center gap-10 flex-1 justify-center">
           <div className="relative" ref={sectorRef}>
             <button
               data-testid="nav-sectors-btn"
               onClick={() => setSectorsOpen((s) => !s)}
-              className="text-sm text-[#1a1f2e] hover:text-[#0D7A6B] transition-colors flex items-center gap-1"
+              className="flex items-center gap-1.5 text-sm font-medium text-[#A39B92] hover:text-[#C89B5F] transition-colors duration-300"
             >
-              Sectors <ChevronDown size={13} className={`transition-transform ${sectorsOpen ? "rotate-180" : ""}`} />
+              Sectors
+              <ChevronDown
+                size={14}
+                className={`transition-transform duration-300 ${sectorsOpen ? "rotate-180" : ""}`}
+              />
             </button>
             {sectorsOpen && (
               <div
                 data-testid="nav-sectors-panel"
-                className="absolute left-1/2 -translate-x-1/2 mt-3 w-[640px] bg-white border border-[#e6e4dd] rounded-lg shadow-xl p-3 grid grid-cols-2 gap-1"
+                className="absolute left-1/2 -translate-x-1/2 mt-4 w-[480px] bg-[#1A1816] border border-[#2A2623] rounded shadow-luxury overflow-hidden"
               >
-                {SECTOR_LINKS.map((s) => (
-                  <Link
-                    key={s.label}
-                    to={s.to}
-                    data-testid={`nav-sector-${s.label.toLowerCase().replace(/\s+/g, "-").replace(/&/g, "and")}`}
-                    onClick={() => setSectorsOpen(false)}
-                    className="px-4 py-3 text-sm rounded-md hover:bg-[#fafaf7] hover:text-[#0D7A6B] transition-colors text-[#1a1f2e]"
-                  >
-                    {s.label}
-                  </Link>
-                ))}
+                <div className="p-1 grid grid-cols-2">
+                  {SECTOR_LINKS.map((s, i) => (
+                    <Link
+                      key={s.label}
+                      to={s.to}
+                      data-testid={`nav-sector-${s.label.toLowerCase().replace(/\s+/g, "-").replace(/&/g, "and")}`}
+                      onClick={() => setSectorsOpen(false)}
+                      className="px-4 py-3 text-sm text-[#A39B92] hover:text-[#F5F0EA] hover:bg-[#0A0908] transition-all duration-200 flex items-center justify-between group"
+                    >
+                      <span>{s.label}</span>
+                      <span className="text-[#C89B5F] opacity-0 group-hover:opacity-100 transition-opacity">→</span>
+                    </Link>
+                  ))}
+                </div>
               </div>
             )}
           </div>
-          <Link to="/properties" className="text-sm text-[#1a1f2e] hover:text-[#0D7A6B] transition-colors">
-            Browse
-          </Link>
-          <Link to="/construction" className="text-sm text-[#1a1f2e] hover:text-[#0D7A6B] transition-colors">
-            Construction
-          </Link>
-          <Link to="/services" className="text-sm text-[#1a1f2e] hover:text-[#0D7A6B] transition-colors">
-            Documents
-          </Link>
-          <Link to="/chat" className="text-sm text-[#1a1f2e] hover:text-[#0D7A6B] transition-colors flex items-center gap-1">
-            <MessageCircle size={14} /> Assistant
-          </Link>
+          <NavLink to="/properties">Browse</NavLink>
+          <NavLink to="/construction">Construction</NavLink>
+          <NavLink to="/services">Documents</NavLink>
+          <NavLink to="/chat">
+            <MessageCircle size={16} className="text-[#C89B5F]" />
+            <span>Assistant</span>
+          </NavLink>
         </nav>
 
-        <div className="hidden lg:flex items-center gap-3 shrink-0">
+        {/* Right section */}
+        <div className="hidden lg:flex items-center gap-4 shrink-0">
           {!isAuthed ? (
             <>
-              <Link to="/login" className="btn-outline" data-testid="nav-login">
+              <Link
+                to="/login"
+                data-testid="nav-login"
+                className="text-sm font-medium text-[#A39B92] hover:text-[#C89B5F] transition-colors duration-300"
+              >
                 Login
               </Link>
-              <Link to="/register" className="btn-primary" data-testid="nav-signup">
+              <Link
+                to="/register"
+                data-testid="nav-signup"
+                className="btn-primary"
+              >
                 Sign Up
               </Link>
             </>
@@ -125,46 +148,60 @@ const Navbar = () => {
                 <button
                   onClick={() => setMenu((s) => !s)}
                   data-testid="user-menu-toggle"
-                  className="flex items-center gap-2 px-3 py-2 border border-[#e6e4dd] rounded-md hover:border-[#0D7A6B]"
+                  className="flex items-center gap-3 px-3 py-2 border border-[#2A2623] hover:border-[#C89B5F] rounded transition-all duration-300 group"
                 >
-                  <div className="w-7 h-7 rounded-full bg-[#0D7A6B] text-white text-xs flex items-center justify-center font-medium">
+                  <div className="w-8 h-8 rounded-full bg-[#C89B5F] text-[#0A0908] text-xs font-semibold flex items-center justify-center">
                     {user.name?.[0]?.toUpperCase() || "U"}
                   </div>
-                  <span className="text-sm">{user.name?.split(" ")[0]}</span>
+                  <span className="text-sm text-[#F5F0EA] group-hover:text-[#C89B5F] transition-colors">
+                    {user.name?.split(" ")[0]}
+                  </span>
+                  <ChevronDown
+                    size={14}
+                    className={`text-[#A39B92] transition-transform duration-200 ${menu ? "rotate-180" : ""}`}
+                  />
                 </button>
                 {menu && (
                   <div
                     data-testid="user-menu"
-                    className="absolute right-0 mt-2 w-56 bg-white border border-[#e6e4dd] rounded-md shadow-lg overflow-hidden"
+                    className="absolute right-0 mt-2 w-60 bg-[#1A1816] border border-[#2A2623] rounded shadow-luxury overflow-hidden"
                   >
                     <Link
                       to={dashboardPath}
                       onClick={() => setMenu(false)}
                       data-testid="menu-dashboard"
-                      className="flex items-center gap-3 px-4 py-3 text-sm hover:bg-[#fafaf7]"
+                      className="flex items-center gap-3 px-4 py-3 text-sm text-[#A39B92] hover:text-[#F5F0EA] hover:bg-[#0A0908] transition-all duration-200"
                     >
-                      <LayoutDashboard size={15} className="text-[#0D7A6B]" />
+                      <LayoutDashboard size={16} className="text-[#C89B5F]" />
                       Dashboard
                     </Link>
                     {user.role === "buyer" && (
                       <>
-                        <Link to="/saved" onClick={() => setMenu(false)} className="flex items-center gap-3 px-4 py-3 text-sm hover:bg-[#fafaf7]">
-                          <Bookmark size={15} className="text-[#0D7A6B]" /> Saved
+                        <Link
+                          to="/saved"
+                          onClick={() => setMenu(false)}
+                          className="flex items-center gap-3 px-4 py-3 text-sm text-[#A39B92] hover:text-[#F5F0EA] hover:bg-[#0A0908] transition-all duration-200"
+                        >
+                          <Bookmark size={16} className="text-[#C89B5F]" /> Saved
                         </Link>
-                        <Link to="/enquiries" onClick={() => setMenu(false)} className="flex items-center gap-3 px-4 py-3 text-sm hover:bg-[#fafaf7]">
-                          <Inbox size={15} className="text-[#0D7A6B]" /> My Enquiries
+                        <Link
+                          to="/enquiries"
+                          onClick={() => setMenu(false)}
+                          className="flex items-center gap-3 px-4 py-3 text-sm text-[#A39B92] hover:text-[#F5F0EA] hover:bg-[#0A0908] transition-all duration-200"
+                        >
+                          <Inbox size={16} className="text-[#C89B5F]" /> My Enquiries
                         </Link>
                       </>
                     )}
-                    <div className="px-4 py-2 text-[11px] uppercase tracking-wider text-[#5b6371] border-t border-[#e6e4dd]">
+                    <div className="px-4 py-2.5 text-[10px] uppercase tracking-[0.15em] text-[#6B6560] border-t border-[#2A2623] bg-[#0A0908]">
                       {user.role} · {user.email}
                     </div>
                     <button
                       onClick={handleLogout}
                       data-testid="menu-logout"
-                      className="w-full text-left flex items-center gap-3 px-4 py-3 text-sm hover:bg-[#fafaf7] border-t border-[#e6e4dd] text-[#c0392b]"
+                      className="w-full text-left flex items-center gap-3 px-4 py-3 text-sm text-[#F87171] hover:bg-[#0A0908] border-t border-[#2A2623] transition-all duration-200"
                     >
-                      <LogOut size={15} /> Sign out
+                      <LogOut size={16} /> Sign out
                     </button>
                   </div>
                 )}
@@ -173,51 +210,86 @@ const Navbar = () => {
           )}
         </div>
 
+        {/* Mobile toggle */}
         <button
-          className="lg:hidden text-[#0F2340]"
+          className="lg:hidden p-2 text-[#F5F0EA] hover:text-[#C89B5F] transition-colors"
           onClick={() => setOpen((s) => !s)}
           data-testid="nav-mobile-toggle"
           aria-label="Toggle menu"
         >
-          {open ? <X size={22} /> : <Menu size={22} />}
+          {open ? <X size={24} /> : <Menu size={24} />}
         </button>
       </div>
 
-      {open && (
-        <div className="lg:hidden border-t border-[#e6e4dd] bg-white">
-          <div className="px-6 py-4 flex flex-col gap-2 max-h-[80vh] overflow-y-auto">
-            <div className="text-[10px] uppercase tracking-wider text-[#5b6371] mt-2 mb-1">Sectors</div>
+      {/* Mobile menu */}
+      <div
+        className={`lg:hidden overflow-hidden transition-all duration-500 ${
+          open ? "max-h-[80vh] opacity-100" : "max-h-0 opacity-0"
+        }`}
+      >
+        <div className="bg-[#0A0908] border-t border-[#2A2623]">
+          <div className="px-6 py-6 space-y-1">
+            <div className="text-[10px] uppercase tracking-[0.2em] text-[#6B6560] mb-3">
+              Sectors
+            </div>
             {SECTOR_LINKS.map((s) => (
-              <Link key={s.label} to={s.to} onClick={() => setOpen(false)} className="text-sm py-2 text-[#1a1f2e]">
+              <Link
+                key={s.label}
+                to={s.to}
+                onClick={() => setOpen(false)}
+                className="block py-2.5 text-sm text-[#A39B92] hover:text-[#C89B5F] transition-colors"
+              >
                 {s.label}
               </Link>
             ))}
-            <Link to="/properties" onClick={() => setOpen(false)} className="text-sm py-2 border-t border-[#e6e4dd] mt-2 pt-3">Browse all</Link>
-            <Link to="/construction" onClick={() => setOpen(false)} className="text-sm py-2">Construction</Link>
-            <Link to="/services" onClick={() => setOpen(false)} className="text-sm py-2">Documents</Link>
-            <Link to="/chat" onClick={() => setOpen(false)} className="text-sm py-2 flex items-center gap-2"><MessageCircle size={14} className="text-[#0D7A6B]" /> AI Assistant</Link>
-            <div className="border-t border-[#e6e4dd] pt-3 flex flex-col gap-2">
-              {!isAuthed ? (
-                <>
-                  <Link to="/login" onClick={() => setOpen(false)} className="btn-outline justify-center">Login</Link>
-                  <Link to="/register" onClick={() => setOpen(false)} className="btn-primary justify-center">Sign Up</Link>
-                </>
-              ) : (
-                <>
-                  <Link to={dashboardPath} onClick={() => setOpen(false)} className="btn-outline justify-center">
-                    <User size={15} /> {user.name}
-                  </Link>
-                  <button onClick={handleLogout} className="btn-outline justify-center">
-                    <LogOut size={15} /> Sign out
-                  </button>
-                </>
-              )}
-            </div>
+            <div className="border-t border-[#2A2623] my-4" />
+            <NavLink to="/properties" onClick={() => setOpen(false)}>Browse all</NavLink>
+            <NavLink to="/construction" onClick={() => setOpen(false)}>Construction</NavLink>
+            <NavLink to="/services" onClick={() => setOpen(false)}>Documents</NavLink>
+            <NavLink to="/chat" onClick={() => setOpen(false)}>
+              <MessageCircle size={16} className="text-[#C89B5F]" />
+              <span>AI Assistant</span>
+            </NavLink>
+            <div className="border-t border-[#2A2623] my-4" />
+            {!isAuthed ? (
+              <div className="space-y-3 pt-2">
+                <Link to="/login" onClick={() => setOpen(false)} className="btn-secondary justify-center w-full">
+                  Login
+                </Link>
+                <Link to="/register" onClick={() => setOpen(false)} className="btn-primary justify-center w-full">
+                  Sign Up
+                </Link>
+              </div>
+            ) : (
+              <div className="space-y-3 pt-2">
+                <Link
+                  to={dashboardPath}
+                  onClick={() => setOpen(false)}
+                  className="btn-secondary justify-center w-full"
+                >
+                  <LayoutDashboard size={16} className="text-[#C89B5F]" />
+                  {user.name}
+                </Link>
+                <button onClick={handleLogout} className="btn-secondary justify-center w-full text-[#F87171] hover:text-[#F87171] hover:border-[#F87171]">
+                  <LogOut size={16} /> Sign out
+                </button>
+              </div>
+            )}
           </div>
         </div>
-      )}
+      </div>
     </header>
   );
 };
+
+const NavLink = ({ to, children, onClick }) => (
+  <Link
+    to={to}
+    onClick={onClick}
+    className="flex items-center gap-2 text-sm font-medium text-[#A39B92] hover:text-[#C89B5F] transition-colors duration-300"
+  >
+    {children}
+  </Link>
+);
 
 export default Navbar;

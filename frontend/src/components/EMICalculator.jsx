@@ -7,9 +7,9 @@ import { INR } from "@/utils/format";
  * Uses the standard reducing-balance (PMT) formula.
  */
 const EMICalculator = ({ priceINR = 0 }) => {
-  const [loanPct, setLoanPct] = useState(80); // % of property price to borrow
-  const [rate, setRate] = useState(8.5);       // annual interest rate (%)
-  const [tenure, setTenure] = useState(20);    // loan tenure in years
+  const [loanPct, setLoanPct] = useState(80);
+  const [rate, setRate] = useState(8.5);
+  const [tenure, setTenure] = useState(20);
 
   const loanAmt = Math.round((priceINR * loanPct) / 100);
   const downPayment = priceINR - loanAmt;
@@ -28,22 +28,21 @@ const EMICalculator = ({ priceINR = 0 }) => {
 
   return (
     <div>
-      <div className="flex items-center gap-2 mb-4">
-        <Calculator size={18} className="text-[#0D7A6B]" />
-        <h3 className="font-display text-xl font-semibold text-[#0F2340]">
+      <div className="flex items-center gap-2 mb-5">
+        <Calculator size={18} className="text-vs-gold" />
+        <h3 className="font-display font-medium text-vs-text-primary text-lg">
           EMI Calculator
         </h3>
       </div>
 
-      <div className="space-y-5">
+      <div className="space-y-6">
         {/* Loan % slider */}
         <div>
-          <div className="flex justify-between mb-1">
-            <span className="label" style={{ marginBottom: 0 }}>
-              Loan amount&nbsp;
-              <span className="text-[#0D7A6B]">({loanPct}% of price)</span>
+          <div className="flex justify-between mb-2">
+            <span className="text-xs text-vs-text-muted uppercase tracking-wider">
+              Loan amount <span className="text-vs-gold">({loanPct}%)</span>
             </span>
-            <span className="text-sm font-semibold text-[#0D7A6B]">{INR(loanAmt)}</span>
+            <span className="text-sm font-medium text-vs-gold">{INR(loanAmt)}</span>
           </div>
           <input
             type="range"
@@ -52,22 +51,21 @@ const EMICalculator = ({ priceINR = 0 }) => {
             step={5}
             value={loanPct}
             onChange={(e) => setLoanPct(Number(e.target.value))}
-            className="w-full accent-[#0D7A6B]"
+            className="w-full accent-vs-gold slider"
           />
-          <div className="flex justify-between text-xs text-[#5b6371] mt-1">
-            <span>Down payment: {INR(downPayment)}</span>
+          <div className="flex justify-between text-xs text-vs-text-muted mt-1.5">
+            <span>Down: {INR(downPayment)}</span>
             <span>Loan: {INR(loanAmt)}</span>
           </div>
         </div>
 
         {/* Interest rate slider */}
         <div>
-          <div className="flex justify-between mb-1">
-            <span className="label" style={{ marginBottom: 0 }}>
-              Interest rate&nbsp;
-              <span className="text-[#0D7A6B]">(per year)</span>
+          <div className="flex justify-between mb-2">
+            <span className="text-xs text-vs-text-muted uppercase tracking-wider">
+              Interest rate <span className="text-vs-gold">(yearly)</span>
             </span>
-            <span className="text-sm font-semibold text-[#0D7A6B]">{rate.toFixed(1)}%</span>
+            <span className="text-sm font-medium text-vs-gold">{rate.toFixed(1)}%</span>
           </div>
           <input
             type="range"
@@ -76,9 +74,9 @@ const EMICalculator = ({ priceINR = 0 }) => {
             step={0.1}
             value={rate}
             onChange={(e) => setRate(Number(e.target.value))}
-            className="w-full accent-[#0D7A6B]"
+            className="w-full accent-vs-gold slider"
           />
-          <div className="flex justify-between text-xs text-[#5b6371] mt-1">
+          <div className="flex justify-between text-xs text-vs-text-muted mt-1.5">
             <span>5%</span>
             <span>20%</span>
           </div>
@@ -86,11 +84,11 @@ const EMICalculator = ({ priceINR = 0 }) => {
 
         {/* Tenure slider */}
         <div>
-          <div className="flex justify-between mb-1">
-            <span className="label" style={{ marginBottom: 0 }}>
+          <div className="flex justify-between mb-2">
+            <span className="text-xs text-vs-text-muted uppercase tracking-wider">
               Loan tenure
             </span>
-            <span className="text-sm font-semibold text-[#0D7A6B]">
+            <span className="text-sm font-medium text-vs-gold">
               {tenure} {tenure === 1 ? "year" : "years"}
             </span>
           </div>
@@ -101,9 +99,9 @@ const EMICalculator = ({ priceINR = 0 }) => {
             step={1}
             value={tenure}
             onChange={(e) => setTenure(Number(e.target.value))}
-            className="w-full accent-[#0D7A6B]"
+            className="w-full accent-vs-gold slider"
           />
-          <div className="flex justify-between text-xs text-[#5b6371] mt-1">
+          <div className="flex justify-between text-xs text-vs-text-muted mt-1.5">
             <span>1 yr</span>
             <span>30 yrs</span>
           </div>
@@ -111,37 +109,34 @@ const EMICalculator = ({ priceINR = 0 }) => {
       </div>
 
       {/* Result panel */}
-      <div className="mt-5 rounded-lg bg-[#0D7A6B]/5 border border-[#0D7A6B]/20 p-4">
-        <div className="text-center mb-4">
-          <div className="text-xs uppercase tracking-wider text-[#0D7A6B] mb-0.5">
+      <div className="mt-6 rounded-lg bg-vs-gold/10 border border-vs-gold/30 p-5">
+        <div className="text-center mb-5">
+          <div className="text-[10px] uppercase tracking-wider text-vs-gold mb-1">
             Monthly EMI
           </div>
-          <div className="font-display text-3xl font-bold text-[#0F2340]">
+          <div className="font-display text-3xl font-medium text-vs-text-primary">
             {emi > 0 ? INR(emi) : "—"}
           </div>
         </div>
 
-        <div className="grid grid-cols-2 gap-2 text-sm">
-          <div className="bg-white rounded p-3 text-center border border-[#e6e4dd]">
-            <div className="text-xs text-[#5b6371]">Principal</div>
-            <div className="font-semibold text-[#0F2340]">{INR(loanAmt)}</div>
+        <div className="grid grid-cols-2 gap-2.5 text-sm">
+          <div className="bg-vs-bg rounded-lg p-3.5 text-center border border-vs-border">
+            <div className="text-[10px] text-vs-text-muted uppercase tracking-wider">Principal</div>
+            <div className="font-medium text-vs-text-primary mt-1">{INR(loanAmt)}</div>
           </div>
-          <div className="bg-white rounded p-3 text-center border border-[#e6e4dd]">
-            <div className="text-xs text-[#5b6371]">Total interest</div>
-            <div className="font-semibold text-red-500">{INR(totalInterest)}</div>
+          <div className="bg-vs-bg rounded-lg p-3.5 text-center border border-vs-border">
+            <div className="text-[10px] text-vs-text-muted uppercase tracking-wider">Total interest</div>
+            <div className="font-medium text-red-400 mt-1">{INR(totalInterest)}</div>
           </div>
-          <div className="bg-white rounded p-3 text-center border border-[#e6e4dd] col-span-2">
-            <div className="text-xs text-[#5b6371]">
-              Total payment&nbsp;
-              {interestPct > 0 && (
-                <span>({interestPct}% is interest)</span>
-              )}
+          <div className="bg-vs-bg rounded-lg p-3.5 text-center border border-vs-border col-span-2">
+            <div className="text-[10px] text-vs-text-muted uppercase tracking-wider">
+              Total payment {interestPct > 0 && <span>({interestPct}% interest)</span>}
             </div>
-            <div className="font-semibold text-[#0F2340]">{INR(totalPayment)}</div>
+            <div className="font-medium text-vs-text-primary mt-1">{INR(totalPayment)}</div>
           </div>
         </div>
 
-        <p className="mt-3 text-xs text-[#5b6371] text-center">
+        <p className="mt-4 text-[11px] text-vs-text-muted text-center leading-relaxed">
           Estimates based on reducing-balance method. Actual rates depend on your lender &amp; profile.
         </p>
       </div>

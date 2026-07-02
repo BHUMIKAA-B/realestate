@@ -1,20 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import {
-  ShieldCheck,
-  HeadphonesIcon,
-  Ban,
-  ArrowRight,
-  CheckCircle2,
-  Sparkles,
-  FileCheck,
-  ScrollText,
-  Compass,
-  Building2,
-  ClipboardCheck,
-  Landmark,
-} from "lucide-react";
+import { ShieldCheck, Headphones as HeadphonesIcon, Ban, ArrowRight, CircleCheck as CheckCircle2, Sparkles, FileCheck, ScrollText, Compass, Building2, ClipboardCheck, Landmark, Star } from "lucide-react";
 
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -41,11 +28,20 @@ const DOCUMENT_SERVICES = [
   { v: "pre_registration", l: "Pre-Registration Assistance", body: "End-to-end help before sub-registrar: stamp duty, drafting, EC, encumbrance.", Icon: ScrollText },
   { v: "khata_assistance", l: "Khatha Assistance", body: "BBMP / GP Khata transfers, bifurcation, A-Khata conversion.", Icon: ClipboardCheck },
   { v: "property_valuation", l: "Property Valuation", body: "Market-honest valuation reports — for loans, sale, ITR or transfer.", Icon: FileCheck },
-  { v: "land_approval", l: "Land Approval", body: "DTCP, BMRDA, BIAAPA layout approvals and revenue conversions.", Icon: Landmark },
+  { v: "land_approval", l: "Land Approval", body: "DTCT, BMRDA, BIAAPA layout approvals and revenue conversions.", Icon: Landmark },
   { v: "plan_approval", l: "Plan Approval", body: "Sanctioned plans, occupancy certificate, deviation regularisation.", Icon: Compass },
   { v: "property_conversion", l: "Property Conversion", body: "Agriculture → residential / commercial DC conversion.", Icon: Building2 },
   { v: "government_approval", l: "Government Approval", body: "NoCs, fire, environmental and statutory clearances.", Icon: ShieldCheck },
 ];
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 24 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } },
+};
+
+const stagger = {
+  visible: { transition: { staggerChildren: 0.1 } },
+};
 
 const Landing = () => {
   const [featured, setFeatured] = useState([]);
@@ -59,10 +55,10 @@ const Landing = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#fafaf7]">
+    <div className="min-h-screen bg-vs-bg">
       <Navbar />
 
-      {/* ===== HERO (backend-driven) ===== */}
+      {/* ===== HERO ===== */}
       <section
         id="hero"
         className="relative min-h-[90vh] flex items-center overflow-hidden"
@@ -79,58 +75,66 @@ const Landing = () => {
           ) : (
             <img src={hero.image_url} alt="VisitSarva" className="w-full h-full object-cover" />
           )}
-          <div className="absolute inset-0 bg-gradient-to-r from-[#0F2340]/85 via-[#0F2340]/65 to-[#0F2340]/30" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#0A0908]/95 via-[#0A0908]/70 to-[#0A0908]/40" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#0A0908] via-transparent to-transparent" />
         </div>
 
-        <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 py-20 w-full">
-          <motion.div initial={{ opacity: 0, y: 28 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }} className="max-w-3xl">
-            <div className="eyebrow text-[#7ec4b8] mb-5">
+        <div className="relative z-10 max-w-[80rem] mx-auto px-6 lg:px-12 py-20 w-full">
+          <motion.div
+            initial="hidden"
+            animate="visible"
+            variants={stagger}
+            className="max-w-3xl"
+          >
+            <motion.div variants={fadeUp} className="eyebrow text-vs-gold mb-6">
               Zero Brokerage · Verified Listings · Direct Contact
-            </div>
-            <h1 className="font-display font-bold text-white text-4xl md:text-5xl lg:text-6xl leading-[1.05] tracking-tight" data-testid="hero-headline">
+            </motion.div>
+            <motion.h1
+              variants={fadeUp}
+              className="font-display font-medium text-vs-text-primary text-4xl md:text-5xl lg:text-6xl leading-[1.1] tracking-tight"
+              data-testid="hero-headline"
+            >
               {hero.headline.split(".")[0]}.
               <br />
-              <span className="text-[#7ec4b8]">{hero.headline.split(".").slice(1).join(".").trim() || "Zero Brokerage."}</span>
-            </h1>
-            <p className="mt-6 text-white/85 text-base md:text-lg leading-relaxed max-w-2xl">
+              <span className="text-vs-gold">{hero.headline.split(".").slice(1).join(".").trim() || "Zero Brokerage."}</span>
+            </motion.h1>
+            <motion.p variants={fadeUp} className="mt-6 text-vs-text-secondary text-base md:text-lg leading-relaxed max-w-2xl">
               {hero.sub_headline}
-            </p>
+            </motion.p>
 
-            <div className="mt-8 max-w-2xl">
+            <motion.div variants={fadeUp} className="mt-10 max-w-2xl">
               <AISearchBar />
-            </div>
+            </motion.div>
 
-            <div className="mt-5 flex flex-wrap gap-2 items-center">
+            <motion.div variants={fadeUp} className="mt-6 flex flex-wrap gap-2.5 items-center">
               {PROPERTY_CATEGORIES.slice(0, 5).map((c) => (
                 <Link
                   key={c.value}
                   to={c.value === "construction_interior" ? "/construction" : `/properties?category=${c.value}`}
                   data-testid={`hero-pill-${c.value}`}
-                  className="chip bg-white/95 hover:bg-white border-white text-[#0F2340]"
+                  className="chip bg-vs-surface border-vs-border text-vs-text-secondary hover:border-vs-gold hover:text-vs-gold transition-all duration-300"
                 >
                   {c.label}
                 </Link>
               ))}
-              <Link to="/properties" className="chip bg-[#0D7A6B] text-white border-[#0D7A6B]">
-                All Categories <ArrowRight size={12} />
+              <Link to="/properties" className="chip bg-vs-gold text-vs-bg border-vs-gold hover:bg-vs-primary-hover transition-all duration-300">
+                All Categories <ArrowRight size={12} className="ml-1" />
               </Link>
-            </div>
+            </motion.div>
 
-            {/* ===== Valuation lead-magnet ===== */}
+            {/* Valuation lead-magnet */}
             <motion.div
-              initial={{ opacity: 0, y: 14 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.4 }}
-              className="mt-8 inline-flex items-center gap-3 px-5 py-3 bg-white/10 backdrop-blur border border-white/20 rounded-lg"
+              variants={fadeUp}
+              className="mt-10 inline-flex items-center gap-4 px-6 py-4 bg-vs-surface/80 backdrop-blur-xl border border-vs-border rounded-lg"
             >
-              <Sparkles size={16} className="text-[#7ec4b8]" />
-              <div className="text-sm text-white/90">
-                <strong className="text-white">Selling or curious?</strong> Get a free property valuation in 24 hours.
+              <Sparkles size={18} className="text-vs-gold" />
+              <div className="text-sm text-vs-text-secondary">
+                <span className="text-vs-text-primary font-medium">Selling or curious?</span> Get a free property valuation in 24 hours.
               </div>
               <button
                 onClick={() => setValuationOpen(true)}
                 data-testid="open-valuation"
-                className="text-sm bg-[#7ec4b8] hover:bg-[#a3d7ce] text-[#0F2340] font-medium px-4 py-2 rounded transition-colors"
+                className="text-sm bg-vs-gold hover:bg-vs-primary-hover text-vs-bg font-medium px-5 py-2.5 rounded transition-all duration-300"
               >
                 Get free valuation
               </button>
@@ -144,81 +148,173 @@ const Landing = () => {
       {/* ===== NEWLY LAUNCHED PROJECTS ===== */}
       <NewlyLaunched />
 
-      {/* ===== ACTIVE PROJECTS (70/30 magazine) ===== */}
+      {/* ===== ACTIVE PROJECTS ===== */}
       <ActiveProjects />
 
       {/* ===== FEATURED PROPERTIES ===== */}
       {featured.length > 0 && (
-        <section className="py-16 md:py-20 bg-[#fafaf7]">
-          <div className="max-w-7xl mx-auto px-6 lg:px-8">
-            <div className="flex items-end justify-between gap-4 flex-wrap mb-10">
-              <div>
-                <div className="eyebrow mb-2">Featured Listings</div>
-                <h2 className="section-title">Hand-picked properties.</h2>
-              </div>
-              <Link to="/properties" className="text-sm text-[#0D7A6B] hover:underline flex items-center gap-1">
-                View all <ArrowRight size={14} />
-              </Link>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+        <section className="py-20 md:py-24 bg-vs-bg">
+          <div className="max-w-[80rem] mx-auto px-6 lg:px-12">
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-100px" }}
+              variants={stagger}
+              className="flex items-end justify-between gap-4 flex-wrap mb-10"
+            >
+              <motion.div variants={fadeUp}>
+                <div className="eyebrow text-vs-gold mb-2">Featured Listings</div>
+                <h2 className="font-display font-medium text-vs-text-primary text-3xl md:text-4xl tracking-tight">
+                  Hand-picked properties.
+                </h2>
+              </motion.div>
+              <motion.div variants={fadeUp}>
+                <Link to="/properties" className="text-sm text-vs-text-secondary hover:text-vs-gold flex items-center gap-2 transition-colors duration-300 group">
+                  View all <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform duration-300" />
+                </Link>
+              </motion.div>
+            </motion.div>
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-100px" }}
+              variants={stagger}
+              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5"
+            >
               {featured.slice(0, 6).map((p) => (
-                <PropertyCard key={p.id} property={p} />
+                <motion.div key={p.id} variants={fadeUp}>
+                  <PropertyCard property={p} />
+                </motion.div>
               ))}
-            </div>
+            </motion.div>
           </div>
         </section>
       )}
 
       {/* ===== BUYER / SELLER CARDS ===== */}
-      <section className="py-20 md:py-24 bg-white border-y border-[#e6e4dd]" data-testid="role-cta-section">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="text-center max-w-2xl mx-auto mb-12">
-            <div className="eyebrow mb-3">Get Started</div>
-            <h2 className="section-title">Buying or selling? Either way — zero brokerage for buyers.</h2>
-          </div>
-          <div className="grid md:grid-cols-2 gap-5 md:gap-6">
-            <RoleCard role="buyer" title="Are you a Buyer?" copy="Browse verified properties, contact sellers directly through our team. No brokerage, ever." points={["Verified listings only", "Direct team contact", "AI-powered smart search"]} />
-            <RoleCard role="seller" title="Are you a Seller?" copy="List your property for free. Our team verifies and publishes it within 48 hours." points={["Free listing", "AI-assisted form filling", "Internal verification before going live"]} variant="navy" />
-          </div>
+      <section className="py-24 md:py-28 bg-vs-surface border-y border-vs-border" data-testid="role-cta-section">
+        <div className="max-w-[80rem] mx-auto px-6 lg:px-12">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+            variants={fadeUp}
+            className="text-center max-w-2xl mx-auto mb-14"
+          >
+            <div className="eyebrow text-vs-gold mb-4">Get Started</div>
+            <h2 className="font-display font-medium text-vs-text-primary text-3xl md:text-4xl tracking-tight">
+              Buying or selling? Either way — zero brokerage for buyers.
+            </h2>
+          </motion.div>
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+            variants={stagger}
+            className="grid md:grid-cols-2 gap-6"
+          >
+            <motion.div variants={fadeUp}>
+              <RoleCard
+                role="buyer"
+                title="Are you a Buyer?"
+                copy="Browse verified properties, contact sellers directly through our team. No brokerage, ever."
+                points={["Verified listings only", "Direct team contact", "AI-powered smart search"]}
+              />
+            </motion.div>
+            <motion.div variants={fadeUp}>
+              <RoleCard
+                role="seller"
+                title="Are you a Seller?"
+                copy="List your property for free. Our team verifies and publishes it within 48 hours."
+                points={["Free listing", "AI-assisted form filling", "Internal verification before going live"]}
+                variant="gold"
+              />
+            </motion.div>
+          </motion.div>
         </div>
       </section>
 
       {/* ===== MOTIVE ===== */}
-      <section id="motive" className="py-24 md:py-32 bg-[#0F2340] text-white relative overflow-hidden" data-testid="motive-section">
-        <div className="absolute inset-0 opacity-[0.04]" style={{ backgroundImage: "radial-gradient(circle at 30% 30%, #fff 1px, transparent 1px)", backgroundSize: "32px 32px" }} />
-        <div className="relative max-w-5xl mx-auto px-6 lg:px-8 text-center">
-          <div className="eyebrow text-[#7ec4b8] mb-5">Our Motive</div>
-          <h2 className="font-display font-bold text-3xl md:text-5xl lg:text-6xl leading-tight tracking-tight">
+      <section id="motive" className="py-28 md:py-36 bg-vs-bg text-vs-text-primary relative overflow-hidden" data-testid="motive-section">
+        <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: "radial-gradient(circle at 30% 30%, #C89B5F 1px, transparent 1px)", backgroundSize: "48px 48px" }} />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[800px] bg-vs-gold/5 rounded-full blur-3xl" />
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          variants={stagger}
+          className="relative max-w-5xl mx-auto px-6 lg:px-12 text-center"
+        >
+          <motion.div variants={fadeUp} className="eyebrow text-vs-gold mb-6">Our Motive</motion.div>
+          <motion.h2 variants={fadeUp} className="font-display font-medium text-vs-text-primary text-3xl md:text-5xl lg:text-6xl leading-tight tracking-tight">
             "Buy property,
             <br />
-            <span className="text-[#7ec4b8]">pay no brokerage."</span>
-          </h2>
-          <p className="mt-8 text-white/80 text-base md:text-lg max-w-2xl mx-auto leading-relaxed">
+            <span className="text-vs-gold">pay no brokerage."</span>
+          </motion.h2>
+          <motion.p variants={fadeUp} className="mt-8 text-vs-text-secondary text-base md:text-lg max-w-2xl mx-auto leading-relaxed">
             We believe buying a home should be simple, transparent, and fair. No middlemen. No hidden fees. Just you, the seller, and us.
-          </p>
-          <div className="mt-14 grid sm:grid-cols-3 gap-6 text-left max-w-4xl mx-auto">
-            <Pillar Icon={Ban} title="Zero Brokerage">Buyers pay nothing. We charge no commission on transactions.</Pillar>
-            <Pillar Icon={ShieldCheck} title="Verified Listings Only">Every property is internally reviewed and approved before going live.</Pillar>
-            <Pillar Icon={HeadphonesIcon} title="Direct Team Contact">Reach a human at VisitSarva — not a call centre, not a broker.</Pillar>
-          </div>
-        </div>
+          </motion.p>
+          <motion.div variants={stagger} className="mt-16 grid sm:grid-cols-3 gap-8 text-left max-w-4xl mx-auto">
+            <motion.div variants={fadeUp}>
+              <Pillar Icon={Ban} title="Zero Brokerage">Buyers pay nothing. We charge no commission on transactions.</Pillar>
+            </motion.div>
+            <motion.div variants={fadeUp}>
+              <Pillar Icon={ShieldCheck} title="Verified Listings Only">Every property is internally reviewed and approved before going live.</Pillar>
+            </motion.div>
+            <motion.div variants={fadeUp}>
+              <Pillar Icon={HeadphonesIcon} title="Direct Team Contact">Reach a human at VisitSarva — not a call centre, not a broker.</Pillar>
+            </motion.div>
+          </motion.div>
+        </motion.div>
       </section>
 
       {/* ===== 8-SECTOR SHOWCASE GRID ===== */}
       <SectorShowcase />
 
       {/* ===== HOW IT WORKS ===== */}
-      <section className="py-20 md:py-24 bg-white border-y border-[#e6e4dd]" data-testid="how-it-works">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="max-w-2xl mx-auto text-center mb-10">
-            <div className="eyebrow mb-3">How It Works</div>
-            <h2 className="section-title">Four steps from sign-up to keys.</h2>
-          </div>
-          <div className="flex justify-center gap-2 mb-12">
-            <button data-testid="how-tab-buyer" onClick={() => setHowTab("buyer")} className={`chip ${howTab === "buyer" ? "chip-active" : ""}`}>For Buyers</button>
-            <button data-testid="how-tab-seller" onClick={() => setHowTab("seller")} className={`chip ${howTab === "seller" ? "chip-active" : ""}`}>For Sellers</button>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-5">
+      <section className="py-24 md:py-28 bg-vs-surface border-y border-vs-border" data-testid="how-it-works">
+        <div className="max-w-[80rem] mx-auto px-6 lg:px-12">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+            variants={stagger}
+            className="max-w-2xl mx-auto text-center mb-12"
+          >
+            <motion.div variants={fadeUp} className="eyebrow text-vs-gold mb-4">How It Works</motion.div>
+            <motion.h2 variants={fadeUp} className="font-display font-medium text-vs-text-primary text-3xl md:text-4xl tracking-tight">
+              Four steps from sign-up to keys.
+            </motion.h2>
+          </motion.div>
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+            variants={fadeUp}
+            className="flex justify-center gap-3 mb-14"
+          >
+            <button
+              data-testid="how-tab-buyer"
+              onClick={() => setHowTab("buyer")}
+              className={`chip ${howTab === "buyer" ? "chip-active" : ""}`}
+            >
+              For Buyers
+            </button>
+            <button
+              data-testid="how-tab-seller"
+              onClick={() => setHowTab("seller")}
+              className={`chip ${howTab === "seller" ? "chip-active" : ""}`}
+            >
+              For Sellers
+            </button>
+          </motion.div>
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+            variants={stagger}
+            className="grid grid-cols-1 md:grid-cols-4 gap-6"
+          >
             {(howTab === "buyer"
               ? [
                   ["Sign Up", "Create a free buyer account in 30 seconds."],
@@ -233,89 +329,132 @@ const Landing = () => {
                   ["Property Goes Live", "Verified listings appear to buyers across India."],
                 ]
             ).map(([title, body], i) => (
-              <div key={title} className="relative">
-                <div className="w-10 h-10 rounded-full bg-[#0D7A6B] text-white flex items-center justify-center font-display font-semibold">
+              <motion.div key={title} variants={fadeUp} className="relative">
+                <div className="w-12 h-12 rounded-full bg-vs-gold text-vs-bg flex items-center justify-center font-display font-semibold text-lg">
                   {i + 1}
                 </div>
-                <h3 className="mt-4 font-display font-semibold text-[#0F2340]">{title}</h3>
-                <p className="mt-2 text-sm text-[#5b6371] leading-relaxed">{body}</p>
-              </div>
+                <h3 className="mt-5 font-display font-medium text-vs-text-primary text-lg">{title}</h3>
+                <p className="mt-2 text-sm text-vs-text-muted leading-relaxed">{body}</p>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
         </div>
       </section>
 
-      {/* ===== ALL-IN-ONE DOCUMENTS (redesigned with icons + descriptions) ===== */}
-      <section id="services" className="py-20 md:py-24" data-testid="services-section">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="max-w-2xl mb-12">
-            <div className="eyebrow mb-3">Property Services</div>
-            <h2 className="section-title">All-in-One Documents.</h2>
-            <p className="mt-4 text-[#5b6371]">
+      {/* ===== ALL-IN-ONE DOCUMENTS ===== */}
+      <section id="services" className="py-24 md:py-28 bg-vs-bg" data-testid="services-section">
+        <div className="max-w-[80rem] mx-auto px-6 lg:px-12">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+            variants={stagger}
+            className="max-w-2xl mb-14"
+          >
+            <motion.div variants={fadeUp} className="eyebrow text-vs-gold mb-4">Property Services</motion.div>
+            <motion.h2 variants={fadeUp} className="font-display font-medium text-vs-text-primary text-3xl md:text-4xl tracking-tight">
+              All-in-One Documents.
+            </motion.h2>
+            <motion.p variants={fadeUp} className="mt-4 text-vs-text-secondary">
               Khata, valuation, conversions, approvals — handled end-to-end by our specialist team.
-            </p>
-          </div>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            </motion.p>
+          </motion.div>
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+            variants={stagger}
+            className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5"
+          >
             {DOCUMENT_SERVICES.map((s) => (
-              <div key={s.v} className="card p-6 flex flex-col hover:border-[#0D7A6B] transition-colors" data-testid={`service-card-${s.v}`}>
-                <div className="w-11 h-11 rounded-lg bg-[#0D7A6B]/10 text-[#0D7A6B] flex items-center justify-center">
-                  <s.Icon size={20} strokeWidth={1.5} />
+              <motion.div
+                key={s.v}
+                variants={fadeUp}
+                className="card p-6 flex flex-col"
+                data-testid={`service-card-${s.v}`}
+              >
+                <div className="w-12 h-12 rounded-lg bg-vs-gold/10 text-vs-gold flex items-center justify-center">
+                  <s.Icon size={22} strokeWidth={1.5} />
                 </div>
-                <h3 className="mt-4 font-display font-semibold text-[#0F2340] text-lg">{s.l}</h3>
-                <p className="mt-2 text-sm text-[#5b6371] flex-1 leading-relaxed">{s.body}</p>
-                <Link to="/services" className="mt-5 text-sm text-[#0D7A6B] hover:underline flex items-center gap-1">
-                  Request Service <ArrowRight size={13} />
+                <h3 className="mt-5 font-display font-medium text-vs-text-primary text-lg">{s.l}</h3>
+                <p className="mt-2 text-sm text-vs-text-muted flex-1 leading-relaxed">{s.body}</p>
+                <Link to="/services" className="mt-6 text-sm text-vs-gold hover:text-vs-primary-hover flex items-center gap-2 transition-colors duration-300 group">
+                  Request Service <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform duration-300" />
                 </Link>
-              </div>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
         </div>
       </section>
 
       {/* ===== STATS ===== */}
-      <section className="py-16 bg-[#0F2340] text-white" data-testid="stats-section">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8 grid grid-cols-2 md:grid-cols-4 gap-6">
-          {[
-            [1240, "Properties Listed"],
-            [18, "Cities Covered"],
-            [320, "Verified Sellers"],
-            [980, "Happy Buyers"],
-          ].map(([n, label]) => (
-            <div key={label} className="text-center md:text-left">
-              <div className="font-display text-4xl md:text-5xl font-bold text-[#7ec4b8]">
-                {n.toLocaleString("en-IN")}+
-              </div>
-              <div className="mt-2 text-xs uppercase tracking-[0.18em] text-white/70">{label}</div>
-            </div>
-          ))}
+      <section className="py-20 bg-vs-surface border-y border-vs-border" data-testid="stats-section">
+        <div className="max-w-[80rem] mx-auto px-6 lg:px-12">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+            variants={stagger}
+            className="grid grid-cols-2 md:grid-cols-4 gap-8"
+          >
+            {[
+              [1240, "Properties Listed"],
+              [18, "Cities Covered"],
+              [320, "Verified Sellers"],
+              [980, "Happy Buyers"],
+            ].map(([n, label]) => (
+              <motion.div key={label} variants={fadeUp} className="text-center md:text-left">
+                <div className="font-display text-4xl md:text-5xl font-medium text-vs-gold">
+                  {n.toLocaleString("en-IN")}+
+                </div>
+                <div className="mt-2 text-xs uppercase tracking-[0.18em] text-vs-text-muted">{label}</div>
+              </motion.div>
+            ))}
+          </motion.div>
         </div>
       </section>
 
       {/* ===== TESTIMONIALS ===== */}
-      <section className="py-20 md:py-24">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="max-w-2xl mb-12">
-            <div className="eyebrow mb-3">Customer Stories</div>
-            <h2 className="section-title">From the people who trusted us.</h2>
-          </div>
-          <div className="grid md:grid-cols-3 gap-5">
+      <section className="py-24 md:py-28 bg-vs-bg">
+        <div className="max-w-[80rem] mx-auto px-6 lg:px-12">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+            variants={stagger}
+            className="max-w-2xl mb-14"
+          >
+            <motion.div variants={fadeUp} className="eyebrow text-vs-gold mb-4">Customer Stories</motion.div>
+            <motion.h2 variants={fadeUp} className="font-display font-medium text-vs-text-primary text-3xl md:text-4xl tracking-tight">
+              From the people who trusted us.
+            </motion.h2>
+          </motion.div>
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+            variants={stagger}
+            className="grid md:grid-cols-3 gap-6"
+          >
             {[
               { name: "Arjun Mehra", role: "Buyer, Bangalore", text: "Found my 3 BHK in Whitefield in two weeks — and paid zero brokerage. The team handled everything." },
               { name: "Kavya Iyer", role: "Seller, Hyderabad", text: "The AI listing form did half my work. Property was live in 3 days, sold in 6 weeks." },
               { name: "Rohit Bhandari", role: "Buyer, Pune", text: "What I loved most: a real person from VisitSarva calling me back, not a broker chasing commission." },
             ].map((t) => (
-              <div key={t.name} className="card p-6">
-                <div className="flex gap-0.5 text-[#0D7A6B]">
-                  {Array.from({ length: 5 }).map((_, i) => <span key={i}>★</span>)}
+              <motion.div key={t.name} variants={fadeUp} className="card p-6">
+                <div className="flex gap-1 text-vs-gold">
+                  {Array.from({ length: 5 }).map((_, i) => (
+                    <Star key={i} size={14} fill="currentColor" />
+                  ))}
                 </div>
-                <p className="mt-4 text-[#1a1f2e] leading-relaxed">"{t.text}"</p>
-                <div className="mt-5 pt-4 border-t border-[#e6e4dd]">
-                  <div className="font-display font-semibold text-[#0F2340]">{t.name}</div>
-                  <div className="text-xs text-[#5b6371]">{t.role}</div>
+                <p className="mt-5 text-vs-text-primary leading-relaxed">"{t.text}"</p>
+                <div className="mt-6 pt-5 border-t border-vs-border">
+                  <div className="font-display font-medium text-vs-text-primary">{t.name}</div>
+                  <div className="text-xs text-vs-text-muted mt-1">{t.role}</div>
                 </div>
-              </div>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
         </div>
       </section>
 
@@ -324,25 +463,44 @@ const Landing = () => {
   );
 };
 
-const RoleCard = ({ role, title, copy, points, variant = "teal" }) => {
-  const isNavy = variant === "navy";
+const RoleCard = ({ role, title, copy, points, variant = "default" }) => {
+  const isGold = variant === "gold";
   return (
-    <div data-testid={`role-card-${role}`} className={`relative p-8 md:p-10 rounded-xl border ${isNavy ? "bg-[#0F2340] text-white border-[#0F2340]" : "bg-white border-[#e6e4dd]"}`}>
-      <h3 className={`font-display text-2xl md:text-3xl font-bold ${isNavy ? "text-white" : "text-[#0F2340]"}`}>{title}</h3>
-      <p className={`mt-3 text-sm md:text-base leading-relaxed ${isNavy ? "text-white/80" : "text-[#5b6371]"}`}>{copy}</p>
-      <ul className="mt-5 space-y-2 text-sm">
+    <div
+      data-testid={`role-card-${role}`}
+      className={`relative p-8 md:p-10 rounded-xl border transition-all duration-300 ${
+        isGold
+          ? "bg-vs-gold/10 border-vs-gold/30 hover:border-vs-gold"
+          : "bg-vs-bg border-vs-border hover:border-vs-gold/50"
+      }`}
+    >
+      <h3 className={`font-display text-2xl md:text-3xl font-medium ${isGold ? "text-vs-gold" : "text-vs-text-primary"}`}>
+        {title}
+      </h3>
+      <p className={`mt-3 text-sm md:text-base leading-relaxed ${isGold ? "text-vs-text-secondary" : "text-vs-text-muted"}`}>
+        {copy}
+      </p>
+      <ul className="mt-6 space-y-3 text-sm">
         {points.map((p) => (
-          <li key={p} className="flex items-center gap-2.5">
-            <CheckCircle2 size={15} className={isNavy ? "text-[#7ec4b8]" : "text-[#0D7A6B]"} />
+          <li key={p} className="flex items-center gap-3 text-vs-text-secondary">
+            <CheckCircle2 size={16} className="text-vs-gold shrink-0" />
             {p}
           </li>
         ))}
       </ul>
-      <div className="mt-7 flex flex-wrap gap-3">
-        <Link to={`/register?role=${role}`} data-testid={`role-${role}-signup`} className={isNavy ? "btn-primary bg-[#7ec4b8] !text-[#0F2340] hover:bg-[#9ed5cb]" : "btn-primary"}>
+      <div className="mt-8 flex flex-wrap gap-3">
+        <Link
+          to={`/register?role=${role}`}
+          data-testid={`role-${role}-signup`}
+          className={isGold ? "btn-primary" : "btn-primary"}
+        >
           Sign Up as {role === "buyer" ? "Buyer" : "Seller"}
         </Link>
-        <Link to="/login" data-testid={`role-${role}-login`} className={isNavy ? "btn-outline !bg-transparent !text-white !border-white/40 hover:!border-white" : "btn-outline"}>
+        <Link
+          to="/login"
+          data-testid={`role-${role}-login`}
+          className="btn-secondary"
+        >
           Login
         </Link>
       </div>
@@ -351,10 +509,10 @@ const RoleCard = ({ role, title, copy, points, variant = "teal" }) => {
 };
 
 const Pillar = ({ Icon, title, children }) => (
-  <div>
-    <Icon size={28} className="text-[#7ec4b8]" strokeWidth={1.5} />
-    <h4 className="mt-4 font-display text-xl font-semibold">{title}</h4>
-    <p className="mt-2 text-sm text-white/75 leading-relaxed">{children}</p>
+  <div className="p-6 rounded-lg bg-vs-surface/50 border border-vs-border">
+    <Icon size={28} className="text-vs-gold" strokeWidth={1.5} />
+    <h4 className="mt-5 font-display text-xl font-medium text-vs-text-primary">{title}</h4>
+    <p className="mt-2 text-sm text-vs-text-muted leading-relaxed">{children}</p>
   </div>
 );
 

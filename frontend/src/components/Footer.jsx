@@ -1,38 +1,38 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import Logo from "@/components/Logo";
-import { Instagram, Linkedin, Facebook, Twitter } from "lucide-react";
+import { Drama as Instagram, Link as Linkedin, Notebook as Facebook, Battery as Twitter, Mail, Phone, MapPin } from "lucide-react";
 
 const Footer = () => (
-  <footer data-testid="footer" className="bg-[#0F2340] text-white">
-    <div className="max-w-7xl mx-auto px-6 lg:px-8 py-16">
-      <div className="grid md:grid-cols-12 gap-10">
+  <footer data-testid="footer" className="bg-vs-surface border-t border-vs-border">
+    <div className="max-w-[80rem] mx-auto px-6 lg:px-12 py-16">
+      <div className="grid md:grid-cols-12 gap-10 lg:gap-12">
         <div className="md:col-span-5">
-          <div className="flex items-center gap-2.5">
-            <Logo size={32} color="#fff" />
+          <div className="flex items-center gap-3">
+            <Logo size={36} color="#C89B5F" />
             <div>
-              <div className="font-display font-bold text-xl">VisitSarva</div>
-              <div className="text-[10px] tracking-[0.18em] uppercase text-[#7ec4b8]">
+              <div className="font-display font-medium text-xl text-vs-text-primary">VisitSarva</div>
+              <div className="text-[10px] tracking-[0.18em] uppercase text-vs-gold mt-0.5">
                 Zero Brokerage Property Platform
               </div>
             </div>
           </div>
-          <p className="mt-5 text-sm text-white/70 leading-relaxed max-w-sm">
+          <p className="mt-6 text-sm text-vs-text-secondary leading-relaxed max-w-sm">
             VisitSarva connects buyers directly with verified sellers across
             India — no brokers, no hidden fees, no middlemen.
           </p>
-          <p className="mt-6 font-display text-xl text-[#7ec4b8]">
-            Buy property, pay no brokerage.
+          <p className="mt-6 font-display text-2xl text-vs-gold">
+            "Buy property, pay no brokerage."
           </p>
           <div className="mt-6 flex items-center gap-3">
             {[Instagram, Linkedin, Facebook, Twitter].map((Icon, i) => (
               <a
                 key={i}
                 href="#"
-                className="w-9 h-9 border border-white/20 hover:border-[#7ec4b8] hover:text-[#7ec4b8] flex items-center justify-center rounded-md transition-colors"
+                className="w-10 h-10 border border-vs-border hover:border-vs-gold text-vs-text-muted hover:text-vs-gold flex items-center justify-center rounded-lg transition-all duration-300"
                 aria-label="social"
               >
-                <Icon size={15} />
+                <Icon size={16} />
               </a>
             ))}
           </div>
@@ -59,16 +59,18 @@ const Footer = () => (
         <FooterCol
           title="Company"
           links={[
-            { to: "#", label: "About" },
+            { to: "#", label: "About Us" },
             { to: "#", label: "Contact" },
-            { to: "#", label: "Privacy" },
-            { to: "#", label: "Terms" },
+            { to: "#", label: "Privacy Policy" },
+            { to: "#", label: "Terms of Service" },
           ]}
         />
       </div>
-      <div className="mt-12 pt-6 border-t border-white/10 flex flex-col md:flex-row items-start md:items-center justify-between gap-3 text-xs text-white/60">
+      <div className="mt-14 pt-8 border-t border-vs-border flex flex-col md:flex-row items-start md:items-center justify-between gap-4 text-xs text-vs-text-muted">
         <div>© {new Date().getFullYear()} VisitSarva. All rights reserved.</div>
-        <div className="tracking-wider">India · Zero Brokerage Platform</div>
+        <div className="flex items-center gap-6">
+          <span className="tracking-wider">India · Zero Brokerage Platform</span>
+        </div>
       </div>
     </div>
   </footer>
@@ -76,13 +78,16 @@ const Footer = () => (
 
 const FooterCol = ({ title, links }) => (
   <div className="md:col-span-2">
-    <div className="text-[11px] uppercase tracking-[0.2em] text-[#7ec4b8] mb-4">
+    <div className="text-[10px] uppercase tracking-[0.2em] text-vs-gold mb-5 font-medium">
       {title}
     </div>
-    <ul className="space-y-2.5">
+    <ul className="space-y-3">
       {links.map((l, i) => (
         <li key={i}>
-          <Link to={l.to} className="text-sm text-white/75 hover:text-white transition-colors">
+          <Link
+            to={l.to}
+            className="text-sm text-vs-text-secondary hover:text-vs-gold transition-colors duration-300"
+          >
             {l.label}
           </Link>
         </li>

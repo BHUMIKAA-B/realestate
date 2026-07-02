@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Bell, Loader2 } from "lucide-react";
+import { Bell, Loader as Loader2 } from "lucide-react";
 import { Link } from "react-router-dom";
 import api from "@/api/client";
 
@@ -46,14 +46,14 @@ const NotificationsDropdown = () => {
       <button
         onClick={() => setOpen((s) => !s)}
         data-testid="notif-toggle"
-        className="relative w-9 h-9 border border-[#e6e4dd] hover:border-[#0D7A6B] rounded-md flex items-center justify-center text-[#5b6371] hover:text-[#0D7A6B] transition-colors"
+        className="relative w-9 h-9 border border-vs-border hover:border-vs-gold rounded-lg flex items-center justify-center text-vs-text-muted hover:text-vs-gold transition-all duration-300"
         aria-label="Notifications"
       >
-        <Bell size={15} />
+        <Bell size={16} />
         {unread > 0 && (
           <span
             data-testid="notif-badge"
-            className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-[#0D7A6B] text-white text-[10px] flex items-center justify-center"
+            className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-vs-gold text-vs-bg text-[10px] font-medium flex items-center justify-center"
           >
             {unread > 9 ? "9+" : unread}
           </span>
@@ -62,12 +62,12 @@ const NotificationsDropdown = () => {
       {open && (
         <div
           data-testid="notif-panel"
-          className="absolute right-0 mt-2 w-80 bg-white border border-[#e6e4dd] rounded-lg shadow-xl z-50 overflow-hidden"
+          className="absolute right-0 mt-2 w-80 bg-vs-surface border border-vs-border rounded-xl shadow-luxury z-50 overflow-hidden"
         >
-          <div className="flex items-center justify-between px-4 py-3 border-b border-[#e6e4dd]">
-            <div className="font-display font-semibold text-[#0F2340]">Notifications</div>
+          <div className="flex items-center justify-between px-4 py-3.5 border-b border-vs-border">
+            <div className="font-display font-medium text-vs-text-primary">Notifications</div>
             {unread > 0 && (
-              <button onClick={markAll} data-testid="notif-mark-all" className="text-xs text-[#0D7A6B] hover:underline">
+              <button onClick={markAll} data-testid="notif-mark-all" className="text-xs text-vs-gold hover:text-vs-primary-hover transition-colors">
                 Mark all read
               </button>
             )}
@@ -75,10 +75,10 @@ const NotificationsDropdown = () => {
           <div className="max-h-80 overflow-y-auto">
             {loading ? (
               <div className="py-8 flex justify-center">
-                <Loader2 size={16} className="animate-spin text-[#0D7A6B]" />
+                <Loader2 size={16} className="animate-spin text-vs-gold" />
               </div>
             ) : items.length === 0 ? (
-              <div className="py-8 text-center text-sm text-[#5b6371]">
+              <div className="py-8 text-center text-sm text-vs-text-muted">
                 You're all caught up.
               </div>
             ) : (
@@ -91,16 +91,16 @@ const NotificationsDropdown = () => {
                     setOpen(false);
                   }}
                   data-testid={`notif-item-${n.id}`}
-                  className={`block px-4 py-3 border-b border-[#e6e4dd] hover:bg-[#fafaf7] ${
-                    !n.is_read ? "bg-[#0D7A6B]/5" : ""
+                  className={`block px-4 py-3.5 border-b border-vs-border hover:bg-vs-bg transition-colors duration-200 ${
+                    !n.is_read ? "bg-vs-gold/5" : ""
                   }`}
                 >
-                  <div className="flex items-start gap-2">
-                    {!n.is_read && <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-[#0D7A6B] shrink-0" />}
+                  <div className="flex items-start gap-2.5">
+                    {!n.is_read && <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-vs-gold shrink-0" />}
                     <div className="flex-1">
-                      <div className="text-sm font-medium text-[#0F2340]">{n.title}</div>
-                      <div className="text-xs text-[#5b6371] mt-0.5">{n.body}</div>
-                      <div className="text-[10px] text-[#5b6371] mt-1">
+                      <div className="text-sm font-medium text-vs-text-primary">{n.title}</div>
+                      <div className="text-xs text-vs-text-muted mt-0.5">{n.body}</div>
+                      <div className="text-[10px] text-vs-text-muted mt-1.5">
                         {new Date(n.created_at).toLocaleString("en-IN")}
                       </div>
                     </div>

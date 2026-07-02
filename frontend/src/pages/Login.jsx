@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import toast from "react-hot-toast";
-import { Eye, EyeOff, Loader2, ArrowRight } from "lucide-react";
+import { Eye, EyeOff, Loader as Loader2, ArrowRight } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import api from "@/api/client";
@@ -40,29 +40,31 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#fafaf7] flex flex-col">
+    <div className="min-h-screen bg-vs-bg flex flex-col">
       <Navbar />
       <div className="flex-1 flex items-center justify-center px-6 py-16">
         <div className="w-full max-w-md">
           <div className="card p-8 md:p-10">
-            <div className="text-center mb-6">
-              <h1 className="font-display text-2xl font-bold text-[#0F2340]">
+            <div className="text-center mb-8">
+              <h1 className="font-display font-medium text-vs-text-primary text-2xl">
                 Welcome back
               </h1>
-              <p className="mt-1 text-sm text-[#5b6371]">
+              <p className="mt-2 text-sm text-vs-text-muted">
                 Login to continue with VisitSarva
               </p>
             </div>
 
-            <div className="flex p-1 bg-[#fafaf7] rounded-md border border-[#e6e4dd] mb-6">
+            <div className="flex p-1 bg-vs-surface rounded-lg border border-vs-border mb-8">
               {["buyer", "seller"].map((r) => (
                 <button
                   key={r}
                   type="button"
                   onClick={() => setRole(r)}
                   data-testid={`login-role-${r}`}
-                  className={`flex-1 py-2 text-sm rounded transition-colors ${
-                    role === r ? "bg-white text-[#0D7A6B] shadow-sm font-medium" : "text-[#5b6371]"
+                  className={`flex-1 py-2.5 text-sm rounded-md transition-all duration-300 ${
+                    role === r
+                      ? "bg-vs-gold text-vs-bg font-medium"
+                      : "text-vs-text-muted hover:text-vs-text-secondary"
                   }`}
                 >
                   I'm a {r === "buyer" ? "Buyer" : "Seller"}
@@ -70,9 +72,9 @@ const Login = () => {
               ))}
             </div>
 
-            <form onSubmit={onSubmit} className="space-y-4" data-testid="login-form">
+            <form onSubmit={onSubmit} className="space-y-5" data-testid="login-form">
               <div>
-                <label className="label" htmlFor="email">Email</label>
+                <label className="text-xs text-vs-text-muted uppercase tracking-wider mb-2 block" htmlFor="email">Email</label>
                 <input
                   id="email"
                   type="email"
@@ -85,7 +87,7 @@ const Login = () => {
                 />
               </div>
               <div>
-                <label className="label" htmlFor="pw">Password</label>
+                <label className="text-xs text-vs-text-muted uppercase tracking-wider mb-2 block" htmlFor="pw">Password</label>
                 <div className="relative">
                   <input
                     id="pw"
@@ -101,7 +103,7 @@ const Login = () => {
                   <button
                     type="button"
                     onClick={() => setShow((s) => !s)}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-[#5b6371]"
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-vs-text-muted hover:text-vs-gold transition-colors"
                     aria-label="Toggle password visibility"
                   >
                     {show ? <EyeOff size={16} /> : <Eye size={16} />}
@@ -119,15 +121,15 @@ const Login = () => {
               </button>
             </form>
 
-            <div className="mt-6 text-center text-sm text-[#5b6371]">
+            <div className="mt-8 text-center text-sm text-vs-text-muted">
               Don't have an account?{" "}
-              <Link to="/register" className="text-[#0D7A6B] font-medium hover:underline">
+              <Link to="/register" className="text-vs-gold font-medium hover:text-vs-primary-hover transition-colors">
                 Sign up
               </Link>
             </div>
           </div>
 
-          <p className="mt-4 text-center text-xs text-[#5b6371]">
+          <p className="mt-6 text-center text-xs text-vs-text-muted leading-relaxed">
             Demo accounts (for testing): admin@visitsarva.in · demo.seller@visitsarva.in · demo.buyer@visitsarva.in <br />
             Password: VisitSarva@2025 / Demo@2025
           </p>
