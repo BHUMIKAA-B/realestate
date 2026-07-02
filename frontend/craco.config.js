@@ -66,7 +66,7 @@ webpackConfig.devServer = (devServerConfig) => {
   // which loads before any craco/visual-edits middleware and correctly
   // forwards all HTTP methods (GET, POST, PUT, DELETE).
 
-  devServerConfig.port = 3000;
+  devServerConfig.port = 5000;
 
   // Allow all hosts (required for Replit's proxied preview)
   devServerConfig.allowedHosts = "all";
