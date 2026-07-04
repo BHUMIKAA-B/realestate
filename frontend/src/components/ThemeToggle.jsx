@@ -1,32 +1,42 @@
-import React, { useEffect, useState } from 'react';
-import { useTheme } from 'next-themes';
+import React, { useEffect, useState } from "react";
+import { useTheme } from "next-themes";
+import { Sun, Moon } from "lucide-react";
 
-// ThemeToggle component – toggles between light and dark mode using next-themes
-// Uses a simple button with an icon; you can replace icons with lucide-react if desired.
-const ThemeToggle = () => {
-  const { theme, setTheme, systemTheme } = useTheme();
+const ThemeToggle = ({ className = "" }) => {
+  const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
-  // Prevent hydration mismatch – wait until client side mount
   useEffect(() => {
     setMounted(true);
   }, []);
 
-  if (!mounted) return null;
+  if (!mounted) {
+    return <div className={`w-9 h-9 rounded-xl ${className}`} aria-hidden="true" />;
+  }
 
-  const current = theme === 'system' ? systemTheme : theme;
-
-  const toggle = () => {
-    setTheme(current === 'dark' ? 'light' : 'dark');
-  };
+  const isDark = theme === "dark";
+  const toggle = () => setTheme(isDark ? "light" : "dark");
 
   return (
     <button
+      type="button"
       onClick={toggle}
-      className="flex items-center gap-1 text-sm text-[#171717] hover:text-[#78AFCF] transition-colors"
       data-testid="theme-toggle"
+      aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
+      className={`relative w-9 h-9 flex items-center justify-center rounded-xl border border-vs-border text-vs-text-secondary hover:text-vs-primary hover:border-vs-primary hover:shadow-premium-sm transition-all duration-300 hover:-translate-y-0.5 ${className}`}
     >
-      {current === 'dark' ? '🌙 Dark' : '☀️ Light'}
+      <Sun
+        size={16}
+        className={`absolute transition-all duration-300 ${
+          isDark ? "opacity-0 -rotate-90 scale-50" : "opacity-100 rotate-0 scale-100"
+        }`}
+      />
+      <Moon
+        size={16}
+        className={`absolute transition-all duration-300 ${
+          isDark ? "opacity-100 rotate-0 scale-100" : "opacity-0 rotate-90 scale-50"
+        }`}
+      />
     </button>
   );
 };

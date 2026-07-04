@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { Menu, X, LogOut, LayoutDashboard, Bookmark, Inbox, ChevronDown, MessageCircle } from "lucide-react";
 import Logo from "@/components/Logo";
 import NotificationsDropdown from "@/components/NotificationsDropdown";
+import ThemeToggle from "@/components/ThemeToggle";
 import { useAuthStore } from "@/store/authStore";
 import { PROPERTY_CATEGORIES } from "@/utils/format";
 
@@ -59,8 +60,8 @@ const Navbar = () => {
       data-testid="navbar"
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
         scrolled
-          ? "bg-[#FFFFFF]/95 backdrop-blur-2xl border-b border-[#E5E7EB]"
-          : "bg-[#FFFFFF]/70 backdrop-blur-md"
+          ? "bg-vs-bg/95 backdrop-blur-2xl border-b border-vs-border shadow-premium-sm"
+          : "bg-vs-bg/70 backdrop-blur-md"
       }`}
     >
       <div className="max-w-[80rem] mx-auto px-6 lg:px-12 h-20 flex items-center justify-between gap-4">
@@ -68,10 +69,10 @@ const Navbar = () => {
         <Link to="/" className="flex items-center gap-3 shrink-0 group" data-testid="navbar-logo">
           <Logo size={36} color="#C89B5F" />
           <div className="leading-tight">
-            <span className="font-display font-medium text-xl tracking-tight text-[#171717] group-hover:text-[#78AFCF] transition-colors duration-300">
+            <span className="font-display font-medium text-xl tracking-tight text-vs-text-primary group-hover:text-[#78AFCF] transition-colors duration-300">
               VisitSarva
             </span>
-            <div className="text-[10px] tracking-[0.2em] uppercase text-[#6B7280] font-medium mt-0.5">
+            <div className="text-[10px] tracking-[0.2em] uppercase text-vs-text-secondary font-medium mt-0.5">
               Zero Brokerage
             </div>
           </div>
@@ -83,7 +84,7 @@ const Navbar = () => {
             <button
               data-testid="nav-sectors-btn"
               onClick={() => setSectorsOpen((s) => !s)}
-              className="flex items-center gap-1.5 text-sm font-medium text-[#6B7280] hover:text-[#78AFCF] transition-colors duration-300"
+              className="flex items-center gap-1.5 text-sm font-medium text-vs-text-secondary hover:text-[#78AFCF] transition-colors duration-300"
             >
               Sectors
               <ChevronDown
@@ -94,7 +95,7 @@ const Navbar = () => {
             {sectorsOpen && (
               <div
                 data-testid="nav-sectors-panel"
-                className="absolute left-1/2 -translate-x-1/2 mt-4 w-[480px] bg-[#F4F6F8] border border-[#E5E7EB] rounded shadow-luxury overflow-hidden"
+                className="absolute left-1/2 -translate-x-1/2 mt-4 w-[480px] bg-vs-surface border border-vs-border rounded-xl shadow-premium-lg overflow-hidden animate-fade-in-up"
               >
                 <div className="p-1 grid grid-cols-2">
                   {SECTOR_LINKS.map((s, i) => (
@@ -103,7 +104,7 @@ const Navbar = () => {
                       to={s.to}
                       data-testid={`nav-sector-${s.label.toLowerCase().replace(/\s+/g, "-").replace(/&/g, "and")}`}
                       onClick={() => setSectorsOpen(false)}
-                      className="px-4 py-3 text-sm text-[#6B7280] hover:text-[#171717] hover:bg-[#FFFFFF] transition-all duration-200 flex items-center justify-between group"
+                      className="px-4 py-3 text-sm text-vs-text-secondary hover:text-vs-text-primary hover:bg-vs-bg transition-all duration-200 flex items-center justify-between group"
                     >
                       <span>{s.label}</span>
                       <span className="text-[#78AFCF] opacity-0 group-hover:opacity-100 transition-opacity">→</span>
@@ -126,10 +127,11 @@ const Navbar = () => {
         <div className="hidden lg:flex items-center gap-4 shrink-0">
           {!isAuthed ? (
             <>
+              <ThemeToggle />
               <Link
                 to="/login"
                 data-testid="nav-login"
-                className="text-sm font-medium text-[#6B7280] hover:text-[#78AFCF] transition-colors duration-300"
+                className="text-sm font-medium text-vs-text-secondary hover:text-[#78AFCF] transition-colors duration-300"
               >
                 Login
               </Link>
@@ -143,34 +145,35 @@ const Navbar = () => {
             </>
           ) : (
             <>
+              <ThemeToggle />
               <NotificationsDropdown />
               <div className="relative" ref={userRef}>
                 <button
                   onClick={() => setMenu((s) => !s)}
                   data-testid="user-menu-toggle"
-                  className="flex items-center gap-3 px-3 py-2 border border-[#E5E7EB] hover:border-[#78AFCF] rounded transition-all duration-300 group"
+                  className="flex items-center gap-3 px-3 py-2 border border-vs-border hover:border-[#78AFCF] hover:shadow-premium-sm rounded-xl transition-all duration-300 group"
                 >
                   <div className="w-8 h-8 rounded-full bg-[#78AFCF] text-[#FFFFFF] text-xs font-semibold flex items-center justify-center">
                     {user.name?.[0]?.toUpperCase() || "U"}
                   </div>
-                  <span className="text-sm text-[#171717] group-hover:text-[#78AFCF] transition-colors">
+                  <span className="text-sm text-vs-text-primary group-hover:text-[#78AFCF] transition-colors">
                     {user.name?.split(" ")[0]}
                   </span>
                   <ChevronDown
                     size={14}
-                    className={`text-[#6B7280] transition-transform duration-200 ${menu ? "rotate-180" : ""}`}
+                    className={`text-vs-text-secondary transition-transform duration-200 ${menu ? "rotate-180" : ""}`}
                   />
                 </button>
                 {menu && (
                   <div
                     data-testid="user-menu"
-                    className="absolute right-0 mt-2 w-60 bg-[#F4F6F8] border border-[#E5E7EB] rounded shadow-luxury overflow-hidden"
+                    className="absolute right-0 mt-2 w-60 bg-vs-surface border border-vs-border rounded-xl shadow-premium-lg overflow-hidden animate-fade-in-up"
                   >
                     <Link
                       to={dashboardPath}
                       onClick={() => setMenu(false)}
                       data-testid="menu-dashboard"
-                      className="flex items-center gap-3 px-4 py-3 text-sm text-[#6B7280] hover:text-[#171717] hover:bg-[#FFFFFF] transition-all duration-200"
+                      className="flex items-center gap-3 px-4 py-3 text-sm text-vs-text-secondary hover:text-vs-text-primary hover:bg-vs-bg transition-all duration-200"
                     >
                       <LayoutDashboard size={16} className="text-[#78AFCF]" />
                       Dashboard
@@ -180,26 +183,26 @@ const Navbar = () => {
                         <Link
                           to="/saved"
                           onClick={() => setMenu(false)}
-                          className="flex items-center gap-3 px-4 py-3 text-sm text-[#6B7280] hover:text-[#171717] hover:bg-[#FFFFFF] transition-all duration-200"
+                          className="flex items-center gap-3 px-4 py-3 text-sm text-vs-text-secondary hover:text-vs-text-primary hover:bg-vs-bg transition-all duration-200"
                         >
                           <Bookmark size={16} className="text-[#78AFCF]" /> Saved
                         </Link>
                         <Link
                           to="/enquiries"
                           onClick={() => setMenu(false)}
-                          className="flex items-center gap-3 px-4 py-3 text-sm text-[#6B7280] hover:text-[#171717] hover:bg-[#FFFFFF] transition-all duration-200"
+                          className="flex items-center gap-3 px-4 py-3 text-sm text-vs-text-secondary hover:text-vs-text-primary hover:bg-vs-bg transition-all duration-200"
                         >
                           <Inbox size={16} className="text-[#78AFCF]" /> My Enquiries
                         </Link>
                       </>
                     )}
-                    <div className="px-4 py-2.5 text-[10px] uppercase tracking-[0.15em] text-[#9CA3AF] border-t border-[#E5E7EB] bg-[#FFFFFF]">
+                    <div className="px-4 py-2.5 text-[10px] uppercase tracking-[0.15em] text-vs-text-muted border-t border-vs-border bg-vs-bg">
                       {user.role} · {user.email}
                     </div>
                     <button
                       onClick={handleLogout}
                       data-testid="menu-logout"
-                      className="w-full text-left flex items-center gap-3 px-4 py-3 text-sm text-[#DC2626] hover:bg-[#FFFFFF] border-t border-[#E5E7EB] transition-all duration-200"
+                      className="w-full text-left flex items-center gap-3 px-4 py-3 text-sm text-[#DC2626] hover:bg-vs-bg border-t border-vs-border transition-all duration-200"
                     >
                       <LogOut size={16} /> Sign out
                     </button>
@@ -212,7 +215,7 @@ const Navbar = () => {
 
         {/* Mobile toggle */}
         <button
-          className="lg:hidden p-2 text-[#171717] hover:text-[#78AFCF] transition-colors"
+          className="lg:hidden p-2 text-vs-text-primary hover:text-[#78AFCF] transition-colors"
           onClick={() => setOpen((s) => !s)}
           data-testid="nav-mobile-toggle"
           aria-label="Toggle menu"
@@ -227,9 +230,9 @@ const Navbar = () => {
           open ? "max-h-[80vh] opacity-100" : "max-h-0 opacity-0"
         }`}
       >
-        <div className="bg-[#FFFFFF] border-t border-[#E5E7EB]">
+        <div className="bg-vs-bg border-t border-vs-border">
           <div className="px-6 py-6 space-y-1">
-            <div className="text-[10px] uppercase tracking-[0.2em] text-[#9CA3AF] mb-3">
+            <div className="text-[10px] uppercase tracking-[0.2em] text-vs-text-muted mb-3">
               Sectors
             </div>
             {SECTOR_LINKS.map((s) => (
@@ -237,12 +240,12 @@ const Navbar = () => {
                 key={s.label}
                 to={s.to}
                 onClick={() => setOpen(false)}
-                className="block py-2.5 text-sm text-[#6B7280] hover:text-[#78AFCF] transition-colors"
+                className="block py-2.5 text-sm text-vs-text-secondary hover:text-[#78AFCF] transition-colors"
               >
                 {s.label}
               </Link>
             ))}
-            <div className="border-t border-[#E5E7EB] my-4" />
+            <div className="border-t border-vs-border my-4" />
             <NavLink to="/properties" onClick={() => setOpen(false)}>Browse all</NavLink>
             <NavLink to="/construction" onClick={() => setOpen(false)}>Construction</NavLink>
             <NavLink to="/services" onClick={() => setOpen(false)}>Documents</NavLink>
@@ -250,7 +253,12 @@ const Navbar = () => {
               <MessageCircle size={16} className="text-[#78AFCF]" />
               <span>AI Assistant</span>
             </NavLink>
-            <div className="border-t border-[#E5E7EB] my-4" />
+            <div className="border-t border-vs-border my-4" />
+            <div className="flex items-center justify-between py-1">
+              <span className="text-sm font-medium text-vs-text-secondary">Appearance</span>
+              <ThemeToggle />
+            </div>
+            <div className="border-t border-vs-border my-4" />
             {!isAuthed ? (
               <div className="space-y-3 pt-2">
                 <Link to="/login" onClick={() => setOpen(false)} className="btn-secondary justify-center w-full">
@@ -286,7 +294,7 @@ const NavLink = ({ to, children, onClick }) => (
   <Link
     to={to}
     onClick={onClick}
-    className="flex items-center gap-2 text-sm font-medium text-[#6B7280] hover:text-[#78AFCF] transition-colors duration-300"
+    className="flex items-center gap-2 text-sm font-medium text-vs-text-secondary hover:text-[#78AFCF] transition-colors duration-300"
   >
     {children}
   </Link>

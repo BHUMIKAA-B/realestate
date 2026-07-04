@@ -29,7 +29,7 @@ const Footer = () => (
               <a
                 key={i}
                 href="#"
-                className="w-10 h-10 border border-vs-border hover:border-vs-gold text-vs-text-muted hover:text-vs-gold flex items-center justify-center rounded-lg transition-all duration-300"
+                className="w-10 h-10 border border-vs-border hover:border-vs-gold hover:shadow-premium-sm text-vs-text-muted hover:text-vs-gold flex items-center justify-center rounded-xl transition-all duration-300 hover:-translate-y-0.5"
                 aria-label="social"
               >
                 <Icon size={16} />

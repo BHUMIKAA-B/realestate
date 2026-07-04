@@ -84,14 +84,14 @@ const PropertiesList = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#FFFFFF]">
+    <div className="min-h-screen bg-vs-bg">
       <Navbar />
-      <section className="bg-white border-b border-[#E5E7EB]">
+      <section className="bg-vs-bg border-b border-vs-border">
         <div className="max-w-7xl mx-auto px-6 lg:px-8 py-8">
-          <h1 className="font-display text-2xl md:text-3xl font-bold text-[#171717]">
+          <h1 className="font-display text-2xl md:text-3xl font-bold text-vs-text-primary">
             Browse Properties
           </h1>
-          <p className="mt-1 text-sm text-[#6B7280]">
+          <p className="mt-1 text-sm text-vs-text-secondary">
             Every listing on VisitSarva is internally verified. Zero brokerage for buyers.
           </p>
           <div className="mt-5 max-w-3xl">
@@ -171,7 +171,7 @@ const PropertiesList = () => {
               <div className="text-[11px] uppercase tracking-wider text-[#78AFCF] mb-1">
                 AI understood your query as
               </div>
-              <div className="font-display text-[#171717]">{smartSummary}</div>
+              <div className="font-display text-vs-text-primary">{smartSummary}</div>
               <button onClick={clearAll} className="mt-2 text-xs text-[#78AFCF] hover:underline">
                 Browse all listings instead
               </button>
@@ -179,8 +179,8 @@ const PropertiesList = () => {
           )}
 
           <div className="flex flex-wrap items-center justify-between gap-3 mb-5">
-            <div className="text-sm text-[#6B7280]" data-testid="results-count">
-              <span className="font-semibold text-[#171717]">{loading ? "…" : total || items.length}</span>{" "}
+            <div className="text-sm text-vs-text-secondary" data-testid="results-count">
+              <span className="font-semibold text-vs-text-primary">{loading ? "…" : total || items.length}</span>{" "}
               {(total || items.length) === 1 ? "result" : "results"}
             </div>
             <div className="flex items-center gap-2">
@@ -211,7 +211,7 @@ const PropertiesList = () => {
               <Loader2 className="animate-spin text-[#78AFCF]" />
             </div>
           ) : items.length === 0 ? (
-            <div className="py-16 text-center text-[#6B7280]">
+            <div className="py-16 text-center text-vs-text-secondary">
               No listings match these filters. Try clearing some filters.
             </div>
           ) : (

@@ -13,7 +13,7 @@ const CAPABILITIES = [
 
 export default function ChatPage() {
   return (
-    <div className="min-h-screen flex flex-col bg-[#FFFFFF]">
+    <div className="min-h-screen flex flex-col bg-vs-bg">
       <Navbar />
 
       <main className="flex-1 max-w-5xl mx-auto w-full px-4 py-10 flex flex-col gap-8">
@@ -22,8 +22,8 @@ export default function ChatPage() {
           <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-[#78AFCF]/10 mb-4">
             <Bot size={28} className="text-[#78AFCF]" />
           </div>
-          <h1 className="text-3xl font-display font-bold text-[#171717]">VisitSarva Assistant</h1>
-          <p className="text-[#6B7280] mt-2 max-w-xl mx-auto">
+          <h1 className="text-3xl font-display font-bold text-vs-text-primary">VisitSarva Assistant</h1>
+          <p className="text-vs-text-secondary mt-2 max-w-xl mx-auto">
             Your AI-powered guide for property search, verified listings, and all things VisitSarva.
           </p>
         </div>
@@ -35,15 +35,15 @@ export default function ChatPage() {
               <div className="w-9 h-9 rounded-xl bg-[#78AFCF]/10 flex items-center justify-center">
                 <Icon size={18} className="text-[#78AFCF]" />
               </div>
-              <div className="font-semibold text-sm text-[#171717]">{title}</div>
-              <div className="text-xs text-[#6B7280] leading-relaxed">{desc}</div>
+              <div className="font-semibold text-sm text-vs-text-primary">{title}</div>
+              <div className="text-xs text-vs-text-secondary leading-relaxed">{desc}</div>
             </div>
           ))}
         </div>
 
         {/* Chat window — full page */}
         <div
-          className="flex-1 flex flex-col rounded-2xl border border-[#E5E7EB] overflow-hidden shadow-md bg-[#FFFFFF]"
+          className="flex-1 flex flex-col rounded-2xl border border-vs-border overflow-hidden shadow-md bg-vs-bg"
           style={{ minHeight: 520 }}
         >
           {/* Chat header */}

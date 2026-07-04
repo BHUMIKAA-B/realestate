@@ -23,14 +23,14 @@ const AdminDashboard = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#FFFFFF]">
+    <div className="min-h-screen bg-vs-bg">
       <Navbar />
-      <section className="bg-white border-b border-[#E5E7EB]">
+      <section className="bg-vs-bg border-b border-vs-border">
         <div className="max-w-7xl mx-auto px-6 lg:px-8 py-8">
-          <h1 className="font-display text-2xl md:text-3xl font-bold text-[#171717]" data-testid="admin-title">
+          <h1 className="font-display text-2xl md:text-3xl font-bold text-vs-text-primary" data-testid="admin-title">
             Admin Console
           </h1>
-          <p className="text-sm text-[#6B7280] mt-1">
+          <p className="text-sm text-vs-text-secondary mt-1">
             Verify listings, manage users, monitor activity.
           </p>
         </div>
@@ -46,7 +46,7 @@ const AdminDashboard = () => {
           </div>
         ) : null}
 
-        <div className="flex flex-wrap gap-2 border-b border-[#E5E7EB] mb-6">
+        <div className="flex flex-wrap gap-2 border-b border-vs-border mb-6">
           {TABS.map((t) => (
             <button
               key={t.id}
@@ -55,7 +55,7 @@ const AdminDashboard = () => {
               className={`px-4 py-2.5 text-sm border-b-2 transition-colors ${
                 tab === t.id
                   ? "border-[#78AFCF] text-[#78AFCF] font-medium"
-                  : "border-transparent text-[#6B7280] hover:text-[#171717]"
+                  : "border-transparent text-vs-text-secondary hover:text-vs-text-primary"
               }`}
             >
               {t.label}
@@ -84,10 +84,10 @@ const StatCard = ({ Icon, label, value, accent }) => (
     }
   >
     <Icon size={18} className={accent ? "text-white" : "text-[#78AFCF]"} />
-    <div className={`text-xs uppercase tracking-wider mt-2 ${accent ? "text-white/85" : "text-[#6B7280]"}`}>
+    <div className={`text-xs uppercase tracking-wider mt-2 ${accent ? "text-white/85" : "text-vs-text-secondary"}`}>
       {label}
     </div>
-    <div className={`font-display text-3xl font-bold mt-1 ${accent ? "text-white" : "text-[#171717]"}`}>
+    <div className={`font-display text-3xl font-bold mt-1 ${accent ? "text-white" : "text-vs-text-primary"}`}>
       {value}
     </div>
   </div>
@@ -126,22 +126,22 @@ const PendingQueue = () => {
 
   if (loading) return <Spin />;
   if (!items.length)
-    return <div className="text-[#6B7280]">Nothing in the queue — you're all caught up.</div>;
+    return <div className="text-vs-text-secondary">Nothing in the queue — you're all caught up.</div>;
 
   return (
     <div className="space-y-3">
       {items.map((p) => (
         <div key={p.id} className="card p-5 flex flex-col md:flex-row md:items-center gap-4" data-testid={`pending-${p.id}`}>
-          <div className="w-full md:w-28 h-24 md:h-20 rounded overflow-hidden bg-[#FFFFFF]">
+          <div className="w-full md:w-28 h-24 md:h-20 rounded overflow-hidden bg-vs-bg">
             {p.images?.[0]?.url && <img src={p.images[0].url} alt="" className="w-full h-full object-cover" />}
           </div>
           <div className="flex-1">
             <div className="flex items-center gap-2 flex-wrap">
               <span className="chip">{CATEGORY_LABEL[p.category]}</span>
-              <span className="text-xs text-[#6B7280]">By {p.listed_by_name}</span>
+              <span className="text-xs text-vs-text-secondary">By {p.listed_by_name}</span>
             </div>
-            <div className="font-display font-semibold text-[#171717] mt-1.5">{p.title}</div>
-            <div className="text-xs text-[#6B7280] mt-1">
+            <div className="font-display font-semibold text-vs-text-primary mt-1.5">{p.title}</div>
+            <div className="text-xs text-vs-text-secondary mt-1">
               {INR(p.price)} · {formatArea(p.area)} · {p.location?.city || "—"}
             </div>
           </div>
@@ -169,15 +169,15 @@ const AllProperties = () => {
   return (
     <div className="overflow-x-auto card">
       <table className="w-full text-sm">
-        <thead className="bg-[#FFFFFF] text-[#6B7280]">
+        <thead className="bg-vs-bg text-vs-text-secondary">
           <tr>
             <Th>Title</Th><Th>Category</Th><Th>City</Th><Th>Price</Th><Th>Status</Th><Th>Created</Th>
           </tr>
         </thead>
         <tbody>
           {items.map((p) => (
-            <tr key={p.id} className="border-t border-[#E5E7EB]">
-              <Td><div className="font-display font-medium text-[#171717]">{p.title}</div><div className="text-xs text-[#6B7280]">{p.listed_by_name}</div></Td>
+            <tr key={p.id} className="border-t border-vs-border">
+              <Td><div className="font-display font-medium text-vs-text-primary">{p.title}</div><div className="text-xs text-vs-text-secondary">{p.listed_by_name}</div></Td>
               <Td>{CATEGORY_LABEL[p.category]}</Td>
               <Td>{p.location?.city || "—"}</Td>
               <Td>{INR(p.price)}</Td>
@@ -212,12 +212,12 @@ const UsersList = () => {
   return (
     <div className="overflow-x-auto card">
       <table className="w-full text-sm">
-        <thead className="bg-[#FFFFFF] text-[#6B7280]">
+        <thead className="bg-vs-bg text-vs-text-secondary">
           <tr><Th>Name</Th><Th>Email</Th><Th>Role</Th><Th>Status</Th><Th>Joined</Th><Th></Th></tr>
         </thead>
         <tbody>
           {items.map((u) => (
-            <tr key={u.id} className="border-t border-[#E5E7EB]">
+            <tr key={u.id} className="border-t border-vs-border">
               <Td>{u.name}</Td>
               <Td>{u.email}</Td>
               <Td><span className="chip">{u.role}</span></Td>
@@ -249,15 +249,15 @@ const EnquiriesList = () => {
     <div className="space-y-3">
       {items.map((e) => (
         <div key={e.id} className="card p-5">
-          <div className="font-display font-semibold text-[#171717]">{e.property_title}</div>
-          <div className="text-sm text-[#6B7280] mt-1">{e.name} · {e.email} · {e.phone}</div>
-          <div className="text-sm text-[#171717] mt-2">{e.message || "(no message)"}</div>
-          <div className="text-xs text-[#6B7280] mt-1">
+          <div className="font-display font-semibold text-vs-text-primary">{e.property_title}</div>
+          <div className="text-sm text-vs-text-secondary mt-1">{e.name} · {e.email} · {e.phone}</div>
+          <div className="text-sm text-vs-text-primary mt-2">{e.message || "(no message)"}</div>
+          <div className="text-xs text-vs-text-secondary mt-1">
             Prefers {e.contact_preference} · {new Date(e.created_at).toLocaleString("en-IN")}
           </div>
         </div>
       ))}
-      {items.length === 0 && <div className="text-[#6B7280]">No enquiries yet.</div>}
+      {items.length === 0 && <div className="text-vs-text-secondary">No enquiries yet.</div>}
     </div>
   );
 };
@@ -274,17 +274,17 @@ const ServicesList = () => {
       {items.map((s) => (
         <div key={s.id} className="card p-5">
           <div className="flex items-center justify-between flex-wrap gap-2">
-            <div className="font-display font-semibold text-[#171717] flex items-center gap-2">
+            <div className="font-display font-semibold text-vs-text-primary flex items-center gap-2">
               <FileCheck size={16} className="text-[#78AFCF]" />
               {s.request_type.replace(/_/g, " ")}
             </div>
             <span className="chip">{s.status}</span>
           </div>
-          <div className="text-sm text-[#6B7280] mt-2">{s.name} · {s.email} · {s.phone}</div>
-          <div className="text-sm mt-2 text-[#171717]">{s.description || "—"}</div>
+          <div className="text-sm text-vs-text-secondary mt-2">{s.name} · {s.email} · {s.phone}</div>
+          <div className="text-sm mt-2 text-vs-text-primary">{s.description || "—"}</div>
         </div>
       ))}
-      {items.length === 0 && <div className="text-[#6B7280]">No service requests yet.</div>}
+      {items.length === 0 && <div className="text-vs-text-secondary">No service requests yet.</div>}
     </div>
   );
 };

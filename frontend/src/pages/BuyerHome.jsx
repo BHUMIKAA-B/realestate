@@ -21,14 +21,14 @@ const BuyerHome = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#FFFFFF]">
+    <div className="min-h-screen bg-vs-bg">
       <Navbar />
-      <section className="py-10 md:py-14 bg-white border-b border-[#E5E7EB]">
+      <section className="py-10 md:py-14 bg-vs-bg border-b border-vs-border">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <h1 className="font-display text-2xl md:text-3xl font-bold text-[#171717]" data-testid="buyer-greeting">
+          <h1 className="font-display text-2xl md:text-3xl font-bold text-vs-text-primary" data-testid="buyer-greeting">
             Welcome back, {user?.name?.split(" ")[0] || "there"}.
           </h1>
-          <p className="mt-1 text-[#6B7280]">
+          <p className="mt-1 text-vs-text-secondary">
             Tell us what you're looking for and our team will help.
           </p>
           <div className="mt-5 max-w-3xl">
@@ -59,7 +59,7 @@ const BuyerHome = () => {
           <div className="flex items-end justify-between mb-6">
             <div>
               <div className="eyebrow mb-1">Featured</div>
-              <h2 className="font-display text-2xl font-semibold text-[#171717]">
+              <h2 className="font-display text-2xl font-semibold text-vs-text-primary">
                 Recommended for you
               </h2>
             </div>
@@ -72,7 +72,7 @@ const BuyerHome = () => {
               <Loader2 className="animate-spin text-[#78AFCF]" />
             </div>
           ) : items.length === 0 ? (
-            <div className="text-[#6B7280]">No properties yet.</div>
+            <div className="text-vs-text-secondary">No properties yet.</div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
               {items.map((p) => (

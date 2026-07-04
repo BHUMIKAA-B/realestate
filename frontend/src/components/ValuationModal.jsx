@@ -33,20 +33,20 @@ const ValuationModal = ({ open, onClose }) => {
       data-testid="valuation-modal"
     >
       <div
-        className="bg-white rounded-xl max-w-md w-full p-6 md:p-8 relative shadow-2xl"
+        className="bg-vs-bg rounded-xl max-w-md w-full p-6 md:p-8 relative shadow-2xl"
         onClick={(e) => e.stopPropagation()}
       >
-        <button onClick={onClose} className="absolute top-4 right-4 text-[#6B7280] hover:text-[#171717]" aria-label="Close" data-testid="valuation-close">
+        <button onClick={onClose} className="absolute top-4 right-4 text-vs-text-secondary hover:text-vs-text-primary" aria-label="Close" data-testid="valuation-close">
           <X size={18} />
         </button>
         <div className="flex items-center gap-2 text-[#78AFCF]">
           <Sparkles size={16} />
           <span className="text-[11px] uppercase tracking-[0.2em] font-medium">Free · No obligation</span>
         </div>
-        <h2 className="font-display text-2xl md:text-3xl font-bold text-[#171717] mt-2">
+        <h2 className="font-display text-2xl md:text-3xl font-bold text-vs-text-primary mt-2">
           Get a free property valuation
         </h2>
-        <p className="mt-2 text-sm text-[#6B7280]">
+        <p className="mt-2 text-sm text-vs-text-secondary">
           Our specialist will call you with a market-honest estimate within one business day.
         </p>
         <form onSubmit={submit} className="mt-6 space-y-3" data-testid="valuation-form">
@@ -65,7 +65,7 @@ const ValuationModal = ({ open, onClose }) => {
             Request my valuation
           </button>
         </form>
-        <p className="mt-4 text-[11px] text-[#6B7280] text-center">
+        <p className="mt-4 text-[11px] text-vs-text-secondary text-center">
           We respect your privacy. No spam, no broker calls.
         </p>
       </div>

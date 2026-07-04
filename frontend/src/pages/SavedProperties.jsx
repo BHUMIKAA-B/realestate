@@ -18,10 +18,10 @@ const SavedProperties = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#FFFFFF]">
+    <div className="min-h-screen bg-vs-bg">
       <Navbar />
       <section className="max-w-7xl mx-auto px-6 lg:px-8 py-10">
-        <h1 className="font-display text-3xl font-bold text-[#171717]" data-testid="saved-page-title">
+        <h1 className="font-display text-3xl font-bold text-vs-text-primary" data-testid="saved-page-title">
           Saved Properties
         </h1>
         {loading ? (
@@ -29,7 +29,7 @@ const SavedProperties = () => {
             <Loader2 className="animate-spin text-[#78AFCF]" />
           </div>
         ) : items.length === 0 ? (
-          <div className="mt-8 text-[#6B7280]">
+          <div className="mt-8 text-vs-text-secondary">
             You haven't saved anything yet.{" "}
             <Link to="/properties" className="text-[#78AFCF] hover:underline">
               Browse properties

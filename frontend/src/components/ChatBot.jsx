@@ -19,7 +19,7 @@ function BotMessage({ text, typing }) {
       <div className="flex-shrink-0 w-7 h-7 rounded-full bg-[#78AFCF] flex items-center justify-center">
         <Bot size={14} className="text-white" />
       </div>
-      <div className="max-w-[80%] bg-white border border-[#E5E7EB] rounded-2xl rounded-tl-sm px-3.5 py-2.5 text-sm text-[#171717] leading-relaxed shadow-sm">
+      <div className="max-w-[80%] bg-vs-surface border border-vs-border rounded-2xl rounded-tl-sm px-3.5 py-2.5 text-sm text-vs-text-primary leading-relaxed shadow-sm">
         {typing ? (
           <span className="flex gap-1 items-center py-0.5">
             <span className="w-1.5 h-1.5 rounded-full bg-[#78AFCF]/50 animate-bounce" style={{ animationDelay: "0ms" }} />
@@ -154,7 +154,7 @@ export default function ChatBot({ forceOpen = false, fullPage = false }) {
       {/* Chat window */}
       {open && (
         <div
-          className="w-[360px] max-h-[560px] flex flex-col bg-[#FFFFFF] rounded-2xl shadow-2xl border border-[#E5E7EB] overflow-hidden"
+          className="w-[360px] max-h-[560px] flex flex-col bg-vs-bg rounded-2xl shadow-2xl border border-vs-border overflow-hidden"
           style={{ animation: "slideUp 0.2s ease" }}
           role="dialog"
           aria-label="VisitSarva chatbot"
@@ -262,7 +262,7 @@ function ChatWindow({
       </div>
 
       {/* Input */}
-      <div className="border-t border-[#E5E7EB] px-3 py-3 bg-white flex-shrink-0">
+      <div className="border-t border-vs-border px-3 py-3 bg-vs-bg flex-shrink-0">
         <div className="flex items-end gap-2">
           <textarea
             ref={inputRef}
@@ -271,7 +271,7 @@ function ChatWindow({
             onKeyDown={onKeyDown}
             placeholder="Ask about properties, pricing, documents…"
             rows={1}
-            className="flex-1 resize-none rounded-xl border border-[#E5E7EB] px-3.5 py-2.5 text-sm text-[#171717] placeholder-[#9CA3AF] focus:outline-none focus:ring-2 focus:ring-[#78AFCF]/30 focus:border-[#78AFCF] transition-colors bg-[#FFFFFF]"
+            className="flex-1 resize-none rounded-xl border border-vs-border px-3.5 py-2.5 text-sm text-vs-text-primary placeholder-vs-text-muted focus:outline-none focus:ring-2 focus:ring-[#78AFCF]/30 focus:border-[#78AFCF] transition-colors bg-vs-bg"
             style={{ maxHeight: 96, overflowY: "auto" }}
             disabled={loading}
             aria-label="Chat message input"
@@ -285,7 +285,7 @@ function ChatWindow({
             {loading ? <Loader2 size={16} className="animate-spin" /> : <Send size={16} />}
           </button>
         </div>
-        <p className="text-[10px] text-[#9CA3AF] mt-2 text-center">
+        <p className="text-[10px] text-vs-text-muted mt-2 text-center">
           Powered by VisitSarva AI · Zero brokerage platform
         </p>
       </div>

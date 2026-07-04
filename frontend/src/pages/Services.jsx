@@ -40,15 +40,16 @@ const Services = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#FFFFFF]">
+    <div className="min-h-screen bg-vs-bg">
       <Navbar />
-      <section className="bg-white border-b border-[#E5E7EB]">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8 py-12">
-          <div className="eyebrow mb-2">Property Services</div>
-          <h1 className="font-display text-3xl md:text-4xl font-bold text-[#171717]">
+      <section className="relative bg-gradient-to-b from-vs-gold/[0.06] via-white to-white border-b border-vs-border overflow-hidden">
+        <div className="absolute -top-24 -right-24 w-72 h-72 rounded-full bg-vs-gold/10 blur-3xl" />
+        <div className="relative max-w-7xl mx-auto px-6 lg:px-8 py-16">
+          <div className="eyebrow mb-2 animate-fade-in-up">Property Services</div>
+          <h1 className="font-display text-3xl md:text-4xl font-bold text-vs-text-primary animate-fade-in-up">
             All-in-One Documents.
           </h1>
-          <p className="mt-3 text-[#6B7280] max-w-2xl">
+          <p className="mt-3 text-vs-text-secondary max-w-2xl animate-fade-in-up">
             Khata, valuation, conversions, approvals — handled end-to-end by our specialist team.
           </p>
         </div>
@@ -69,10 +70,10 @@ const Services = () => {
                 data-testid={`service-pick-${s.value}`}
               >
                 <FileCheck size={18} className="text-[#78AFCF]" />
-                <h3 className="mt-3 font-display font-semibold text-[#171717]">
+                <h3 className="mt-3 font-display font-semibold text-vs-text-primary">
                   {s.label}
                 </h3>
-                <p className="mt-1.5 text-xs text-[#6B7280]">
+                <p className="mt-1.5 text-xs text-vs-text-secondary">
                   Specialist team · end-to-end paperwork
                 </p>
               </div>
@@ -81,10 +82,10 @@ const Services = () => {
         </div>
 
         <form onSubmit={submit} className="lg:col-span-5 card p-6 md:p-8 h-fit lg:sticky lg:top-24" data-testid="service-request-form">
-          <h3 className="font-display text-xl font-semibold text-[#171717]">
+          <h3 className="font-display text-xl font-semibold text-vs-text-primary">
             Request a service
           </h3>
-          <p className="mt-1 text-sm text-[#6B7280]">
+          <p className="mt-1 text-sm text-vs-text-secondary">
             We'll review and call you within one business day.
           </p>
           <div className="mt-5 space-y-3">

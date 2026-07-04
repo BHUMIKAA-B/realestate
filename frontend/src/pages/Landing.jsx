@@ -75,8 +75,8 @@ const Landing = () => {
           ) : (
             <img src={hero.image_url} alt="VisitSarva" className="w-full h-full object-cover" />
           )}
-          <div className="absolute inset-0 bg-gradient-to-r from-[#FFFFFF]/95 via-[#FFFFFF]/70 to-[#FFFFFF]/40" />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#FFFFFF] via-transparent to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-r from-vs-bg/95 via-vs-bg/70 to-vs-bg/40" />
+          <div className="absolute inset-0 bg-gradient-to-t from-vs-bg via-transparent to-transparent" />
         </div>
 
         <div className="relative z-10 max-w-[80rem] mx-auto px-6 lg:px-12 py-20 w-full">

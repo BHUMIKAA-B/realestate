@@ -47,15 +47,15 @@ const SellerDashboard = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#FFFFFF]">
+    <div className="min-h-screen bg-vs-bg">
       <Navbar />
-      <section className="bg-white border-b border-[#E5E7EB]">
+      <section className="bg-vs-bg border-b border-vs-border">
         <div className="max-w-7xl mx-auto px-6 lg:px-8 py-8 flex items-end justify-between gap-4 flex-wrap">
           <div>
-            <h1 className="font-display text-2xl md:text-3xl font-bold text-[#171717]" data-testid="seller-dashboard-title">
+            <h1 className="font-display text-2xl md:text-3xl font-bold text-vs-text-primary" data-testid="seller-dashboard-title">
               Hello, {user?.name?.split(" ")[0] || "Seller"}
             </h1>
-            <p className="text-sm text-[#6B7280] mt-1">
+            <p className="text-sm text-vs-text-secondary mt-1">
               Manage your listings, track enquiries, and create new properties.
             </p>
           </div>
@@ -79,7 +79,7 @@ const SellerDashboard = () => {
           </div>
         ) : items.length === 0 ? (
           <div className="card p-10 text-center">
-            <p className="text-[#6B7280]">You have no listings yet.</p>
+            <p className="text-vs-text-secondary">You have no listings yet.</p>
             <Link to="/seller/listings/new" className="btn-primary mt-4">
               <Plus size={15} /> Create your first listing
             </Link>
@@ -91,7 +91,7 @@ const SellerDashboard = () => {
               const Icon = meta.Icon;
               return (
                 <div key={p.id} className="card p-5 flex flex-col md:flex-row md:items-center gap-4" data-testid={`seller-listing-${p.id}`}>
-                  <div className="w-full md:w-28 h-24 md:h-20 rounded overflow-hidden bg-[#FFFFFF]">
+                  <div className="w-full md:w-28 h-24 md:h-20 rounded overflow-hidden bg-vs-bg">
                     {p.images?.[0]?.url && (
                       <img src={p.images[0].url} alt="" className="w-full h-full object-cover" />
                     )}
@@ -103,10 +103,10 @@ const SellerDashboard = () => {
                         {Icon ? <Icon size={11} /> : null} {meta.l || p.status}
                       </span>
                     </div>
-                    <div className="font-display font-semibold text-[#171717] mt-1.5">
+                    <div className="font-display font-semibold text-vs-text-primary mt-1.5">
                       {p.title}
                     </div>
-                    <div className="text-xs text-[#6B7280] mt-1">
+                    <div className="text-xs text-vs-text-secondary mt-1">
                       {INR(p.price)} · {formatArea(p.area)} · {p.location?.city || "—"}
                     </div>
                     {p.status === "rejected" && p.rejection_reason && (
@@ -145,10 +145,10 @@ const Stat = ({ label, value, accent }) => (
         : "card p-4"
     }
   >
-    <div className={`text-xs uppercase tracking-wider ${accent ? "text-white/85" : "text-[#6B7280]"}`}>
+    <div className={`text-xs uppercase tracking-wider ${accent ? "text-white/85" : "text-vs-text-secondary"}`}>
       {label}
     </div>
-    <div className={`font-display text-3xl font-bold mt-1 ${accent ? "text-white" : "text-[#171717]"}`}>
+    <div className={`font-display text-3xl font-bold mt-1 ${accent ? "text-white" : "text-vs-text-primary"}`}>
       {value}
     </div>
   </div>

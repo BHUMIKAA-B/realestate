@@ -49,7 +49,7 @@ const Construction = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#FFFFFF]">
+    <div className="min-h-screen bg-vs-bg">
       <Navbar />
 
       {/* HERO with video */}
@@ -90,15 +90,15 @@ const Construction = () => {
           ].map((p) => (
             <div key={p.title} className="card p-7">
               <p.Icon size={28} className="text-[#78AFCF]" strokeWidth={1.5} />
-              <h3 className="mt-5 font-display font-semibold text-xl text-[#171717]">{p.title}</h3>
-              <p className="mt-2 text-sm text-[#6B7280] leading-relaxed">{p.body}</p>
+              <h3 className="mt-5 font-display font-semibold text-xl text-vs-text-primary">{p.title}</h3>
+              <p className="mt-2 text-sm text-vs-text-secondary leading-relaxed">{p.body}</p>
             </div>
           ))}
         </div>
       </section>
 
       {/* BLOG-STYLE SHOWCASE */}
-      <section className="py-16 md:py-20 bg-white border-y border-[#E5E7EB]">
+      <section className="py-16 md:py-20 bg-vs-bg border-y border-vs-border">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="max-w-2xl mb-10">
             <div className="eyebrow mb-2">Recent Projects</div>
@@ -143,7 +143,7 @@ const Construction = () => {
           <div className="md:col-span-5">
             <div className="eyebrow mb-2">Materials & Standards</div>
             <h2 className="section-title">Specs you won't have to chase.</h2>
-            <p className="mt-4 text-[#6B7280] text-sm md:text-base leading-relaxed">
+            <p className="mt-4 text-vs-text-secondary text-sm md:text-base leading-relaxed">
               Every Sarva build uses traceable, branded materials with written warranties — from the steel
               to the switch plates. Quantity surveying is in-house, so margins stay where they belong.
             </p>
@@ -158,8 +158,8 @@ const Construction = () => {
               ["Paint", "Asian Paints — Royale"],
             ].map(([k, v]) => (
               <div key={k} className="card p-4">
-                <div className="text-[10px] uppercase tracking-wider text-[#6B7280]">{k}</div>
-                <div className="font-display font-semibold text-[#171717] mt-1 text-sm">{v}</div>
+                <div className="text-[10px] uppercase tracking-wider text-vs-text-secondary">{k}</div>
+                <div className="font-display font-semibold text-vs-text-primary mt-1 text-sm">{v}</div>
               </div>
             ))}
           </div>
@@ -194,7 +194,7 @@ const Construction = () => {
             </div>
           </div>
 
-          <form onSubmit={submit} className="md:col-span-7 bg-white rounded-xl p-6 md:p-8 text-[#171717]" data-testid="construction-form">
+          <form onSubmit={submit} className="md:col-span-7 bg-vs-surface rounded-xl p-6 md:p-8 text-vs-text-primary" data-testid="construction-form">
             <div className="grid sm:grid-cols-2 gap-4">
               <Field label="Name *">
                 <input className="input-field" required value={form.name} onChange={set("name")} data-testid="cons-name" />
@@ -242,8 +242,8 @@ const Showcase = ({ className, img, tag, title, body }) => (
     </div>
     <div className="p-5">
       <span className="text-[10px] uppercase tracking-wider text-[#78AFCF] font-semibold">{tag}</span>
-      <h3 className="mt-2 font-display font-semibold text-[#171717] text-lg leading-snug">{title}</h3>
-      <p className="mt-1.5 text-sm text-[#6B7280] leading-relaxed">{body}</p>
+      <h3 className="mt-2 font-display font-semibold text-vs-text-primary text-lg leading-snug">{title}</h3>
+      <p className="mt-1.5 text-sm text-vs-text-secondary leading-relaxed">{body}</p>
     </div>
   </article>
 );

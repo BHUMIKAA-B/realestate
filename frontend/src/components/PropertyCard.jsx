@@ -48,7 +48,7 @@ const PropertyCard = ({ property, onSave, isSaved }) => {
             <button
               data-testid={`property-save-${property.id}`}
               onClick={() => onSave(property.id)}
-              className={`p-2 rounded-lg transition-all duration-300 ${
+              className={`p-2 rounded-xl transition-all duration-300 hover:scale-110 active:scale-95 ${
                 isSaved
                   ? "text-vs-gold bg-vs-gold/10"
                   : "text-vs-text-muted hover:text-vs-gold hover:bg-vs-gold/10"
