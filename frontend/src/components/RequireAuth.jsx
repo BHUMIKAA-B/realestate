@@ -11,7 +11,7 @@ export const RequireAuth = ({ roles, children }) => {
   if (!isHydrated) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <Loader2 className="animate-spin text-[#0D7A6B]" size={28} />
+        <Loader2 className="animate-spin text-[#78AFCF]" size={28} />
       </div>
     );
   }

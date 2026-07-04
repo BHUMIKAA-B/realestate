@@ -193,11 +193,11 @@ const NewListing = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#fafaf7]">
+    <div className="min-h-screen bg-[#FFFFFF]">
       <Navbar />
 
       <div className="max-w-7xl mx-auto px-6 lg:px-8 py-6">
-        <button onClick={() => navigate("/seller/dashboard")} className="inline-flex items-center gap-2 text-sm text-[#5b6371] hover:text-[#0D7A6B]">
+        <button onClick={() => navigate("/seller/dashboard")} className="inline-flex items-center gap-2 text-sm text-[#6B7280] hover:text-[#78AFCF]">
           <ArrowLeft size={14} /> Back to dashboard
         </button>
       </div>
@@ -206,8 +206,8 @@ const NewListing = () => {
         {/* ===== AI CHATBOT ===== */}
         <aside className="lg:col-span-5 order-2 lg:order-1">
           <div className="card flex flex-col h-[78vh] sticky top-24">
-            <div className="px-5 py-4 border-b border-[#e6e4dd] flex items-center gap-2 bg-[#0F2340] text-white rounded-t-lg">
-              <Sparkles size={18} className="text-[#7ec4b8]" />
+            <div className="px-5 py-4 border-b border-[#E5E7EB] flex items-center gap-2 bg-[#171717] text-white rounded-t-lg">
+              <Sparkles size={18} className="text-[#A9CBE3]" />
               <div>
                 <div className="font-display font-semibold text-sm">AI Listing Assistant</div>
                 <div className="text-[10px] tracking-wider uppercase text-white/70">Auto-fills the wizard as you chat</div>
@@ -217,18 +217,18 @@ const NewListing = () => {
               {history.map((m, i) => (
                 <div
                   key={i}
-                  className={`max-w-[85%] text-sm ${m.role === "user" ? "ml-auto bg-[#0D7A6B] text-white" : "bg-[#fafaf7] text-[#1a1f2e] border border-[#e6e4dd]"} px-3.5 py-2.5 rounded-lg leading-relaxed whitespace-pre-line`}
+                  className={`max-w-[85%] text-sm ${m.role === "user" ? "ml-auto bg-[#78AFCF] text-white" : "bg-[#FFFFFF] text-[#171717] border border-[#E5E7EB]"} px-3.5 py-2.5 rounded-lg leading-relaxed whitespace-pre-line`}
                 >
                   {m.content}
                 </div>
               ))}
               {chatLoading && (
-                <div className="text-sm text-[#5b6371] flex items-center gap-2">
+                <div className="text-sm text-[#6B7280] flex items-center gap-2">
                   <Loader2 size={14} className="animate-spin" /> Assistant is thinking…
                 </div>
               )}
             </div>
-            <form onSubmit={sendChat} className="border-t border-[#e6e4dd] p-3 flex items-center gap-2">
+            <form onSubmit={sendChat} className="border-t border-[#E5E7EB] p-3 flex items-center gap-2">
               <input
                 value={chatInput}
                 onChange={(e) => setChatInput(e.target.value)}
@@ -248,7 +248,7 @@ const NewListing = () => {
           {/* Step header / progress */}
           <div className="card p-6">
             <div className="eyebrow mb-2">New Listing · Step {step + 1} of {STEPS.length}</div>
-            <h1 className="font-display text-2xl font-bold text-[#0F2340]">{STEPS[step].title}</h1>
+            <h1 className="font-display text-2xl font-bold text-[#171717]">{STEPS[step].title}</h1>
             <Progress current={step} steps={STEPS} onJump={(i) => i <= step && setStep(i)} />
           </div>
 
@@ -322,16 +322,16 @@ const Progress = ({ current, steps, onJump }) => (
         <span
           className={`w-7 h-7 shrink-0 rounded-full flex items-center justify-center text-[11px] font-semibold transition-colors ${
             i < current
-              ? "bg-[#0D7A6B] text-white"
+              ? "bg-[#78AFCF] text-white"
               : i === current
-              ? "bg-[#0D7A6B] text-white ring-4 ring-[#0D7A6B]/15"
-              : "bg-[#fafaf7] text-[#5b6371] border border-[#e6e4dd]"
+              ? "bg-[#78AFCF] text-white ring-4 ring-[#78AFCF]/15"
+              : "bg-[#FFFFFF] text-[#6B7280] border border-[#E5E7EB]"
           }`}
         >
           {i < current ? <Check size={13} /> : i + 1}
         </span>
         {i < steps.length - 1 && (
-          <span className={`flex-1 h-px ${i < current ? "bg-[#0D7A6B]" : "bg-[#e6e4dd]"}`} />
+          <span className={`flex-1 h-px ${i < current ? "bg-[#78AFCF]" : "bg-[#E5E7EB]"}`} />
         )}
       </button>
     ))}
@@ -350,7 +350,7 @@ const Field = ({ label, children, className = "" }) => (
 
 const CategoryStep = ({ form, setForm }) => (
   <Block>
-    <p className="text-sm text-[#5b6371] mb-3">Which category fits your property best?</p>
+    <p className="text-sm text-[#6B7280] mb-3">Which category fits your property best?</p>
     <div className="grid grid-cols-2 sm:grid-cols-3 gap-3" data-testid="category-picker">
       {PROPERTY_CATEGORIES.map((c) => (
         <button
@@ -360,11 +360,11 @@ const CategoryStep = ({ form, setForm }) => (
           data-testid={`cat-${c.value}`}
           className={`p-4 rounded-lg border text-left transition-all ${
             form.category === c.value
-              ? "border-[#0D7A6B] bg-[#0D7A6B]/5 ring-2 ring-[#0D7A6B]/20"
-              : "border-[#e6e4dd] hover:border-[#0D7A6B]/50"
+              ? "border-[#78AFCF] bg-[#78AFCF]/5 ring-2 ring-[#78AFCF]/20"
+              : "border-[#E5E7EB] hover:border-[#78AFCF]/50"
           }`}
         >
-          <div className="font-display font-semibold text-[#0F2340] text-sm">{c.label}</div>
+          <div className="font-display font-semibold text-[#171717] text-sm">{c.label}</div>
         </button>
       ))}
     </div>
@@ -457,7 +457,7 @@ const AmenitiesStep = ({ form, setField }) => (
     <Field label="Features (comma separated)">
       <input className="input-field" value={form.features_text} onChange={setField("features_text")} placeholder="RERA Approved, Park Facing, Vaastu Compliant" />
     </Field>
-    <p className="text-xs text-[#5b6371] mt-2">
+    <p className="text-xs text-[#6B7280] mt-2">
       Separate each item with a comma. Buyers filter by these tags.
     </p>
   </Block>
@@ -465,10 +465,10 @@ const AmenitiesStep = ({ form, setField }) => (
 
 const ImagesStep = ({ form, imageInputRef, addImageFromFile, removeImage }) => (
   <Block>
-    <p className="text-sm text-[#5b6371]">Add up to 20 photos. JPG/PNG/WebP, max 5MB each.</p>
+    <p className="text-sm text-[#6B7280]">Add up to 20 photos. JPG/PNG/WebP, max 5MB each.</p>
     <div className="grid grid-cols-3 md:grid-cols-4 gap-3">
       {form.images.map((img, i) => (
-        <div key={i} className="relative aspect-[4/3] rounded overflow-hidden border border-[#e6e4dd]">
+        <div key={i} className="relative aspect-[4/3] rounded overflow-hidden border border-[#E5E7EB]">
           <img src={img.url} alt="" className="w-full h-full object-cover" />
           <button
             type="button"
@@ -485,7 +485,7 @@ const ImagesStep = ({ form, imageInputRef, addImageFromFile, removeImage }) => (
           type="button"
           onClick={() => imageInputRef.current?.click()}
           data-testid="add-image-btn"
-          className="aspect-[4/3] border-2 border-dashed border-[#e6e4dd] hover:border-[#0D7A6B] rounded flex flex-col items-center justify-center gap-1 text-[#5b6371] hover:text-[#0D7A6B]"
+          className="aspect-[4/3] border-2 border-dashed border-[#E5E7EB] hover:border-[#78AFCF] rounded flex flex-col items-center justify-center gap-1 text-[#6B7280] hover:text-[#78AFCF]"
         >
           <ImagePlus size={20} />
           <span className="text-xs">Add image</span>
@@ -510,7 +510,7 @@ const ReviewStep = ({ form }) => {
   const cat = PROPERTY_CATEGORIES.find((c) => c.value === form.category);
   return (
     <Block>
-      <p className="text-sm text-[#5b6371]">Review and submit. Our team will publish within 48 hours.</p>
+      <p className="text-sm text-[#6B7280]">Review and submit. Our team will publish within 48 hours.</p>
       <div className="grid sm:grid-cols-2 gap-3">
         <Tile label="Title" v={form.title} />
         <Tile label="Category" v={cat?.label} />
@@ -524,14 +524,14 @@ const ReviewStep = ({ form }) => {
         <Tile label="Images" v={`${form.images.length} added`} />
       </div>
       {form.description && (
-        <div className="mt-3 p-4 bg-[#fafaf7] rounded border border-[#e6e4dd]">
-          <div className="text-[10px] uppercase tracking-wider text-[#5b6371] mb-1">Description</div>
-          <p className="text-sm text-[#1a1f2e] whitespace-pre-line">{form.description}</p>
+        <div className="mt-3 p-4 bg-[#FFFFFF] rounded border border-[#E5E7EB]">
+          <div className="text-[10px] uppercase tracking-wider text-[#6B7280] mb-1">Description</div>
+          <p className="text-sm text-[#171717] whitespace-pre-line">{form.description}</p>
         </div>
       )}
       {form.amenities_text && (
         <div className="mt-2">
-          <div className="text-[10px] uppercase tracking-wider text-[#5b6371] mb-1">Amenities</div>
+          <div className="text-[10px] uppercase tracking-wider text-[#6B7280] mb-1">Amenities</div>
           <div className="flex flex-wrap gap-1.5">
             {form.amenities_text.split(",").map((a) => a.trim()).filter(Boolean).map((a) => (
               <span key={a} className="chip">{a}</span>
@@ -544,9 +544,9 @@ const ReviewStep = ({ form }) => {
 };
 
 const Tile = ({ label, v }) => (
-  <div className="p-3 rounded border border-[#e6e4dd]">
-    <div className="text-[10px] uppercase tracking-wider text-[#5b6371]">{label}</div>
-    <div className="font-display font-semibold text-[#0F2340] text-sm mt-0.5">{v || "—"}</div>
+  <div className="p-3 rounded border border-[#E5E7EB]">
+    <div className="text-[10px] uppercase tracking-wider text-[#6B7280]">{label}</div>
+    <div className="font-display font-semibold text-[#171717] text-sm mt-0.5">{v || "—"}</div>
   </div>
 );
 

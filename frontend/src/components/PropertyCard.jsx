@@ -55,7 +55,7 @@ const PropertyCard = ({ property, onSave, isSaved }) => {
               }`}
               aria-label="Save property"
             >
-              <Bookmark size={18} fill={isSaved ? "#C89B5F" : "none"} />
+              <Bookmark size={18} fill={isSaved ? "#78AFCF" : "none"} />
             </button>
           )}
         </div>

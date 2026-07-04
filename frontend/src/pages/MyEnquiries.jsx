@@ -13,10 +13,10 @@ const STATUS_LABEL = {
 };
 
 const STATUS_COLOR = {
-  new: "bg-[#0D7A6B] text-white",
-  viewed: "bg-[#fafaf7] text-[#0F2340] border border-[#e6e4dd]",
-  responded: "bg-[#0F2340] text-white",
-  closed: "bg-[#fafaf7] text-[#5b6371] border border-[#e6e4dd]",
+  new: "bg-[#78AFCF] text-white",
+  viewed: "bg-[#FFFFFF] text-[#171717] border border-[#E5E7EB]",
+  responded: "bg-[#171717] text-white",
+  closed: "bg-[#FFFFFF] text-[#6B7280] border border-[#E5E7EB]",
 };
 
 const MyEnquiries = () => {
@@ -31,35 +31,35 @@ const MyEnquiries = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#fafaf7]">
+    <div className="min-h-screen bg-[#FFFFFF]">
       <Navbar />
       <section className="max-w-7xl mx-auto px-6 lg:px-8 py-10">
-        <h1 className="font-display text-3xl font-bold text-[#0F2340]">
+        <h1 className="font-display text-3xl font-bold text-[#171717]">
           My Enquiries
         </h1>
         {loading ? (
           <div className="py-12 flex justify-center">
-            <Loader2 className="animate-spin text-[#0D7A6B]" />
+            <Loader2 className="animate-spin text-[#78AFCF]" />
           </div>
         ) : items.length === 0 ? (
-          <div className="mt-8 text-[#5b6371]">No enquiries yet.</div>
+          <div className="mt-8 text-[#6B7280]">No enquiries yet.</div>
         ) : (
           <div className="mt-6 space-y-3">
             {items.map((e) => (
               <Link
                 key={e.id}
                 to={`/properties/${e.property_id}`}
-                className="card p-5 flex items-center justify-between gap-4 hover:border-[#0D7A6B]"
+                className="card p-5 flex items-center justify-between gap-4 hover:border-[#78AFCF]"
                 data-testid={`my-enquiry-${e.id}`}
               >
                 <div>
-                  <div className="font-display font-semibold text-[#0F2340]">
+                  <div className="font-display font-semibold text-[#171717]">
                     {e.property_title || "Property"}
                   </div>
-                  <div className="text-sm text-[#5b6371] mt-1">
+                  <div className="text-sm text-[#6B7280] mt-1">
                     {e.message || `Contact preference: ${e.contact_preference}`}
                   </div>
-                  <div className="text-xs text-[#5b6371] mt-1">
+                  <div className="text-xs text-[#6B7280] mt-1">
                     {new Date(e.created_at).toLocaleString("en-IN")}
                   </div>
                 </div>

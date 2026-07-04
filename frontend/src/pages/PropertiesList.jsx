@@ -84,14 +84,14 @@ const PropertiesList = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#fafaf7]">
+    <div className="min-h-screen bg-[#FFFFFF]">
       <Navbar />
-      <section className="bg-white border-b border-[#e6e4dd]">
+      <section className="bg-white border-b border-[#E5E7EB]">
         <div className="max-w-7xl mx-auto px-6 lg:px-8 py-8">
-          <h1 className="font-display text-2xl md:text-3xl font-bold text-[#0F2340]">
+          <h1 className="font-display text-2xl md:text-3xl font-bold text-[#171717]">
             Browse Properties
           </h1>
-          <p className="mt-1 text-sm text-[#5b6371]">
+          <p className="mt-1 text-sm text-[#6B7280]">
             Every listing on VisitSarva is internally verified. Zero brokerage for buyers.
           </p>
           <div className="mt-5 max-w-3xl">
@@ -167,20 +167,20 @@ const PropertiesList = () => {
         {/* ===== RESULTS ===== */}
         <main className="lg:col-span-9">
           {smartSummary && (
-            <div data-testid="smart-search-banner" className="mb-6 p-4 rounded-lg border border-[#0D7A6B]/30 bg-[#0D7A6B]/5">
-              <div className="text-[11px] uppercase tracking-wider text-[#0D7A6B] mb-1">
+            <div data-testid="smart-search-banner" className="mb-6 p-4 rounded-lg border border-[#78AFCF]/30 bg-[#78AFCF]/5">
+              <div className="text-[11px] uppercase tracking-wider text-[#78AFCF] mb-1">
                 AI understood your query as
               </div>
-              <div className="font-display text-[#0F2340]">{smartSummary}</div>
-              <button onClick={clearAll} className="mt-2 text-xs text-[#0D7A6B] hover:underline">
+              <div className="font-display text-[#171717]">{smartSummary}</div>
+              <button onClick={clearAll} className="mt-2 text-xs text-[#78AFCF] hover:underline">
                 Browse all listings instead
               </button>
             </div>
           )}
 
           <div className="flex flex-wrap items-center justify-between gap-3 mb-5">
-            <div className="text-sm text-[#5b6371]" data-testid="results-count">
-              <span className="font-semibold text-[#0F2340]">{loading ? "…" : total || items.length}</span>{" "}
+            <div className="text-sm text-[#6B7280]" data-testid="results-count">
+              <span className="font-semibold text-[#171717]">{loading ? "…" : total || items.length}</span>{" "}
               {(total || items.length) === 1 ? "result" : "results"}
             </div>
             <div className="flex items-center gap-2">
@@ -208,10 +208,10 @@ const PropertiesList = () => {
 
           {loading ? (
             <div className="py-20 flex justify-center">
-              <Loader2 className="animate-spin text-[#0D7A6B]" />
+              <Loader2 className="animate-spin text-[#78AFCF]" />
             </div>
           ) : items.length === 0 ? (
-            <div className="py-16 text-center text-[#5b6371]">
+            <div className="py-16 text-center text-[#6B7280]">
               No listings match these filters. Try clearing some filters.
             </div>
           ) : (

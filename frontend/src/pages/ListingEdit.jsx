@@ -76,18 +76,18 @@ const ListingEdit = () => {
   if (loading || !form) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <Loader2 className="animate-spin text-[#0D7A6B]" />
+        <Loader2 className="animate-spin text-[#78AFCF]" />
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-[#fafaf7]">
+    <div className="min-h-screen bg-[#FFFFFF]">
       <Navbar />
       <div className="max-w-4xl mx-auto px-6 lg:px-8 py-6">
         <button
           onClick={() => navigate("/seller/dashboard")}
-          className="inline-flex items-center gap-2 text-sm text-[#5b6371] hover:text-[#0D7A6B]"
+          className="inline-flex items-center gap-2 text-sm text-[#6B7280] hover:text-[#78AFCF]"
         >
           <ArrowLeft size={14} /> Back to dashboard
         </button>
@@ -95,8 +95,8 @@ const ListingEdit = () => {
 
       <form onSubmit={submit} className="max-w-4xl mx-auto px-6 lg:px-8 space-y-5 pb-16" data-testid="listing-edit-form">
         <div className="card p-6">
-          <h1 className="font-display text-2xl font-bold text-[#0F2340]">Edit Listing</h1>
-          <p className="mt-1 text-sm text-[#5b6371]">Updates will resend the listing for VisitSarva team verification.</p>
+          <h1 className="font-display text-2xl font-bold text-[#171717]">Edit Listing</h1>
+          <p className="mt-1 text-sm text-[#6B7280]">Updates will resend the listing for VisitSarva team verification.</p>
         </div>
 
         <Block title="Basics">
@@ -189,7 +189,7 @@ const ListingEdit = () => {
 
 const Block = ({ title, children }) => (
   <div className="card p-6">
-    <h3 className="font-display font-semibold text-[#0F2340] mb-4">{title}</h3>
+    <h3 className="font-display font-semibold text-[#171717] mb-4">{title}</h3>
     <div className="space-y-3">{children}</div>
   </div>
 );

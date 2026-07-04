@@ -14,38 +14,38 @@ const SellerEnquiries = () => {
       .finally(() => setLoading(false));
   }, []);
   return (
-    <div className="min-h-screen bg-[#fafaf7]">
+    <div className="min-h-screen bg-[#FFFFFF]">
       <Navbar />
       <section className="max-w-7xl mx-auto px-6 lg:px-8 py-10">
-        <h1 className="font-display text-3xl font-bold text-[#0F2340]">
+        <h1 className="font-display text-3xl font-bold text-[#171717]">
           Enquiries on your listings
         </h1>
         {loading ? (
           <div className="py-12 flex justify-center">
-            <Loader2 className="animate-spin text-[#0D7A6B]" />
+            <Loader2 className="animate-spin text-[#78AFCF]" />
           </div>
         ) : items.length === 0 ? (
-          <div className="mt-8 text-[#5b6371]">No enquiries yet.</div>
+          <div className="mt-8 text-[#6B7280]">No enquiries yet.</div>
         ) : (
           <div className="mt-6 space-y-3">
             {items.map((e) => (
               <div key={e.id} className="card p-5" data-testid={`seller-enquiry-${e.id}`}>
                 <div className="flex items-center justify-between gap-2 flex-wrap">
-                  <div className="font-display font-semibold text-[#0F2340]">
+                  <div className="font-display font-semibold text-[#171717]">
                     {e.property_title}
                   </div>
-                  <span className="text-xs text-[#5b6371]">
+                  <span className="text-xs text-[#6B7280]">
                     {new Date(e.created_at).toLocaleString("en-IN")}
                   </span>
                 </div>
-                <div className="mt-3 text-sm text-[#1a1f2e]">
+                <div className="mt-3 text-sm text-[#171717]">
                   <strong>{e.name}</strong> — {e.message || "(no message)"}
                 </div>
-                <div className="mt-3 flex items-center gap-4 text-sm text-[#5b6371]">
-                  <a href={`mailto:${e.email}`} className="inline-flex items-center gap-1.5 hover:text-[#0D7A6B]">
+                <div className="mt-3 flex items-center gap-4 text-sm text-[#6B7280]">
+                  <a href={`mailto:${e.email}`} className="inline-flex items-center gap-1.5 hover:text-[#78AFCF]">
                     <Mail size={13} /> {e.email}
                   </a>
-                  <a href={`tel:${e.phone}`} className="inline-flex items-center gap-1.5 hover:text-[#0D7A6B]">
+                  <a href={`tel:${e.phone}`} className="inline-flex items-center gap-1.5 hover:text-[#78AFCF]">
                     <Phone size={13} /> {e.phone}
                   </a>
                   <span className="chip">Prefers {e.contact_preference}</span>

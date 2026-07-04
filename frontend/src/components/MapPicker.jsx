@@ -45,8 +45,8 @@ const MapPicker = ({ lat, lng, onChange }) => {
   return (
     <div data-testid="map-picker">
       <div className="flex items-center justify-between mb-2">
-        <div className="text-xs text-[#5b6371] flex items-center gap-1.5">
-          <MapPin size={12} className="text-[#0D7A6B]" />
+        <div className="text-xs text-[#6B7280] flex items-center gap-1.5">
+          <MapPin size={12} className="text-[#78AFCF]" />
           {hasPin ? `Pinned: ${lat.toFixed(5)}, ${lng.toFixed(5)}` : "Click the map to drop a pin"}
         </div>
         <button
@@ -54,13 +54,13 @@ const MapPicker = ({ lat, lng, onChange }) => {
           onClick={useMyLocation}
           disabled={locating}
           data-testid="use-my-location"
-          className="text-xs flex items-center gap-1.5 text-[#0D7A6B] hover:underline"
+          className="text-xs flex items-center gap-1.5 text-[#78AFCF] hover:underline"
         >
           {locating ? <Loader2 size={11} className="animate-spin" /> : <Locate size={11} />}
           Use my location
         </button>
       </div>
-      <div className="h-72 rounded-lg overflow-hidden border border-[#e6e4dd]" data-testid="map-container">
+      <div className="h-72 rounded-lg overflow-hidden border border-[#E5E7EB]" data-testid="map-container">
         <MapContainer
           center={hasPin ? [lat, lng] : fallback}
           zoom={hasPin ? 13 : 11}

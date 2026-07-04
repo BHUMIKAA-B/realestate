@@ -21,14 +21,14 @@ const BuyerHome = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#fafaf7]">
+    <div className="min-h-screen bg-[#FFFFFF]">
       <Navbar />
-      <section className="py-10 md:py-14 bg-white border-b border-[#e6e4dd]">
+      <section className="py-10 md:py-14 bg-white border-b border-[#E5E7EB]">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <h1 className="font-display text-2xl md:text-3xl font-bold text-[#0F2340]" data-testid="buyer-greeting">
+          <h1 className="font-display text-2xl md:text-3xl font-bold text-[#171717]" data-testid="buyer-greeting">
             Welcome back, {user?.name?.split(" ")[0] || "there"}.
           </h1>
-          <p className="mt-1 text-[#5b6371]">
+          <p className="mt-1 text-[#6B7280]">
             Tell us what you're looking for and our team will help.
           </p>
           <div className="mt-5 max-w-3xl">
@@ -59,20 +59,20 @@ const BuyerHome = () => {
           <div className="flex items-end justify-between mb-6">
             <div>
               <div className="eyebrow mb-1">Featured</div>
-              <h2 className="font-display text-2xl font-semibold text-[#0F2340]">
+              <h2 className="font-display text-2xl font-semibold text-[#171717]">
                 Recommended for you
               </h2>
             </div>
-            <Link to="/properties" className="text-sm text-[#0D7A6B] hover:underline flex items-center gap-1">
+            <Link to="/properties" className="text-sm text-[#78AFCF] hover:underline flex items-center gap-1">
               View all <ArrowRight size={13} />
             </Link>
           </div>
           {loading ? (
             <div className="py-12 flex justify-center">
-              <Loader2 className="animate-spin text-[#0D7A6B]" />
+              <Loader2 className="animate-spin text-[#78AFCF]" />
             </div>
           ) : items.length === 0 ? (
-            <div className="text-[#5b6371]">No properties yet.</div>
+            <div className="text-[#6B7280]">No properties yet.</div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
               {items.map((p) => (

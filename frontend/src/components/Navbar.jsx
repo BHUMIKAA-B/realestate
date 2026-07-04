@@ -59,8 +59,8 @@ const Navbar = () => {
       data-testid="navbar"
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
         scrolled
-          ? "bg-[#0A0908]/95 backdrop-blur-2xl border-b border-[#2A2623]"
-          : "bg-transparent"
+          ? "bg-[#FFFFFF]/95 backdrop-blur-2xl border-b border-[#E5E7EB]"
+          : "bg-[#FFFFFF]/70 backdrop-blur-md"
       }`}
     >
       <div className="max-w-[80rem] mx-auto px-6 lg:px-12 h-20 flex items-center justify-between gap-4">
@@ -68,10 +68,10 @@ const Navbar = () => {
         <Link to="/" className="flex items-center gap-3 shrink-0 group" data-testid="navbar-logo">
           <Logo size={36} color="#C89B5F" />
           <div className="leading-tight">
-            <span className="font-display font-medium text-xl tracking-tight text-[#F5F0EA] group-hover:text-[#C89B5F] transition-colors duration-300">
+            <span className="font-display font-medium text-xl tracking-tight text-[#171717] group-hover:text-[#78AFCF] transition-colors duration-300">
               VisitSarva
             </span>
-            <div className="text-[10px] tracking-[0.2em] uppercase text-[#A39B92] font-medium mt-0.5">
+            <div className="text-[10px] tracking-[0.2em] uppercase text-[#6B7280] font-medium mt-0.5">
               Zero Brokerage
             </div>
           </div>
@@ -83,7 +83,7 @@ const Navbar = () => {
             <button
               data-testid="nav-sectors-btn"
               onClick={() => setSectorsOpen((s) => !s)}
-              className="flex items-center gap-1.5 text-sm font-medium text-[#A39B92] hover:text-[#C89B5F] transition-colors duration-300"
+              className="flex items-center gap-1.5 text-sm font-medium text-[#6B7280] hover:text-[#78AFCF] transition-colors duration-300"
             >
               Sectors
               <ChevronDown
@@ -94,7 +94,7 @@ const Navbar = () => {
             {sectorsOpen && (
               <div
                 data-testid="nav-sectors-panel"
-                className="absolute left-1/2 -translate-x-1/2 mt-4 w-[480px] bg-[#1A1816] border border-[#2A2623] rounded shadow-luxury overflow-hidden"
+                className="absolute left-1/2 -translate-x-1/2 mt-4 w-[480px] bg-[#F4F6F8] border border-[#E5E7EB] rounded shadow-luxury overflow-hidden"
               >
                 <div className="p-1 grid grid-cols-2">
                   {SECTOR_LINKS.map((s, i) => (
@@ -103,10 +103,10 @@ const Navbar = () => {
                       to={s.to}
                       data-testid={`nav-sector-${s.label.toLowerCase().replace(/\s+/g, "-").replace(/&/g, "and")}`}
                       onClick={() => setSectorsOpen(false)}
-                      className="px-4 py-3 text-sm text-[#A39B92] hover:text-[#F5F0EA] hover:bg-[#0A0908] transition-all duration-200 flex items-center justify-between group"
+                      className="px-4 py-3 text-sm text-[#6B7280] hover:text-[#171717] hover:bg-[#FFFFFF] transition-all duration-200 flex items-center justify-between group"
                     >
                       <span>{s.label}</span>
-                      <span className="text-[#C89B5F] opacity-0 group-hover:opacity-100 transition-opacity">→</span>
+                      <span className="text-[#78AFCF] opacity-0 group-hover:opacity-100 transition-opacity">→</span>
                     </Link>
                   ))}
                 </div>
@@ -117,7 +117,7 @@ const Navbar = () => {
           <NavLink to="/construction">Construction</NavLink>
           <NavLink to="/services">Documents</NavLink>
           <NavLink to="/chat">
-            <MessageCircle size={16} className="text-[#C89B5F]" />
+            <MessageCircle size={16} className="text-[#78AFCF]" />
             <span>Assistant</span>
           </NavLink>
         </nav>
@@ -129,7 +129,7 @@ const Navbar = () => {
               <Link
                 to="/login"
                 data-testid="nav-login"
-                className="text-sm font-medium text-[#A39B92] hover:text-[#C89B5F] transition-colors duration-300"
+                className="text-sm font-medium text-[#6B7280] hover:text-[#78AFCF] transition-colors duration-300"
               >
                 Login
               </Link>
@@ -148,31 +148,31 @@ const Navbar = () => {
                 <button
                   onClick={() => setMenu((s) => !s)}
                   data-testid="user-menu-toggle"
-                  className="flex items-center gap-3 px-3 py-2 border border-[#2A2623] hover:border-[#C89B5F] rounded transition-all duration-300 group"
+                  className="flex items-center gap-3 px-3 py-2 border border-[#E5E7EB] hover:border-[#78AFCF] rounded transition-all duration-300 group"
                 >
-                  <div className="w-8 h-8 rounded-full bg-[#C89B5F] text-[#0A0908] text-xs font-semibold flex items-center justify-center">
+                  <div className="w-8 h-8 rounded-full bg-[#78AFCF] text-[#FFFFFF] text-xs font-semibold flex items-center justify-center">
                     {user.name?.[0]?.toUpperCase() || "U"}
                   </div>
-                  <span className="text-sm text-[#F5F0EA] group-hover:text-[#C89B5F] transition-colors">
+                  <span className="text-sm text-[#171717] group-hover:text-[#78AFCF] transition-colors">
                     {user.name?.split(" ")[0]}
                   </span>
                   <ChevronDown
                     size={14}
-                    className={`text-[#A39B92] transition-transform duration-200 ${menu ? "rotate-180" : ""}`}
+                    className={`text-[#6B7280] transition-transform duration-200 ${menu ? "rotate-180" : ""}`}
                   />
                 </button>
                 {menu && (
                   <div
                     data-testid="user-menu"
-                    className="absolute right-0 mt-2 w-60 bg-[#1A1816] border border-[#2A2623] rounded shadow-luxury overflow-hidden"
+                    className="absolute right-0 mt-2 w-60 bg-[#F4F6F8] border border-[#E5E7EB] rounded shadow-luxury overflow-hidden"
                   >
                     <Link
                       to={dashboardPath}
                       onClick={() => setMenu(false)}
                       data-testid="menu-dashboard"
-                      className="flex items-center gap-3 px-4 py-3 text-sm text-[#A39B92] hover:text-[#F5F0EA] hover:bg-[#0A0908] transition-all duration-200"
+                      className="flex items-center gap-3 px-4 py-3 text-sm text-[#6B7280] hover:text-[#171717] hover:bg-[#FFFFFF] transition-all duration-200"
                     >
-                      <LayoutDashboard size={16} className="text-[#C89B5F]" />
+                      <LayoutDashboard size={16} className="text-[#78AFCF]" />
                       Dashboard
                     </Link>
                     {user.role === "buyer" && (
@@ -180,26 +180,26 @@ const Navbar = () => {
                         <Link
                           to="/saved"
                           onClick={() => setMenu(false)}
-                          className="flex items-center gap-3 px-4 py-3 text-sm text-[#A39B92] hover:text-[#F5F0EA] hover:bg-[#0A0908] transition-all duration-200"
+                          className="flex items-center gap-3 px-4 py-3 text-sm text-[#6B7280] hover:text-[#171717] hover:bg-[#FFFFFF] transition-all duration-200"
                         >
-                          <Bookmark size={16} className="text-[#C89B5F]" /> Saved
+                          <Bookmark size={16} className="text-[#78AFCF]" /> Saved
                         </Link>
                         <Link
                           to="/enquiries"
                           onClick={() => setMenu(false)}
-                          className="flex items-center gap-3 px-4 py-3 text-sm text-[#A39B92] hover:text-[#F5F0EA] hover:bg-[#0A0908] transition-all duration-200"
+                          className="flex items-center gap-3 px-4 py-3 text-sm text-[#6B7280] hover:text-[#171717] hover:bg-[#FFFFFF] transition-all duration-200"
                         >
-                          <Inbox size={16} className="text-[#C89B5F]" /> My Enquiries
+                          <Inbox size={16} className="text-[#78AFCF]" /> My Enquiries
                         </Link>
                       </>
                     )}
-                    <div className="px-4 py-2.5 text-[10px] uppercase tracking-[0.15em] text-[#6B6560] border-t border-[#2A2623] bg-[#0A0908]">
+                    <div className="px-4 py-2.5 text-[10px] uppercase tracking-[0.15em] text-[#9CA3AF] border-t border-[#E5E7EB] bg-[#FFFFFF]">
                       {user.role} · {user.email}
                     </div>
                     <button
                       onClick={handleLogout}
                       data-testid="menu-logout"
-                      className="w-full text-left flex items-center gap-3 px-4 py-3 text-sm text-[#F87171] hover:bg-[#0A0908] border-t border-[#2A2623] transition-all duration-200"
+                      className="w-full text-left flex items-center gap-3 px-4 py-3 text-sm text-[#DC2626] hover:bg-[#FFFFFF] border-t border-[#E5E7EB] transition-all duration-200"
                     >
                       <LogOut size={16} /> Sign out
                     </button>
@@ -212,7 +212,7 @@ const Navbar = () => {
 
         {/* Mobile toggle */}
         <button
-          className="lg:hidden p-2 text-[#F5F0EA] hover:text-[#C89B5F] transition-colors"
+          className="lg:hidden p-2 text-[#171717] hover:text-[#78AFCF] transition-colors"
           onClick={() => setOpen((s) => !s)}
           data-testid="nav-mobile-toggle"
           aria-label="Toggle menu"
@@ -227,9 +227,9 @@ const Navbar = () => {
           open ? "max-h-[80vh] opacity-100" : "max-h-0 opacity-0"
         }`}
       >
-        <div className="bg-[#0A0908] border-t border-[#2A2623]">
+        <div className="bg-[#FFFFFF] border-t border-[#E5E7EB]">
           <div className="px-6 py-6 space-y-1">
-            <div className="text-[10px] uppercase tracking-[0.2em] text-[#6B6560] mb-3">
+            <div className="text-[10px] uppercase tracking-[0.2em] text-[#9CA3AF] mb-3">
               Sectors
             </div>
             {SECTOR_LINKS.map((s) => (
@@ -237,20 +237,20 @@ const Navbar = () => {
                 key={s.label}
                 to={s.to}
                 onClick={() => setOpen(false)}
-                className="block py-2.5 text-sm text-[#A39B92] hover:text-[#C89B5F] transition-colors"
+                className="block py-2.5 text-sm text-[#6B7280] hover:text-[#78AFCF] transition-colors"
               >
                 {s.label}
               </Link>
             ))}
-            <div className="border-t border-[#2A2623] my-4" />
+            <div className="border-t border-[#E5E7EB] my-4" />
             <NavLink to="/properties" onClick={() => setOpen(false)}>Browse all</NavLink>
             <NavLink to="/construction" onClick={() => setOpen(false)}>Construction</NavLink>
             <NavLink to="/services" onClick={() => setOpen(false)}>Documents</NavLink>
             <NavLink to="/chat" onClick={() => setOpen(false)}>
-              <MessageCircle size={16} className="text-[#C89B5F]" />
+              <MessageCircle size={16} className="text-[#78AFCF]" />
               <span>AI Assistant</span>
             </NavLink>
-            <div className="border-t border-[#2A2623] my-4" />
+            <div className="border-t border-[#E5E7EB] my-4" />
             {!isAuthed ? (
               <div className="space-y-3 pt-2">
                 <Link to="/login" onClick={() => setOpen(false)} className="btn-secondary justify-center w-full">
@@ -267,10 +267,10 @@ const Navbar = () => {
                   onClick={() => setOpen(false)}
                   className="btn-secondary justify-center w-full"
                 >
-                  <LayoutDashboard size={16} className="text-[#C89B5F]" />
+                  <LayoutDashboard size={16} className="text-[#78AFCF]" />
                   {user.name}
                 </Link>
-                <button onClick={handleLogout} className="btn-secondary justify-center w-full text-[#F87171] hover:text-[#F87171] hover:border-[#F87171]">
+                <button onClick={handleLogout} className="btn-secondary justify-center w-full text-[#DC2626] hover:text-[#DC2626] hover:border-[#DC2626]">
                   <LogOut size={16} /> Sign out
                 </button>
               </div>
@@ -286,7 +286,7 @@ const NavLink = ({ to, children, onClick }) => (
   <Link
     to={to}
     onClick={onClick}
-    className="flex items-center gap-2 text-sm font-medium text-[#A39B92] hover:text-[#C89B5F] transition-colors duration-300"
+    className="flex items-center gap-2 text-sm font-medium text-[#6B7280] hover:text-[#78AFCF] transition-colors duration-300"
   >
     {children}
   </Link>

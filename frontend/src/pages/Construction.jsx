@@ -49,7 +49,7 @@ const Construction = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#fafaf7]">
+    <div className="min-h-screen bg-[#FFFFFF]">
       <Navbar />
 
       {/* HERO with video */}
@@ -61,16 +61,16 @@ const Construction = () => {
         >
           <source src={HERO_VIDEO} type="video/mp4" />
         </video>
-        <div className="absolute inset-0 bg-gradient-to-r from-[#0F2340]/85 via-[#0F2340]/55 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#171717]/85 via-[#171717]/55 to-transparent" />
         <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 h-full flex items-center">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }} className="max-w-2xl text-white">
-            <div className="text-[11px] tracking-[0.25em] uppercase text-[#7ec4b8] mb-4">
+            <div className="text-[11px] tracking-[0.25em] uppercase text-[#A9CBE3] mb-4">
               Sarva Construction & Interiors
             </div>
             <h1 className="font-display font-bold text-4xl md:text-5xl lg:text-6xl leading-[1.05]">
               Build it once.
               <br />
-              <span className="text-[#7ec4b8]">Build it right.</span>
+              <span className="text-[#A9CBE3]">Build it right.</span>
             </h1>
             <p className="mt-5 text-white/85 text-base md:text-lg max-w-lg leading-relaxed">
               End-to-end design, build and interiors for homes, offices and retail.
@@ -89,16 +89,16 @@ const Construction = () => {
             { Icon: Sofa, title: "Interiors", body: "Modular kitchens, wardrobes, lighting, and full furniture packages." },
           ].map((p) => (
             <div key={p.title} className="card p-7">
-              <p.Icon size={28} className="text-[#0D7A6B]" strokeWidth={1.5} />
-              <h3 className="mt-5 font-display font-semibold text-xl text-[#0F2340]">{p.title}</h3>
-              <p className="mt-2 text-sm text-[#5b6371] leading-relaxed">{p.body}</p>
+              <p.Icon size={28} className="text-[#78AFCF]" strokeWidth={1.5} />
+              <h3 className="mt-5 font-display font-semibold text-xl text-[#171717]">{p.title}</h3>
+              <p className="mt-2 text-sm text-[#6B7280] leading-relaxed">{p.body}</p>
             </div>
           ))}
         </div>
       </section>
 
       {/* BLOG-STYLE SHOWCASE */}
-      <section className="py-16 md:py-20 bg-white border-y border-[#e6e4dd]">
+      <section className="py-16 md:py-20 bg-white border-y border-[#E5E7EB]">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="max-w-2xl mb-10">
             <div className="eyebrow mb-2">Recent Projects</div>
@@ -143,7 +143,7 @@ const Construction = () => {
           <div className="md:col-span-5">
             <div className="eyebrow mb-2">Materials & Standards</div>
             <h2 className="section-title">Specs you won't have to chase.</h2>
-            <p className="mt-4 text-[#5b6371] text-sm md:text-base leading-relaxed">
+            <p className="mt-4 text-[#6B7280] text-sm md:text-base leading-relaxed">
               Every Sarva build uses traceable, branded materials with written warranties — from the steel
               to the switch plates. Quantity surveying is in-house, so margins stay where they belong.
             </p>
@@ -158,8 +158,8 @@ const Construction = () => {
               ["Paint", "Asian Paints — Royale"],
             ].map(([k, v]) => (
               <div key={k} className="card p-4">
-                <div className="text-[10px] uppercase tracking-wider text-[#5b6371]">{k}</div>
-                <div className="font-display font-semibold text-[#0F2340] mt-1 text-sm">{v}</div>
+                <div className="text-[10px] uppercase tracking-wider text-[#6B7280]">{k}</div>
+                <div className="font-display font-semibold text-[#171717] mt-1 text-sm">{v}</div>
               </div>
             ))}
           </div>
@@ -167,10 +167,10 @@ const Construction = () => {
       </section>
 
       {/* ENQUIRY FORM */}
-      <section id="enquire" className="py-20 md:py-24 bg-[#0F2340] text-white" data-testid="construction-enquiry">
+      <section id="enquire" className="py-20 md:py-24 bg-[#171717] text-white" data-testid="construction-enquiry">
         <div className="max-w-7xl mx-auto px-6 lg:px-8 grid md:grid-cols-12 gap-10">
           <div className="md:col-span-5">
-            <div className="text-[11px] tracking-[0.25em] uppercase text-[#7ec4b8] mb-3">
+            <div className="text-[11px] tracking-[0.25em] uppercase text-[#A9CBE3] mb-3">
               Start your build
             </div>
             <h2 className="font-display font-bold text-3xl md:text-4xl leading-tight">
@@ -187,14 +187,14 @@ const Construction = () => {
                 ["12", "Cities served"],
               ].map(([n, l]) => (
                 <div key={l}>
-                  <div className="font-display text-2xl font-bold text-[#7ec4b8]">{n}</div>
+                  <div className="font-display text-2xl font-bold text-[#A9CBE3]">{n}</div>
                   <div className="text-white/60 uppercase tracking-wider mt-1">{l}</div>
                 </div>
               ))}
             </div>
           </div>
 
-          <form onSubmit={submit} className="md:col-span-7 bg-white rounded-xl p-6 md:p-8 text-[#0F2340]" data-testid="construction-form">
+          <form onSubmit={submit} className="md:col-span-7 bg-white rounded-xl p-6 md:p-8 text-[#171717]" data-testid="construction-form">
             <div className="grid sm:grid-cols-2 gap-4">
               <Field label="Name *">
                 <input className="input-field" required value={form.name} onChange={set("name")} data-testid="cons-name" />
@@ -241,9 +241,9 @@ const Showcase = ({ className, img, tag, title, body }) => (
       <img src={img} alt={title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" loading="lazy" />
     </div>
     <div className="p-5">
-      <span className="text-[10px] uppercase tracking-wider text-[#0D7A6B] font-semibold">{tag}</span>
-      <h3 className="mt-2 font-display font-semibold text-[#0F2340] text-lg leading-snug">{title}</h3>
-      <p className="mt-1.5 text-sm text-[#5b6371] leading-relaxed">{body}</p>
+      <span className="text-[10px] uppercase tracking-wider text-[#78AFCF] font-semibold">{tag}</span>
+      <h3 className="mt-2 font-display font-semibold text-[#171717] text-lg leading-snug">{title}</h3>
+      <p className="mt-1.5 text-sm text-[#6B7280] leading-relaxed">{body}</p>
     </div>
   </article>
 );

@@ -75,8 +75,8 @@ const Landing = () => {
           ) : (
             <img src={hero.image_url} alt="VisitSarva" className="w-full h-full object-cover" />
           )}
-          <div className="absolute inset-0 bg-gradient-to-r from-[#0A0908]/95 via-[#0A0908]/70 to-[#0A0908]/40" />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#0A0908] via-transparent to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#FFFFFF]/95 via-[#FFFFFF]/70 to-[#FFFFFF]/40" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#FFFFFF] via-transparent to-transparent" />
         </div>
 
         <div className="relative z-10 max-w-[80rem] mx-auto px-6 lg:px-12 py-20 w-full">
@@ -236,7 +236,7 @@ const Landing = () => {
 
       {/* ===== MOTIVE ===== */}
       <section id="motive" className="py-28 md:py-36 bg-vs-bg text-vs-text-primary relative overflow-hidden" data-testid="motive-section">
-        <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: "radial-gradient(circle at 30% 30%, #C89B5F 1px, transparent 1px)", backgroundSize: "48px 48px" }} />
+        <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: "radial-gradient(circle at 30% 30%, #78AFCF 1px, transparent 1px)", backgroundSize: "48px 48px" }} />
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[800px] bg-vs-gold/5 rounded-full blur-3xl" />
         <motion.div
           initial="hidden"

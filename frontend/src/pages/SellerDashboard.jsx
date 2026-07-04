@@ -12,8 +12,8 @@ const STATUS_META = {
   pending_verification: { l: "Pending review", c: "bg-yellow-100 text-yellow-800", Icon: Clock },
   published: { l: "Live", c: "bg-emerald-100 text-emerald-800", Icon: BadgeCheck },
   rejected: { l: "Rejected", c: "bg-red-100 text-red-800", Icon: XIcon },
-  sold: { l: "Sold", c: "bg-[#0F2340] text-white", Icon: BadgeCheck },
-  rented: { l: "Rented", c: "bg-[#0F2340] text-white", Icon: BadgeCheck },
+  sold: { l: "Sold", c: "bg-[#171717] text-white", Icon: BadgeCheck },
+  rented: { l: "Rented", c: "bg-[#171717] text-white", Icon: BadgeCheck },
   verified: { l: "Verified", c: "bg-emerald-100 text-emerald-800", Icon: BadgeCheck },
 };
 
@@ -47,15 +47,15 @@ const SellerDashboard = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#fafaf7]">
+    <div className="min-h-screen bg-[#FFFFFF]">
       <Navbar />
-      <section className="bg-white border-b border-[#e6e4dd]">
+      <section className="bg-white border-b border-[#E5E7EB]">
         <div className="max-w-7xl mx-auto px-6 lg:px-8 py-8 flex items-end justify-between gap-4 flex-wrap">
           <div>
-            <h1 className="font-display text-2xl md:text-3xl font-bold text-[#0F2340]" data-testid="seller-dashboard-title">
+            <h1 className="font-display text-2xl md:text-3xl font-bold text-[#171717]" data-testid="seller-dashboard-title">
               Hello, {user?.name?.split(" ")[0] || "Seller"}
             </h1>
-            <p className="text-sm text-[#5b6371] mt-1">
+            <p className="text-sm text-[#6B7280] mt-1">
               Manage your listings, track enquiries, and create new properties.
             </p>
           </div>
@@ -75,11 +75,11 @@ const SellerDashboard = () => {
 
         {loading ? (
           <div className="py-12 flex justify-center">
-            <Loader2 className="animate-spin text-[#0D7A6B]" />
+            <Loader2 className="animate-spin text-[#78AFCF]" />
           </div>
         ) : items.length === 0 ? (
           <div className="card p-10 text-center">
-            <p className="text-[#5b6371]">You have no listings yet.</p>
+            <p className="text-[#6B7280]">You have no listings yet.</p>
             <Link to="/seller/listings/new" className="btn-primary mt-4">
               <Plus size={15} /> Create your first listing
             </Link>
@@ -91,7 +91,7 @@ const SellerDashboard = () => {
               const Icon = meta.Icon;
               return (
                 <div key={p.id} className="card p-5 flex flex-col md:flex-row md:items-center gap-4" data-testid={`seller-listing-${p.id}`}>
-                  <div className="w-full md:w-28 h-24 md:h-20 rounded overflow-hidden bg-[#fafaf7]">
+                  <div className="w-full md:w-28 h-24 md:h-20 rounded overflow-hidden bg-[#FFFFFF]">
                     {p.images?.[0]?.url && (
                       <img src={p.images[0].url} alt="" className="w-full h-full object-cover" />
                     )}
@@ -103,10 +103,10 @@ const SellerDashboard = () => {
                         {Icon ? <Icon size={11} /> : null} {meta.l || p.status}
                       </span>
                     </div>
-                    <div className="font-display font-semibold text-[#0F2340] mt-1.5">
+                    <div className="font-display font-semibold text-[#171717] mt-1.5">
                       {p.title}
                     </div>
-                    <div className="text-xs text-[#5b6371] mt-1">
+                    <div className="text-xs text-[#6B7280] mt-1">
                       {INR(p.price)} · {formatArea(p.area)} · {p.location?.city || "—"}
                     </div>
                     {p.status === "rejected" && p.rejection_reason && (
@@ -122,7 +122,7 @@ const SellerDashboard = () => {
                     <Link to={`/seller/listings/${p.id}/edit`} className="btn-outline !py-2 !px-3" data-testid={`edit-${p.id}`}>
                       <Pencil size={14} />
                     </Link>
-                    <button onClick={() => remove(p.id)} className="btn-outline !py-2 !px-3 !text-[#c0392b]" data-testid={`delete-${p.id}`}>
+                    <button onClick={() => remove(p.id)} className="btn-outline !py-2 !px-3 !text-[#DC2626]" data-testid={`delete-${p.id}`}>
                       <Trash2 size={14} />
                     </button>
                   </div>
@@ -141,14 +141,14 @@ const Stat = ({ label, value, accent }) => (
   <div
     className={
       accent
-        ? "p-4 rounded-lg overflow-hidden bg-[#0D7A6B] text-white border border-[#0D7A6B]"
+        ? "p-4 rounded-lg overflow-hidden bg-[#78AFCF] text-white border border-[#78AFCF]"
         : "card p-4"
     }
   >
-    <div className={`text-xs uppercase tracking-wider ${accent ? "text-white/85" : "text-[#5b6371]"}`}>
+    <div className={`text-xs uppercase tracking-wider ${accent ? "text-white/85" : "text-[#6B7280]"}`}>
       {label}
     </div>
-    <div className={`font-display text-3xl font-bold mt-1 ${accent ? "text-white" : "text-[#0F2340]"}`}>
+    <div className={`font-display text-3xl font-bold mt-1 ${accent ? "text-white" : "text-[#171717]"}`}>
       {value}
     </div>
   </div>

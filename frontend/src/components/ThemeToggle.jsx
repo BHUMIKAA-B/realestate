@@ -23,7 +23,7 @@ const ThemeToggle = () => {
   return (
     <button
       onClick={toggle}
-      className="flex items-center gap-1 text-sm text-[#1a1f2e] hover:text-[#0D7A6B] transition-colors"
+      className="flex items-center gap-1 text-sm text-[#171717] hover:text-[#78AFCF] transition-colors"
       data-testid="theme-toggle"
     >
       {current === 'dark' ? '🌙 Dark' : '☀️ Light'}

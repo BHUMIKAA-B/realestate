@@ -16,15 +16,15 @@ const SUGGESTED = [
 function BotMessage({ text, typing }) {
   return (
     <div className="flex items-start gap-2">
-      <div className="flex-shrink-0 w-7 h-7 rounded-full bg-[#0D7A6B] flex items-center justify-center">
+      <div className="flex-shrink-0 w-7 h-7 rounded-full bg-[#78AFCF] flex items-center justify-center">
         <Bot size={14} className="text-white" />
       </div>
-      <div className="max-w-[80%] bg-white border border-[#e6e4dd] rounded-2xl rounded-tl-sm px-3.5 py-2.5 text-sm text-[#0F2340] leading-relaxed shadow-sm">
+      <div className="max-w-[80%] bg-white border border-[#E5E7EB] rounded-2xl rounded-tl-sm px-3.5 py-2.5 text-sm text-[#171717] leading-relaxed shadow-sm">
         {typing ? (
           <span className="flex gap-1 items-center py-0.5">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#0D7A6B]/50 animate-bounce" style={{ animationDelay: "0ms" }} />
-            <span className="w-1.5 h-1.5 rounded-full bg-[#0D7A6B]/50 animate-bounce" style={{ animationDelay: "150ms" }} />
-            <span className="w-1.5 h-1.5 rounded-full bg-[#0D7A6B]/50 animate-bounce" style={{ animationDelay: "300ms" }} />
+            <span className="w-1.5 h-1.5 rounded-full bg-[#78AFCF]/50 animate-bounce" style={{ animationDelay: "0ms" }} />
+            <span className="w-1.5 h-1.5 rounded-full bg-[#78AFCF]/50 animate-bounce" style={{ animationDelay: "150ms" }} />
+            <span className="w-1.5 h-1.5 rounded-full bg-[#78AFCF]/50 animate-bounce" style={{ animationDelay: "300ms" }} />
           </span>
         ) : (
           <span style={{ whiteSpace: "pre-wrap" }}>{text}</span>
@@ -37,10 +37,10 @@ function BotMessage({ text, typing }) {
 function UserMessage({ text }) {
   return (
     <div className="flex items-start gap-2 flex-row-reverse">
-      <div className="flex-shrink-0 w-7 h-7 rounded-full bg-[#0F2340] flex items-center justify-center">
+      <div className="flex-shrink-0 w-7 h-7 rounded-full bg-[#171717] flex items-center justify-center">
         <User size={14} className="text-white" />
       </div>
-      <div className="max-w-[80%] bg-[#0D7A6B] text-white rounded-2xl rounded-tr-sm px-3.5 py-2.5 text-sm leading-relaxed shadow-sm">
+      <div className="max-w-[80%] bg-[#78AFCF] text-white rounded-2xl rounded-tr-sm px-3.5 py-2.5 text-sm leading-relaxed shadow-sm">
         {text}
       </div>
     </div>
@@ -154,14 +154,14 @@ export default function ChatBot({ forceOpen = false, fullPage = false }) {
       {/* Chat window */}
       {open && (
         <div
-          className="w-[360px] max-h-[560px] flex flex-col bg-[#fafaf7] rounded-2xl shadow-2xl border border-[#e6e4dd] overflow-hidden"
+          className="w-[360px] max-h-[560px] flex flex-col bg-[#FFFFFF] rounded-2xl shadow-2xl border border-[#E5E7EB] overflow-hidden"
           style={{ animation: "slideUp 0.2s ease" }}
           role="dialog"
           aria-label="VisitSarva chatbot"
           aria-modal="false"
         >
           {/* Header */}
-          <div className="bg-[#0D7A6B] px-4 py-3 flex items-center justify-between flex-shrink-0">
+          <div className="bg-[#78AFCF] px-4 py-3 flex items-center justify-between flex-shrink-0">
             <div className="flex items-center gap-2">
               <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center">
                 <Bot size={16} className="text-white" />
@@ -207,7 +207,7 @@ export default function ChatBot({ forceOpen = false, fullPage = false }) {
       {/* Bubble button */}
       <button
         onClick={() => setOpen((v) => !v)}
-        className="w-14 h-14 rounded-full bg-[#0D7A6B] hover:bg-[#0a5e52] text-white shadow-lg flex items-center justify-center transition-all duration-200 hover:scale-105 active:scale-95"
+        className="w-14 h-14 rounded-full bg-[#78AFCF] hover:bg-[#5D93B4] text-white shadow-lg flex items-center justify-center transition-all duration-200 hover:scale-105 active:scale-95"
         aria-label={open ? "Close chat" : "Open chat"}
         style={{ boxShadow: "0 4px 24px rgba(13,122,107,0.4)" }}
       >
@@ -250,7 +250,7 @@ function ChatWindow({
               <button
                 key={s}
                 onClick={() => onSuggest(s)}
-                className="text-[11px] px-3 py-1.5 rounded-full border border-[#0D7A6B]/30 text-[#0D7A6B] hover:bg-[#0D7A6B]/5 transition-colors leading-tight text-left"
+                className="text-[11px] px-3 py-1.5 rounded-full border border-[#78AFCF]/30 text-[#78AFCF] hover:bg-[#78AFCF]/5 transition-colors leading-tight text-left"
               >
                 {s}
               </button>
@@ -262,7 +262,7 @@ function ChatWindow({
       </div>
 
       {/* Input */}
-      <div className="border-t border-[#e6e4dd] px-3 py-3 bg-white flex-shrink-0">
+      <div className="border-t border-[#E5E7EB] px-3 py-3 bg-white flex-shrink-0">
         <div className="flex items-end gap-2">
           <textarea
             ref={inputRef}
@@ -271,7 +271,7 @@ function ChatWindow({
             onKeyDown={onKeyDown}
             placeholder="Ask about properties, pricing, documents…"
             rows={1}
-            className="flex-1 resize-none rounded-xl border border-[#e6e4dd] px-3.5 py-2.5 text-sm text-[#0F2340] placeholder-[#9ca3af] focus:outline-none focus:ring-2 focus:ring-[#0D7A6B]/30 focus:border-[#0D7A6B] transition-colors bg-[#fafaf7]"
+            className="flex-1 resize-none rounded-xl border border-[#E5E7EB] px-3.5 py-2.5 text-sm text-[#171717] placeholder-[#9CA3AF] focus:outline-none focus:ring-2 focus:ring-[#78AFCF]/30 focus:border-[#78AFCF] transition-colors bg-[#FFFFFF]"
             style={{ maxHeight: 96, overflowY: "auto" }}
             disabled={loading}
             aria-label="Chat message input"
@@ -279,13 +279,13 @@ function ChatWindow({
           <button
             onClick={onSend}
             disabled={!input.trim() || loading}
-            className="flex-shrink-0 w-10 h-10 rounded-xl bg-[#0D7A6B] hover:bg-[#0a5e52] disabled:opacity-40 disabled:cursor-not-allowed text-white flex items-center justify-center transition-colors"
+            className="flex-shrink-0 w-10 h-10 rounded-xl bg-[#78AFCF] hover:bg-[#5D93B4] disabled:opacity-40 disabled:cursor-not-allowed text-white flex items-center justify-center transition-colors"
             aria-label="Send message"
           >
             {loading ? <Loader2 size={16} className="animate-spin" /> : <Send size={16} />}
           </button>
         </div>
-        <p className="text-[10px] text-[#9ca3af] mt-2 text-center">
+        <p className="text-[10px] text-[#9CA3AF] mt-2 text-center">
           Powered by VisitSarva AI · Zero brokerage platform
         </p>
       </div>

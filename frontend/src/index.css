@@ -1,42 +1,42 @@
-/* VisitSarva — Luxury Dark Theme with Earthy Undertones */
+/* VisitSarva — Light, Airy Theme (Framer-inspired) */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 /* ========================================
-   DESIGN TOKENS — Archetype 5 (Luxury)
+   DESIGN TOKENS — Light Theme
    ======================================== */
 :root {
-  /* Background palette — deep, opulent blacks */
-  --vs-bg: #0A0908;
-  --vs-surface: #1A1816;
-  --vs-surface-glass: rgba(26, 24, 22, 0.6);
+  /* Background palette — clean, airy whites */
+  --vs-bg: #FFFFFF;
+  --vs-surface: #F4F6F8;
+  --vs-surface-glass: rgba(255, 255, 255, 0.7);
 
-  /* Primary — deep gold/bronze */
-  --vs-primary: #C89B5F;
-  --vs-primary-hover: #DCC197;
-  --vs-primary-muted: rgba(200, 155, 95, 0.15);
+  /* Primary — sky blue accent */
+  --vs-primary: #78AFCF;
+  --vs-primary-hover: #5D93B4;
+  --vs-primary-muted: rgba(120, 175, 207, 0.15);
 
-  /* Secondary — warm terracotta */
-  --vs-secondary: #8A4F3D;
+  /* Secondary — near-black, used for primary CTAs */
+  --vs-secondary: #171717;
 
   /* Text hierarchy */
-  --vs-text-primary: #F5F0EA;
-  --vs-text-secondary: #A39B92;
-  --vs-text-muted: #6B6560;
+  --vs-text-primary: #171717;
+  --vs-text-secondary: #6B7280;
+  --vs-text-muted: #9CA3AF;
 
-  /* Borders — subtle, editorial */
-  --vs-border: #2A2623;
-  --vs-border-subtle: rgba(42, 38, 35, 0.5);
+  /* Borders — light, subtle */
+  --vs-border: #E5E7EB;
+  --vs-border-subtle: rgba(229, 231, 235, 0.6);
 
   /* Semantic colors */
-  --vs-success: #4ADE80;
-  --vs-warning: #FBBF24;
-  --vs-error: #F87171;
+  --vs-success: #16A34A;
+  --vs-warning: #D97706;
+  --vs-error: #DC2626;
 
   /* Typography */
-  --font-display: "Cormorant Garamond", Georgia, serif;
-  --font-body: "Outfit", system-ui, -apple-system, sans-serif;
+  --font-display: "Inter", system-ui, -apple-system, sans-serif;
+  --font-body: "Inter", system-ui, -apple-system, sans-serif;
 
   /* Spacing */
   --space-section: 6rem;
@@ -149,17 +149,17 @@ body {
   font-size: 0.875rem;
   font-weight: 500;
   letter-spacing: 0.02em;
-  color: #0A0908;
-  background-color: var(--vs-primary);
+  color: #FFFFFF;
+  background-color: var(--vs-secondary);
   border: none;
-  border-radius: 0.125rem;
+  border-radius: 0.75rem;
   cursor: pointer;
   transition: background-color var(--transition-medium), transform var(--transition-fast);
   text-decoration: none;
 }
 
 .btn-primary:hover {
-  background-color: var(--vs-primary-hover);
+  background-color: #2E2E2E;
   transform: translateY(-1px);
 }
 
@@ -184,9 +184,9 @@ body {
   font-weight: 500;
   letter-spacing: 0.02em;
   color: var(--vs-text-primary);
-  background-color: transparent;
+  background-color: #FFFFFF;
   border: 1px solid var(--vs-border);
-  border-radius: 0.125rem;
+  border-radius: 0.75rem;
   cursor: pointer;
   transition: border-color var(--transition-medium), color var(--transition-medium), background-color var(--transition-medium);
   text-decoration: none;
@@ -237,14 +237,14 @@ body {
   color: var(--vs-text-primary);
   background-color: var(--vs-surface);
   border: 1px solid var(--vs-border);
-  border-radius: 0.125rem;
+  border-radius: 0.75rem;
   cursor: pointer;
   transition: all var(--transition-medium);
   text-decoration: none;
 }
 
 .btn-navy:hover {
-  background-color: #252220;
+  background-color: #EAEDF0;
   border-color: var(--vs-primary);
 }
 
@@ -252,31 +252,31 @@ body {
    CARD SYSTEM
    ======================================== */
 .card {
-  background-color: var(--vs-surface);
+  background-color: #FFFFFF;
   border: 1px solid var(--vs-border);
-  border-radius: 0.25rem;
+  border-radius: 1rem;
   overflow: hidden;
   transition: border-color var(--transition-medium), box-shadow var(--transition-medium);
 }
 
 .card:hover {
-  border-color: rgba(200, 155, 95, 0.3);
-  box-shadow: 0 20px 40px -20px rgba(0, 0, 0, 0.5);
+  border-color: rgba(120, 175, 207, 0.4);
+  box-shadow: 0 20px 40px -20px rgba(23, 23, 23, 0.15);
 }
 
 .card-elevated {
-  background-color: var(--vs-surface);
+  background-color: #FFFFFF;
   border: 1px solid var(--vs-border);
-  border-radius: 0.25rem;
+  border-radius: 1rem;
   overflow: hidden;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 4px 20px rgba(23, 23, 23, 0.06);
   transition: all var(--transition-medium);
 }
 
 .card-elevated:hover {
   transform: translateY(-4px);
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
-  border-color: rgba(200, 155, 95, 0.25);
+  box-shadow: 0 12px 40px rgba(23, 23, 23, 0.12);
+  border-color: rgba(120, 175, 207, 0.35);
 }
 
 /* ========================================
@@ -288,9 +288,9 @@ body {
   font-family: var(--font-body);
   font-size: 0.9375rem;
   color: var(--vs-text-primary);
-  background-color: rgba(26, 24, 22, 0.5);
+  background-color: var(--vs-surface);
   border: 1px solid var(--vs-border);
-  border-radius: 0.125rem;
+  border-radius: 0.75rem;
   outline: none;
   transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
 }
@@ -305,7 +305,7 @@ body {
 }
 
 .input-field:hover:not(:focus) {
-  border-color: rgba(200, 155, 95, 0.3);
+  border-color: rgba(120, 175, 207, 0.4);
 }
 
 .label {
@@ -345,7 +345,7 @@ body {
 
 .chip-active,
 .chip.chip-active {
-  color: #0A0908;
+  color: #FFFFFF;
   background-color: var(--vs-primary);
   border-color: var(--vs-primary);
 }
@@ -357,7 +357,7 @@ body {
 }
 
 .chip-primary:hover {
-  background-color: rgba(200, 155, 95, 0.25);
+  background-color: rgba(120, 175, 207, 0.25);
 }
 
 /* ========================================
@@ -365,12 +365,12 @@ body {
    ======================================== */
 ::selection {
   background-color: var(--vs-primary);
-  color: #0A0908;
+  color: #FFFFFF;
 }
 
 ::-moz-selection {
   background-color: var(--vs-primary);
-  color: #0A0908;
+  color: #FFFFFF;
 }
 
 /* ========================================
@@ -386,19 +386,19 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #3A3633;
+  background: #D1D5DB;
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #4A4643;
+  background: #9CA3AF;
 }
 
 /* ========================================
    UTILITY CLASSES
    ======================================== */
 .text-gradient {
-  background: linear-gradient(135deg, var(--vs-primary) 0%, #E8D4B8 100%);
+  background: linear-gradient(135deg, var(--vs-primary) 0%, #A9CBE3 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -437,26 +437,26 @@ body {
    ======================================== */
 @layer base {
   :root {
-    --background: 20 15% 4%;
-    --foreground: 37 25% 92%;
-    --card: 20 15% 10%;
-    --card-foreground: 37 25% 92%;
-    --popover: 20 15% 10%;
-    --popover-foreground: 37 25% 92%;
-    --primary: 35 45% 56%;
-    --primary-foreground: 20 15% 4%;
-    --secondary: 20 15% 15%;
-    --secondary-foreground: 37 25% 92%;
-    --muted: 20 15% 15%;
-    --muted-foreground: 37 15% 60%;
-    --accent: 35 45% 56%;
-    --accent-foreground: 20 15% 4%;
+    --background: 0 0% 100%;
+    --foreground: 0 0% 9%;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 9%;
+    --primary: 203 45% 64%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 210 20% 96%;
+    --secondary-foreground: 0 0% 9%;
+    --muted: 210 20% 96%;
+    --muted-foreground: 220 9% 46%;
+    --accent: 203 45% 64%;
+    --accent-foreground: 0 0% 9%;
     --destructive: 0 72% 51%;
     --destructive-foreground: 0 0% 100%;
-    --border: 20 10% 15%;
-    --input: 20 10% 15%;
-    --ring: 35 45% 56%;
-    --radius: 0.125rem;
+    --border: 220 13% 91%;
+    --input: 220 13% 91%;
+    --ring: 203 45% 64%;
+    --radius: 0.75rem;
   }
 }
 
@@ -477,11 +477,11 @@ body {
    ======================================== */
 .leaflet-container {
   background: var(--vs-surface);
-  border-radius: 0.25rem;
+  border-radius: 1rem;
 }
 
 .leaflet-tile-pane {
-  filter: brightness(0.85) saturate(0.9);
+  filter: none;
 }
 
 .leaflet-control-zoom {
