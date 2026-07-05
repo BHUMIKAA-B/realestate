@@ -75,7 +75,7 @@ const SellerDashboard = () => {
 
         {loading ? (
           <div className="py-12 flex justify-center">
-            <Loader2 className="animate-spin text-[#78AFCF]" />
+            <Loader2 className="animate-spin text-vs-gold" />
           </div>
         ) : items.length === 0 ? (
           <div className="card p-10 text-center">
@@ -141,7 +141,7 @@ const Stat = ({ label, value, accent }) => (
   <div
     className={
       accent
-        ? "p-4 rounded-lg overflow-hidden bg-[#78AFCF] text-white border border-[#78AFCF]"
+        ? "p-4 rounded-lg overflow-hidden bg-vs-gold text-white border border-vs-gold"
         : "card p-4"
     }
   >

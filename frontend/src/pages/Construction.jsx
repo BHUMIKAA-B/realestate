@@ -89,7 +89,7 @@ const Construction = () => {
             { Icon: Sofa, title: "Interiors", body: "Modular kitchens, wardrobes, lighting, and full furniture packages." },
           ].map((p) => (
             <div key={p.title} className="card p-7">
-              <p.Icon size={28} className="text-[#78AFCF]" strokeWidth={1.5} />
+              <p.Icon size={28} className="text-vs-gold" strokeWidth={1.5} />
               <h3 className="mt-5 font-display font-semibold text-xl text-vs-text-primary">{p.title}</h3>
               <p className="mt-2 text-sm text-vs-text-secondary leading-relaxed">{p.body}</p>
             </div>
@@ -241,7 +241,7 @@ const Showcase = ({ className, img, tag, title, body }) => (
       <img src={img} alt={title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" loading="lazy" />
     </div>
     <div className="p-5">
-      <span className="text-[10px] uppercase tracking-wider text-[#78AFCF] font-semibold">{tag}</span>
+      <span className="text-[10px] uppercase tracking-wider text-vs-gold font-semibold">{tag}</span>
       <h3 className="mt-2 font-display font-semibold text-vs-text-primary text-lg leading-snug">{title}</h3>
       <p className="mt-1.5 text-sm text-vs-text-secondary leading-relaxed">{body}</p>
     </div>

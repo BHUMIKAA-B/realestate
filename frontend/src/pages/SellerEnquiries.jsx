@@ -22,7 +22,7 @@ const SellerEnquiries = () => {
         </h1>
         {loading ? (
           <div className="py-12 flex justify-center">
-            <Loader2 className="animate-spin text-[#78AFCF]" />
+            <Loader2 className="animate-spin text-vs-gold" />
           </div>
         ) : items.length === 0 ? (
           <div className="mt-8 text-vs-text-secondary">No enquiries yet.</div>
@@ -42,10 +42,10 @@ const SellerEnquiries = () => {
                   <strong>{e.name}</strong> — {e.message || "(no message)"}
                 </div>
                 <div className="mt-3 flex items-center gap-4 text-sm text-vs-text-secondary">
-                  <a href={`mailto:${e.email}`} className="inline-flex items-center gap-1.5 hover:text-[#78AFCF]">
+                  <a href={`mailto:${e.email}`} className="inline-flex items-center gap-1.5 hover:text-vs-gold">
                     <Mail size={13} /> {e.email}
                   </a>
-                  <a href={`tel:${e.phone}`} className="inline-flex items-center gap-1.5 hover:text-[#78AFCF]">
+                  <a href={`tel:${e.phone}`} className="inline-flex items-center gap-1.5 hover:text-vs-gold">
                     <Phone size={13} /> {e.phone}
                   </a>
                   <span className="chip">Prefers {e.contact_preference}</span>

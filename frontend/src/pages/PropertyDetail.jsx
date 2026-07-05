@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import toast from "react-hot-toast";
+import { motion } from "framer-motion";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import L from "leaflet";
 import { MapPin, Bed, Bath, Maximize2, Compass, Sofa, BadgeCheck, ArrowLeft, Loader as Loader2, Phone, Mail, MessageSquare } from "lucide-react";
@@ -9,6 +10,7 @@ import Footer from "@/components/Footer";
 import EMICalculator from "@/components/EMICalculator";
 import api from "@/api/client";
 import { INR, formatArea, CATEGORY_LABEL } from "@/utils/format";
+import { fadeUp, fadeIn, stagger, viewportOnce } from "@/lib/animations";
 
 // Fix default Leaflet marker icons broken by webpack
 delete L.Icon.Default.prototype._getIconUrl;
@@ -64,7 +66,12 @@ const PropertyDetail = () => {
     <div className="min-h-screen bg-vs-bg">
       <Navbar />
 
-      <div className="max-w-[80rem] mx-auto px-6 lg:px-12 py-6">
+      <motion.div
+        className="max-w-[80rem] mx-auto px-6 lg:px-12 py-6"
+        initial="hidden"
+        animate="visible"
+        variants={fadeIn}
+      >
         <Link
           to="/properties"
           className="inline-flex items-center gap-2 text-sm text-vs-text-muted hover:text-vs-gold transition-colors duration-300"
@@ -72,17 +79,26 @@ const PropertyDetail = () => {
         >
           <ArrowLeft size={14} /> Back to listings
         </Link>
-      </div>
+      </motion.div>
 
-      <div className="max-w-[80rem] mx-auto px-6 lg:px-12 pb-16 grid lg:grid-cols-12 gap-8">
+      <motion.div
+        className="max-w-[80rem] mx-auto px-6 lg:px-12 pb-16 grid lg:grid-cols-12 gap-8"
+        initial="hidden"
+        animate="visible"
+        variants={stagger()}
+      >
 
         {/* LEFT COLUMN */}
         <div className="lg:col-span-8 space-y-6">
 
           {/* Gallery */}
-          <div>
+          <motion.div variants={fadeUp}>
             <div className="relative overflow-hidden rounded-xl bg-vs-surface border border-vs-border">
-              <img
+              <motion.img
+                key={activeImg}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.4 }}
                 src={images[activeImg].url}
                 alt={p.title}
                 className="w-full aspect-[16/10] object-cover"
@@ -110,10 +126,10 @@ const PropertyDetail = () => {
                 ))}
               </div>
             )}
-          </div>
+          </motion.div>
 
           {/* Title + price */}
-          <div>
+          <motion.div variants={fadeUp}>
             <h1
               className="font-display font-medium text-vs-text-primary text-3xl md:text-4xl tracking-tight"
               data-testid="property-title"
@@ -135,20 +151,24 @@ const PropertyDetail = () => {
                 <span className="chip bg-vs-gold/10 border-vs-gold/30 text-vs-gold">Negotiable</span>
               )}
             </div>
-          </div>
+          </motion.div>
 
           {/* Key stats */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+          <motion.div variants={stagger()} className="grid grid-cols-2 md:grid-cols-4 gap-3">
             <KV icon={Maximize2} label="Area" value={formatArea(p.area)} />
             {p.bedrooms && <KV icon={Bed} label="Bedrooms" value={`${p.bedrooms} BHK`} />}
             {p.bathrooms && <KV icon={Bath} label="Bathrooms" value={p.bathrooms} />}
             {p.facing && <KV icon={Compass} label="Facing" value={p.facing} />}
             {p.furnishing && <KV icon={Sofa} label="Furnishing" value={p.furnishing} />}
-          </div>
+          </motion.div>
 
           {/* Map */}
           {hasMap && (
-            <div className="rounded-xl overflow-hidden border border-vs-border" style={{ height: 280 }}>
+            <motion.div
+              variants={fadeUp}
+              className="rounded-xl overflow-hidden border border-vs-border"
+              style={{ height: 280 }}
+            >
               <MapContainer
                 center={[loc.lat, loc.lng]}
                 zoom={14}
@@ -156,55 +176,61 @@ const PropertyDetail = () => {
                 style={{ height: "100%", width: "100%" }}
               >
                 <TileLayer
-                  url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
+                  url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png"
                   attribution="&copy; OpenStreetMap contributors &copy; CARTO"
                 />
                 <Marker position={[loc.lat, loc.lng]}>
                   <Popup>{p.title}</Popup>
                 </Marker>
               </MapContainer>
-            </div>
+            </motion.div>
           )}
 
           {/* Description */}
           {p.description && (
-            <Section title="About this property">
-              <p className="text-vs-text-secondary leading-relaxed whitespace-pre-line">
-                {p.description}
-              </p>
-            </Section>
+            <motion.div initial="hidden" whileInView="visible" viewport={viewportOnce} variants={fadeUp}>
+              <Section title="About this property">
+                <p className="text-vs-text-secondary leading-relaxed whitespace-pre-line">
+                  {p.description}
+                </p>
+              </Section>
+            </motion.div>
           )}
 
           {/* Amenities */}
           {p.amenities?.length > 0 && (
-            <Section title="Amenities">
-              <div className="flex flex-wrap gap-2">
-                {p.amenities.map((a) => (
-                  <span key={a} className="chip">{a}</span>
-                ))}
-              </div>
-            </Section>
+            <motion.div initial="hidden" whileInView="visible" viewport={viewportOnce} variants={fadeUp}>
+              <Section title="Amenities">
+                <div className="flex flex-wrap gap-2">
+                  {p.amenities.map((a) => (
+                    <span key={a} className="chip">{a}</span>
+                  ))}
+                </div>
+              </Section>
+            </motion.div>
           )}
 
           {/* Features */}
           {p.features?.length > 0 && (
-            <Section title="Features">
-              <div className="flex flex-wrap gap-2">
-                {p.features.map((f) => (
-                  <span key={f} className="chip">{f}</span>
-                ))}
-              </div>
-            </Section>
+            <motion.div initial="hidden" whileInView="visible" viewport={viewportOnce} variants={fadeUp}>
+              <Section title="Features">
+                <div className="flex flex-wrap gap-2">
+                  {p.features.map((f) => (
+                    <span key={f} className="chip">{f}</span>
+                  ))}
+                </div>
+              </Section>
+            </motion.div>
           )}
         </div>
 
         {/* RIGHT SIDEBAR */}
-        <aside className="lg:col-span-4">
+        <motion.aside variants={fadeUp} className="lg:col-span-4">
           <div className="sticky top-24">
             <SidebarTabs key={p.id} propertyId={p.id} price={p.price} isForSale={isForSale} />
           </div>
-        </aside>
-      </div>
+        </motion.aside>
+      </motion.div>
 
       <Footer />
     </div>

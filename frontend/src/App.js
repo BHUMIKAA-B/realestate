@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 import { ThemeProvider } from "next-themes";
+import api from "@/api/client";
+import { applyAccentColor } from "@/lib/theme";
 
 import Landing from "@/pages/Landing";
 import Login from "@/pages/Login";
@@ -115,6 +117,15 @@ function AnimatedRoutes() {
 }
 
 function App() {
+  useEffect(() => {
+    api
+      .get("/hero")
+      .then(({ data }) => {
+        if (data?.accent_color) applyAccentColor(data.accent_color);
+      })
+      .catch(() => {});
+  }, []);
+
   return (
     <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false}>
       <div className="App">

@@ -76,7 +76,7 @@ const ListingEdit = () => {
   if (loading || !form) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <Loader2 className="animate-spin text-[#78AFCF]" />
+        <Loader2 className="animate-spin text-vs-gold" />
       </div>
     );
   }
@@ -87,7 +87,7 @@ const ListingEdit = () => {
       <div className="max-w-4xl mx-auto px-6 lg:px-8 py-6">
         <button
           onClick={() => navigate("/seller/dashboard")}
-          className="inline-flex items-center gap-2 text-sm text-vs-text-secondary hover:text-[#78AFCF]"
+          className="inline-flex items-center gap-2 text-sm text-vs-text-secondary hover:text-vs-gold"
         >
           <ArrowLeft size={14} /> Back to dashboard
         </button>

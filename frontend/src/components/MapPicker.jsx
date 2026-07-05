@@ -46,7 +46,7 @@ const MapPicker = ({ lat, lng, onChange }) => {
     <div data-testid="map-picker">
       <div className="flex items-center justify-between mb-2">
         <div className="text-xs text-vs-text-secondary flex items-center gap-1.5">
-          <MapPin size={12} className="text-[#78AFCF]" />
+          <MapPin size={12} className="text-vs-gold" />
           {hasPin ? `Pinned: ${lat.toFixed(5)}, ${lng.toFixed(5)}` : "Click the map to drop a pin"}
         </div>
         <button
@@ -54,7 +54,7 @@ const MapPicker = ({ lat, lng, onChange }) => {
           onClick={useMyLocation}
           disabled={locating}
           data-testid="use-my-location"
-          className="text-xs flex items-center gap-1.5 text-[#78AFCF] hover:underline"
+          className="text-xs flex items-center gap-1.5 text-vs-gold hover:underline"
         >
           {locating ? <Loader2 size={11} className="animate-spin" /> : <Locate size={11} />}
           Use my location
@@ -67,8 +67,8 @@ const MapPicker = ({ lat, lng, onChange }) => {
           style={{ height: "100%", width: "100%" }}
         >
           <TileLayer
-            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-            attribution='&copy; OpenStreetMap contributors'
+            url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png"
+            attribution='&copy; OpenStreetMap contributors &copy; CARTO'
           />
           <ClickPin onPick={onChange} />
           {hasPin && <Marker position={[lat, lng]} />}

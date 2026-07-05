@@ -197,7 +197,7 @@ const NewListing = () => {
       <Navbar />
 
       <div className="max-w-7xl mx-auto px-6 lg:px-8 py-6">
-        <button onClick={() => navigate("/seller/dashboard")} className="inline-flex items-center gap-2 text-sm text-vs-text-secondary hover:text-[#78AFCF]">
+        <button onClick={() => navigate("/seller/dashboard")} className="inline-flex items-center gap-2 text-sm text-vs-text-secondary hover:text-vs-gold">
           <ArrowLeft size={14} /> Back to dashboard
         </button>
       </div>
@@ -217,7 +217,7 @@ const NewListing = () => {
               {history.map((m, i) => (
                 <div
                   key={i}
-                  className={`max-w-[85%] text-sm ${m.role === "user" ? "ml-auto bg-[#78AFCF] text-white" : "bg-vs-bg text-vs-text-primary border border-vs-border"} px-3.5 py-2.5 rounded-lg leading-relaxed whitespace-pre-line`}
+                  className={`max-w-[85%] text-sm ${m.role === "user" ? "ml-auto bg-vs-gold text-white" : "bg-vs-bg text-vs-text-primary border border-vs-border"} px-3.5 py-2.5 rounded-lg leading-relaxed whitespace-pre-line`}
                 >
                   {m.content}
                 </div>
@@ -322,16 +322,16 @@ const Progress = ({ current, steps, onJump }) => (
         <span
           className={`w-7 h-7 shrink-0 rounded-full flex items-center justify-center text-[11px] font-semibold transition-colors ${
             i < current
-              ? "bg-[#78AFCF] text-white"
+              ? "bg-vs-gold text-white"
               : i === current
-              ? "bg-[#78AFCF] text-white ring-4 ring-[#78AFCF]/15"
+              ? "bg-vs-gold text-white ring-4 ring-vs-gold/15"
               : "bg-vs-bg text-vs-text-secondary border border-vs-border"
           }`}
         >
           {i < current ? <Check size={13} /> : i + 1}
         </span>
         {i < steps.length - 1 && (
-          <span className={`flex-1 h-px ${i < current ? "bg-[#78AFCF]" : "bg-[#E5E7EB]"}`} />
+          <span className={`flex-1 h-px ${i < current ? "bg-vs-gold" : "bg-[#E5E7EB]"}`} />
         )}
       </button>
     ))}
@@ -360,8 +360,8 @@ const CategoryStep = ({ form, setForm }) => (
           data-testid={`cat-${c.value}`}
           className={`p-4 rounded-lg border text-left transition-all ${
             form.category === c.value
-              ? "border-[#78AFCF] bg-[#78AFCF]/5 ring-2 ring-[#78AFCF]/20"
-              : "border-vs-border hover:border-[#78AFCF]/50"
+              ? "border-vs-gold bg-vs-gold/5 ring-2 ring-vs-gold/20"
+              : "border-vs-border hover:border-vs-gold/50"
           }`}
         >
           <div className="font-display font-semibold text-vs-text-primary text-sm">{c.label}</div>
@@ -485,7 +485,7 @@ const ImagesStep = ({ form, imageInputRef, addImageFromFile, removeImage }) => (
           type="button"
           onClick={() => imageInputRef.current?.click()}
           data-testid="add-image-btn"
-          className="aspect-[4/3] border-2 border-dashed border-vs-border hover:border-[#78AFCF] rounded flex flex-col items-center justify-center gap-1 text-vs-text-secondary hover:text-[#78AFCF]"
+          className="aspect-[4/3] border-2 border-dashed border-vs-border hover:border-vs-gold rounded flex flex-col items-center justify-center gap-1 text-vs-text-secondary hover:text-vs-gold"
         >
           <ImagePlus size={20} />
           <span className="text-xs">Add image</span>

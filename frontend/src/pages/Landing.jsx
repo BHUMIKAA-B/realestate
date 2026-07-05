@@ -13,6 +13,7 @@ import SectorShowcase from "@/components/SectorShowcase";
 import ValuationModal from "@/components/ValuationModal";
 import api from "@/api/client";
 import { PROPERTY_CATEGORIES } from "@/utils/format";
+import { applyAccentColor } from "@/lib/theme";
 
 const DEFAULT_HERO = {
   image_url:
@@ -51,7 +52,10 @@ const Landing = () => {
 
   useEffect(() => {
     api.get("/properties/featured").then(({ data }) => setFeatured(data || [])).catch(() => {});
-    api.get("/hero").then(({ data }) => setHero({ ...DEFAULT_HERO, ...data })).catch(() => {});
+    api.get("/hero").then(({ data }) => {
+      setHero({ ...DEFAULT_HERO, ...data });
+      if (data?.accent_color) applyAccentColor(data.accent_color);
+    }).catch(() => {});
   }, []);
 
   return (
@@ -236,7 +240,7 @@ const Landing = () => {
 
       {/* ===== MOTIVE ===== */}
       <section id="motive" className="py-28 md:py-36 bg-vs-bg text-vs-text-primary relative overflow-hidden" data-testid="motive-section">
-        <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: "radial-gradient(circle at 30% 30%, #78AFCF 1px, transparent 1px)", backgroundSize: "48px 48px" }} />
+        <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: "radial-gradient(circle at 30% 30%, var(--vs-primary) 1px, transparent 1px)", backgroundSize: "48px 48px" }} />
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[800px] bg-vs-gold/5 rounded-full blur-3xl" />
         <motion.div
           initial="hidden"

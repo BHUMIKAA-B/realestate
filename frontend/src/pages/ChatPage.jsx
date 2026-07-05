@@ -19,8 +19,8 @@ export default function ChatPage() {
       <main className="flex-1 max-w-5xl mx-auto w-full px-4 py-10 flex flex-col gap-8">
         {/* Page header */}
         <div className="text-center">
-          <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-[#78AFCF]/10 mb-4">
-            <Bot size={28} className="text-[#78AFCF]" />
+          <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-vs-gold/10 mb-4">
+            <Bot size={28} className="text-vs-gold" />
           </div>
           <h1 className="text-3xl font-display font-bold text-vs-text-primary">VisitSarva Assistant</h1>
           <p className="text-vs-text-secondary mt-2 max-w-xl mx-auto">
@@ -32,8 +32,8 @@ export default function ChatPage() {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
           {CAPABILITIES.map(({ icon: Icon, title, desc }) => (
             <div key={title} className="card p-4 flex flex-col gap-2">
-              <div className="w-9 h-9 rounded-xl bg-[#78AFCF]/10 flex items-center justify-center">
-                <Icon size={18} className="text-[#78AFCF]" />
+              <div className="w-9 h-9 rounded-xl bg-vs-gold/10 flex items-center justify-center">
+                <Icon size={18} className="text-vs-gold" />
               </div>
               <div className="font-semibold text-sm text-vs-text-primary">{title}</div>
               <div className="text-xs text-vs-text-secondary leading-relaxed">{desc}</div>
@@ -47,7 +47,7 @@ export default function ChatPage() {
           style={{ minHeight: 520 }}
         >
           {/* Chat header */}
-          <div className="bg-[#78AFCF] px-5 py-4 flex items-center gap-3 flex-shrink-0">
+          <div className="bg-vs-gold px-5 py-4 flex items-center gap-3 flex-shrink-0">
             <div className="w-9 h-9 rounded-full bg-white/20 flex items-center justify-center">
               <Bot size={18} className="text-white" />
             </div>

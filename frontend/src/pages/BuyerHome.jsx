@@ -63,13 +63,13 @@ const BuyerHome = () => {
                 Recommended for you
               </h2>
             </div>
-            <Link to="/properties" className="text-sm text-[#78AFCF] hover:underline flex items-center gap-1">
+            <Link to="/properties" className="text-sm text-vs-gold hover:underline flex items-center gap-1">
               View all <ArrowRight size={13} />
             </Link>
           </div>
           {loading ? (
             <div className="py-12 flex justify-center">
-              <Loader2 className="animate-spin text-[#78AFCF]" />
+              <Loader2 className="animate-spin text-vs-gold" />
             </div>
           ) : items.length === 0 ? (
             <div className="text-vs-text-secondary">No properties yet.</div>

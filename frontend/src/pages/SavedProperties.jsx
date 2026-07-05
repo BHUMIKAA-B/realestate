@@ -26,12 +26,12 @@ const SavedProperties = () => {
         </h1>
         {loading ? (
           <div className="py-12 flex justify-center">
-            <Loader2 className="animate-spin text-[#78AFCF]" />
+            <Loader2 className="animate-spin text-vs-gold" />
           </div>
         ) : items.length === 0 ? (
           <div className="mt-8 text-vs-text-secondary">
             You haven't saved anything yet.{" "}
-            <Link to="/properties" className="text-[#78AFCF] hover:underline">
+            <Link to="/properties" className="text-vs-gold hover:underline">
               Browse properties
             </Link>
             .

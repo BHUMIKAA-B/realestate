@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "react-router-dom";
+import { motion } from "framer-motion";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import PropertyCard from "@/components/PropertyCard";
@@ -8,6 +9,7 @@ import FilterPanel from "@/components/FilterPanel";
 import api from "@/api/client";
 import { PROPERTY_CATEGORIES } from "@/utils/format";
 import { Loader2, SlidersHorizontal, X } from "lucide-react";
+import { fadeUp, stagger, viewportOnce } from "@/lib/animations";
 
 const SORTS = [
   { v: "newest", l: "Newest" },
@@ -87,17 +89,22 @@ const PropertiesList = () => {
     <div className="min-h-screen bg-vs-bg">
       <Navbar />
       <section className="bg-vs-bg border-b border-vs-border">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8 py-8">
-          <h1 className="font-display text-2xl md:text-3xl font-bold text-vs-text-primary">
+        <motion.div
+          className="max-w-7xl mx-auto px-6 lg:px-8 py-8"
+          initial="hidden"
+          animate="visible"
+          variants={stagger(0.1)}
+        >
+          <motion.h1 variants={fadeUp} className="font-display text-2xl md:text-3xl font-bold text-vs-text-primary">
             Browse Properties
-          </h1>
-          <p className="mt-1 text-sm text-vs-text-secondary">
+          </motion.h1>
+          <motion.p variants={fadeUp} className="mt-1 text-sm text-vs-text-secondary">
             Every listing on VisitSarva is internally verified. Zero brokerage for buyers.
-          </p>
-          <div className="mt-5 max-w-3xl">
+          </motion.p>
+          <motion.div variants={fadeUp} className="mt-5 max-w-3xl">
             <AISearchBar compact />
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       </section>
 
       <div className="max-w-7xl mx-auto px-6 lg:px-8 py-8 grid lg:grid-cols-12 gap-8">
@@ -167,12 +174,12 @@ const PropertiesList = () => {
         {/* ===== RESULTS ===== */}
         <main className="lg:col-span-9">
           {smartSummary && (
-            <div data-testid="smart-search-banner" className="mb-6 p-4 rounded-lg border border-[#78AFCF]/30 bg-[#78AFCF]/5">
-              <div className="text-[11px] uppercase tracking-wider text-[#78AFCF] mb-1">
+            <div data-testid="smart-search-banner" className="mb-6 p-4 rounded-lg border border-vs-gold/30 bg-vs-gold/5">
+              <div className="text-[11px] uppercase tracking-wider text-vs-gold mb-1">
                 AI understood your query as
               </div>
               <div className="font-display text-vs-text-primary">{smartSummary}</div>
-              <button onClick={clearAll} className="mt-2 text-xs text-[#78AFCF] hover:underline">
+              <button onClick={clearAll} className="mt-2 text-xs text-vs-gold hover:underline">
                 Browse all listings instead
               </button>
             </div>
@@ -208,18 +215,26 @@ const PropertiesList = () => {
 
           {loading ? (
             <div className="py-20 flex justify-center">
-              <Loader2 className="animate-spin text-[#78AFCF]" />
+              <Loader2 className="animate-spin text-vs-gold" />
             </div>
           ) : items.length === 0 ? (
             <div className="py-16 text-center text-vs-text-secondary">
               No listings match these filters. Try clearing some filters.
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
+            <motion.div
+              className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5"
+              initial="hidden"
+              whileInView="visible"
+              viewport={viewportOnce}
+              variants={stagger(0.08)}
+            >
               {items.map((p) => (
-                <PropertyCard key={p.id} property={p} />
+                <motion.div key={p.id} variants={fadeUp}>
+                  <PropertyCard property={p} />
+                </motion.div>
               ))}
-            </div>
+            </motion.div>
           )}
         </main>
       </div>

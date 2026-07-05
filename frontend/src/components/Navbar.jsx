@@ -69,7 +69,7 @@ const Navbar = () => {
         <Link to="/" className="flex items-center gap-3 shrink-0 group" data-testid="navbar-logo">
           <Logo size={36} color="#C89B5F" />
           <div className="leading-tight">
-            <span className="font-display font-medium text-xl tracking-tight text-vs-text-primary group-hover:text-[#78AFCF] transition-colors duration-300">
+            <span className="font-display font-medium text-xl tracking-tight text-vs-text-primary group-hover:text-vs-gold transition-colors duration-300">
               VisitSarva
             </span>
             <div className="text-[10px] tracking-[0.2em] uppercase text-vs-text-secondary font-medium mt-0.5">
@@ -84,7 +84,7 @@ const Navbar = () => {
             <button
               data-testid="nav-sectors-btn"
               onClick={() => setSectorsOpen((s) => !s)}
-              className="flex items-center gap-1.5 text-sm font-medium text-vs-text-secondary hover:text-[#78AFCF] transition-colors duration-300"
+              className="flex items-center gap-1.5 text-sm font-medium text-vs-text-secondary hover:text-vs-gold transition-colors duration-300"
             >
               Sectors
               <ChevronDown
@@ -107,7 +107,7 @@ const Navbar = () => {
                       className="px-4 py-3 text-sm text-vs-text-secondary hover:text-vs-text-primary hover:bg-vs-bg transition-all duration-200 flex items-center justify-between group"
                     >
                       <span>{s.label}</span>
-                      <span className="text-[#78AFCF] opacity-0 group-hover:opacity-100 transition-opacity">→</span>
+                      <span className="text-vs-gold opacity-0 group-hover:opacity-100 transition-opacity">→</span>
                     </Link>
                   ))}
                 </div>
@@ -118,7 +118,7 @@ const Navbar = () => {
           <NavLink to="/construction">Construction</NavLink>
           <NavLink to="/services">Documents</NavLink>
           <NavLink to="/chat">
-            <MessageCircle size={16} className="text-[#78AFCF]" />
+            <MessageCircle size={16} className="text-vs-gold" />
             <span>Assistant</span>
           </NavLink>
         </nav>
@@ -131,7 +131,7 @@ const Navbar = () => {
               <Link
                 to="/login"
                 data-testid="nav-login"
-                className="text-sm font-medium text-vs-text-secondary hover:text-[#78AFCF] transition-colors duration-300"
+                className="text-sm font-medium text-vs-text-secondary hover:text-vs-gold transition-colors duration-300"
               >
                 Login
               </Link>
@@ -151,12 +151,12 @@ const Navbar = () => {
                 <button
                   onClick={() => setMenu((s) => !s)}
                   data-testid="user-menu-toggle"
-                  className="flex items-center gap-3 px-3 py-2 border border-vs-border hover:border-[#78AFCF] hover:shadow-premium-sm rounded-xl transition-all duration-300 group"
+                  className="flex items-center gap-3 px-3 py-2 border border-vs-border hover:border-vs-gold hover:shadow-premium-sm rounded-xl transition-all duration-300 group"
                 >
-                  <div className="w-8 h-8 rounded-full bg-[#78AFCF] text-[#FFFFFF] text-xs font-semibold flex items-center justify-center">
+                  <div className="w-8 h-8 rounded-full bg-vs-gold text-[#FFFFFF] text-xs font-semibold flex items-center justify-center">
                     {user.name?.[0]?.toUpperCase() || "U"}
                   </div>
-                  <span className="text-sm text-vs-text-primary group-hover:text-[#78AFCF] transition-colors">
+                  <span className="text-sm text-vs-text-primary group-hover:text-vs-gold transition-colors">
                     {user.name?.split(" ")[0]}
                   </span>
                   <ChevronDown
@@ -175,7 +175,7 @@ const Navbar = () => {
                       data-testid="menu-dashboard"
                       className="flex items-center gap-3 px-4 py-3 text-sm text-vs-text-secondary hover:text-vs-text-primary hover:bg-vs-bg transition-all duration-200"
                     >
-                      <LayoutDashboard size={16} className="text-[#78AFCF]" />
+                      <LayoutDashboard size={16} className="text-vs-gold" />
                       Dashboard
                     </Link>
                     {user.role === "buyer" && (
@@ -185,14 +185,14 @@ const Navbar = () => {
                           onClick={() => setMenu(false)}
                           className="flex items-center gap-3 px-4 py-3 text-sm text-vs-text-secondary hover:text-vs-text-primary hover:bg-vs-bg transition-all duration-200"
                         >
-                          <Bookmark size={16} className="text-[#78AFCF]" /> Saved
+                          <Bookmark size={16} className="text-vs-gold" /> Saved
                         </Link>
                         <Link
                           to="/enquiries"
                           onClick={() => setMenu(false)}
                           className="flex items-center gap-3 px-4 py-3 text-sm text-vs-text-secondary hover:text-vs-text-primary hover:bg-vs-bg transition-all duration-200"
                         >
-                          <Inbox size={16} className="text-[#78AFCF]" /> My Enquiries
+                          <Inbox size={16} className="text-vs-gold" /> My Enquiries
                         </Link>
                       </>
                     )}
@@ -215,7 +215,7 @@ const Navbar = () => {
 
         {/* Mobile toggle */}
         <button
-          className="lg:hidden p-2 text-vs-text-primary hover:text-[#78AFCF] transition-colors"
+          className="lg:hidden p-2 text-vs-text-primary hover:text-vs-gold transition-colors"
           onClick={() => setOpen((s) => !s)}
           data-testid="nav-mobile-toggle"
           aria-label="Toggle menu"
@@ -240,7 +240,7 @@ const Navbar = () => {
                 key={s.label}
                 to={s.to}
                 onClick={() => setOpen(false)}
-                className="block py-2.5 text-sm text-vs-text-secondary hover:text-[#78AFCF] transition-colors"
+                className="block py-2.5 text-sm text-vs-text-secondary hover:text-vs-gold transition-colors"
               >
                 {s.label}
               </Link>
@@ -250,7 +250,7 @@ const Navbar = () => {
             <NavLink to="/construction" onClick={() => setOpen(false)}>Construction</NavLink>
             <NavLink to="/services" onClick={() => setOpen(false)}>Documents</NavLink>
             <NavLink to="/chat" onClick={() => setOpen(false)}>
-              <MessageCircle size={16} className="text-[#78AFCF]" />
+              <MessageCircle size={16} className="text-vs-gold" />
               <span>AI Assistant</span>
             </NavLink>
             <div className="border-t border-vs-border my-4" />
@@ -275,7 +275,7 @@ const Navbar = () => {
                   onClick={() => setOpen(false)}
                   className="btn-secondary justify-center w-full"
                 >
-                  <LayoutDashboard size={16} className="text-[#78AFCF]" />
+                  <LayoutDashboard size={16} className="text-vs-gold" />
                   {user.name}
                 </Link>
                 <button onClick={handleLogout} className="btn-secondary justify-center w-full text-[#DC2626] hover:text-[#DC2626] hover:border-[#DC2626]">
@@ -294,7 +294,7 @@ const NavLink = ({ to, children, onClick }) => (
   <Link
     to={to}
     onClick={onClick}
-    className="flex items-center gap-2 text-sm font-medium text-vs-text-secondary hover:text-[#78AFCF] transition-colors duration-300"
+    className="flex items-center gap-2 text-sm font-medium text-vs-text-secondary hover:text-vs-gold transition-colors duration-300"
   >
     {children}
   </Link>

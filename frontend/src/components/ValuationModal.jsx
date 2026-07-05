@@ -39,7 +39,7 @@ const ValuationModal = ({ open, onClose }) => {
         <button onClick={onClose} className="absolute top-4 right-4 text-vs-text-secondary hover:text-vs-text-primary" aria-label="Close" data-testid="valuation-close">
           <X size={18} />
         </button>
-        <div className="flex items-center gap-2 text-[#78AFCF]">
+        <div className="flex items-center gap-2 text-vs-gold">
           <Sparkles size={16} />
           <span className="text-[11px] uppercase tracking-[0.2em] font-medium">Free · No obligation</span>
         </div>

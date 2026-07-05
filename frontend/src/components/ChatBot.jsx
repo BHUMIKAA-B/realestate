@@ -16,15 +16,15 @@ const SUGGESTED = [
 function BotMessage({ text, typing }) {
   return (
     <div className="flex items-start gap-2">
-      <div className="flex-shrink-0 w-7 h-7 rounded-full bg-[#78AFCF] flex items-center justify-center">
+      <div className="flex-shrink-0 w-7 h-7 rounded-full bg-vs-gold flex items-center justify-center">
         <Bot size={14} className="text-white" />
       </div>
       <div className="max-w-[80%] bg-vs-surface border border-vs-border rounded-2xl rounded-tl-sm px-3.5 py-2.5 text-sm text-vs-text-primary leading-relaxed shadow-sm">
         {typing ? (
           <span className="flex gap-1 items-center py-0.5">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#78AFCF]/50 animate-bounce" style={{ animationDelay: "0ms" }} />
-            <span className="w-1.5 h-1.5 rounded-full bg-[#78AFCF]/50 animate-bounce" style={{ animationDelay: "150ms" }} />
-            <span className="w-1.5 h-1.5 rounded-full bg-[#78AFCF]/50 animate-bounce" style={{ animationDelay: "300ms" }} />
+            <span className="w-1.5 h-1.5 rounded-full bg-vs-gold/50 animate-bounce" style={{ animationDelay: "0ms" }} />
+            <span className="w-1.5 h-1.5 rounded-full bg-vs-gold/50 animate-bounce" style={{ animationDelay: "150ms" }} />
+            <span className="w-1.5 h-1.5 rounded-full bg-vs-gold/50 animate-bounce" style={{ animationDelay: "300ms" }} />
           </span>
         ) : (
           <span style={{ whiteSpace: "pre-wrap" }}>{text}</span>
@@ -40,7 +40,7 @@ function UserMessage({ text }) {
       <div className="flex-shrink-0 w-7 h-7 rounded-full bg-[#171717] flex items-center justify-center">
         <User size={14} className="text-white" />
       </div>
-      <div className="max-w-[80%] bg-[#78AFCF] text-white rounded-2xl rounded-tr-sm px-3.5 py-2.5 text-sm leading-relaxed shadow-sm">
+      <div className="max-w-[80%] bg-vs-gold text-white rounded-2xl rounded-tr-sm px-3.5 py-2.5 text-sm leading-relaxed shadow-sm">
         {text}
       </div>
     </div>
@@ -161,7 +161,7 @@ export default function ChatBot({ forceOpen = false, fullPage = false }) {
           aria-modal="false"
         >
           {/* Header */}
-          <div className="bg-[#78AFCF] px-4 py-3 flex items-center justify-between flex-shrink-0">
+          <div className="bg-vs-gold px-4 py-3 flex items-center justify-between flex-shrink-0">
             <div className="flex items-center gap-2">
               <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center">
                 <Bot size={16} className="text-white" />
@@ -207,7 +207,7 @@ export default function ChatBot({ forceOpen = false, fullPage = false }) {
       {/* Bubble button */}
       <button
         onClick={() => setOpen((v) => !v)}
-        className="w-14 h-14 rounded-full bg-[#78AFCF] hover:bg-[#5D93B4] text-white shadow-lg flex items-center justify-center transition-all duration-200 hover:scale-105 active:scale-95"
+        className="w-14 h-14 rounded-full bg-vs-gold hover:bg-vs-primary-hover text-white shadow-lg flex items-center justify-center transition-all duration-200 hover:scale-105 active:scale-95"
         aria-label={open ? "Close chat" : "Open chat"}
         style={{ boxShadow: "0 4px 24px rgba(13,122,107,0.4)" }}
       >
@@ -250,7 +250,7 @@ function ChatWindow({
               <button
                 key={s}
                 onClick={() => onSuggest(s)}
-                className="text-[11px] px-3 py-1.5 rounded-full border border-[#78AFCF]/30 text-[#78AFCF] hover:bg-[#78AFCF]/5 transition-colors leading-tight text-left"
+                className="text-[11px] px-3 py-1.5 rounded-full border border-vs-gold/30 text-vs-gold hover:bg-vs-gold/5 transition-colors leading-tight text-left"
               >
                 {s}
               </button>
@@ -271,7 +271,7 @@ function ChatWindow({
             onKeyDown={onKeyDown}
             placeholder="Ask about properties, pricing, documents…"
             rows={1}
-            className="flex-1 resize-none rounded-xl border border-vs-border px-3.5 py-2.5 text-sm text-vs-text-primary placeholder-vs-text-muted focus:outline-none focus:ring-2 focus:ring-[#78AFCF]/30 focus:border-[#78AFCF] transition-colors bg-vs-bg"
+            className="flex-1 resize-none rounded-xl border border-vs-border px-3.5 py-2.5 text-sm text-vs-text-primary placeholder-vs-text-muted focus:outline-none focus:ring-2 focus:ring-vs-gold/30 focus:border-vs-gold transition-colors bg-vs-bg"
             style={{ maxHeight: 96, overflowY: "auto" }}
             disabled={loading}
             aria-label="Chat message input"
@@ -279,7 +279,7 @@ function ChatWindow({
           <button
             onClick={onSend}
             disabled={!input.trim() || loading}
-            className="flex-shrink-0 w-10 h-10 rounded-xl bg-[#78AFCF] hover:bg-[#5D93B4] disabled:opacity-40 disabled:cursor-not-allowed text-white flex items-center justify-center transition-colors"
+            className="flex-shrink-0 w-10 h-10 rounded-xl bg-vs-gold hover:bg-vs-primary-hover disabled:opacity-40 disabled:cursor-not-allowed text-white flex items-center justify-center transition-colors"
             aria-label="Send message"
           >
             {loading ? <Loader2 size={16} className="animate-spin" /> : <Send size={16} />}

@@ -1,4 +1,5 @@
 import React from "react";
+import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { MapPin, Bed, Maximize2, BadgeCheck, Bookmark } from "lucide-react";
 import { INR, formatArea, CATEGORY_LABEL } from "@/utils/format";
@@ -10,9 +11,10 @@ const PropertyCard = ({ property, onSave, isSaved }) => {
   const img = property.images?.[0]?.url || fallbackImg;
   const loc = property.location || {};
   return (
-    <article
+    <motion.article
       data-testid={`property-card-${property.id}`}
       className="card group flex flex-col overflow-hidden"
+      whileHover={{ y: -6, transition: { duration: 0.25, ease: "easeOut" } }}
     >
       <Link
         to={`/properties/${property.id}`}
@@ -55,7 +57,7 @@ const PropertyCard = ({ property, onSave, isSaved }) => {
               }`}
               aria-label="Save property"
             >
-              <Bookmark size={18} fill={isSaved ? "#78AFCF" : "none"} />
+              <Bookmark size={18} fill={isSaved ? "var(--vs-primary)" : "none"} />
             </button>
           )}
         </div>
@@ -97,7 +99,7 @@ const PropertyCard = ({ property, onSave, isSaved }) => {
           </Link>
         </div>
       </div>
-    </article>
+    </motion.article>
   );
 };
 

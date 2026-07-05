@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import { Loader2, CheckCircle2, XCircle, Users, Building, AlertCircle, Inbox, FileCheck } from "lucide-react";
+import { Loader2, CheckCircle2, XCircle, Users, Building, AlertCircle, Inbox, FileCheck, Palette, Save } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import api from "@/api/client";
 import { INR, formatArea, CATEGORY_LABEL } from "@/utils/format";
+import { applyAccentColor } from "@/lib/theme";
 
 const TABS = [
   { id: "pending", label: "Pending verification" },
@@ -12,6 +13,7 @@ const TABS = [
   { id: "users", label: "Users" },
   { id: "enquiries", label: "Enquiries" },
   { id: "services", label: "Service requests" },
+  { id: "site_settings", label: "Site Settings" },
 ];
 
 const AdminDashboard = () => {
@@ -54,7 +56,7 @@ const AdminDashboard = () => {
               data-testid={`admin-tab-${t.id}`}
               className={`px-4 py-2.5 text-sm border-b-2 transition-colors ${
                 tab === t.id
-                  ? "border-[#78AFCF] text-[#78AFCF] font-medium"
+                  ? "border-vs-gold text-vs-gold font-medium"
                   : "border-transparent text-vs-text-secondary hover:text-vs-text-primary"
               }`}
             >
@@ -68,6 +70,7 @@ const AdminDashboard = () => {
         {tab === "users" && <UsersList />}
         {tab === "enquiries" && <EnquiriesList />}
         {tab === "services" && <ServicesList />}
+        {tab === "site_settings" && <SiteSettings />}
       </section>
       <Footer />
     </div>
@@ -79,11 +82,11 @@ const StatCard = ({ Icon, label, value, accent }) => (
     data-testid={`admin-stat-${label.toLowerCase().replace(/\s+/g, "-")}`}
     className={
       accent
-        ? "p-4 rounded-lg overflow-hidden bg-[#78AFCF] text-white border border-[#78AFCF]"
+        ? "p-4 rounded-lg overflow-hidden bg-vs-gold text-white border border-vs-gold"
         : "card p-4"
     }
   >
-    <Icon size={18} className={accent ? "text-white" : "text-[#78AFCF]"} />
+    <Icon size={18} className={accent ? "text-white" : "text-vs-gold"} />
     <div className={`text-xs uppercase tracking-wider mt-2 ${accent ? "text-white/85" : "text-vs-text-secondary"}`}>
       {label}
     </div>
@@ -225,7 +228,7 @@ const UsersList = () => {
               <Td>{new Date(u.created_at).toLocaleDateString("en-IN")}</Td>
               <Td>
                 {u.role !== "admin" && (
-                  <button onClick={() => toggle(u)} className="text-xs text-[#78AFCF] hover:underline">
+                  <button onClick={() => toggle(u)} className="text-xs text-vs-gold hover:underline">
                     {u.is_active ? "Deactivate" : "Activate"}
                   </button>
                 )}
@@ -275,7 +278,7 @@ const ServicesList = () => {
         <div key={s.id} className="card p-5">
           <div className="flex items-center justify-between flex-wrap gap-2">
             <div className="font-display font-semibold text-vs-text-primary flex items-center gap-2">
-              <FileCheck size={16} className="text-[#78AFCF]" />
+              <FileCheck size={16} className="text-vs-gold" />
               {s.request_type.replace(/_/g, " ")}
             </div>
             <span className="chip">{s.status}</span>
@@ -289,8 +292,156 @@ const ServicesList = () => {
   );
 };
 
+const ACCENT_PRESETS = ["#78AFCF", "#0EA5E9", "#8B5CF6", "#F59E0B", "#10B981", "#EF4444", "#EC4899", "#171717"];
+
+const SiteSettings = () => {
+  const [form, setForm] = useState({
+    accent_color: "#78AFCF",
+    image_url: "",
+    headline: "",
+    sub_headline: "",
+    cta_text: "",
+    cta_link: "",
+  });
+  const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
+
+  useEffect(() => {
+    api
+      .get("/hero")
+      .then(({ data }) =>
+        setForm((f) => ({
+          ...f,
+          accent_color: data.accent_color || "#78AFCF",
+          image_url: data.image_url || "",
+          headline: data.headline || "",
+          sub_headline: data.sub_headline || "",
+          cta_text: data.cta_text || "",
+          cta_link: data.cta_link || "",
+        }))
+      )
+      .finally(() => setLoading(false));
+  }, []);
+
+  const set = (k) => (e) => setForm((s) => ({ ...s, [k]: e.target.value }));
+
+  const previewColor = (hex) => {
+    setForm((f) => ({ ...f, accent_color: hex }));
+    applyAccentColor(hex);
+  };
+
+  const save = async (e) => {
+    e.preventDefault();
+    setSaving(true);
+    try {
+      await api.put("/hero", form);
+      applyAccentColor(form.accent_color);
+      toast.success("Site settings updated");
+    } catch (err) {
+      toast.error(err?.response?.data?.detail || "Could not save settings");
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  if (loading) return <Spin />;
+
+  return (
+    <form onSubmit={save} className="grid lg:grid-cols-12 gap-6" data-testid="site-settings-form">
+      <div className="lg:col-span-7 space-y-6">
+        <div className="card p-6">
+          <h3 className="font-display font-semibold text-vs-text-primary flex items-center gap-2">
+            <Palette size={16} className="text-vs-gold" /> Accent Color
+          </h3>
+          <p className="text-xs text-vs-text-secondary mt-1">
+            Applied instantly across buttons, links and highlights site-wide.
+          </p>
+          <div className="mt-4 flex items-center gap-3 flex-wrap">
+            {ACCENT_PRESETS.map((hex) => (
+              <button
+                type="button"
+                key={hex}
+                onClick={() => previewColor(hex)}
+                data-testid={`accent-preset-${hex}`}
+                className={`w-9 h-9 rounded-full border-2 transition-transform hover:scale-110 ${
+                  form.accent_color.toLowerCase() === hex.toLowerCase() ? "border-vs-text-primary" : "border-transparent"
+                }`}
+                style={{ backgroundColor: hex }}
+                aria-label={hex}
+              />
+            ))}
+            <label className="flex items-center gap-2 ml-2">
+              <input
+                type="color"
+                value={form.accent_color}
+                onChange={(e) => previewColor(e.target.value)}
+                className="w-9 h-9 rounded-full border border-vs-border cursor-pointer bg-transparent"
+                data-testid="accent-color-picker"
+              />
+              <input
+                type="text"
+                value={form.accent_color}
+                onChange={(e) => previewColor(e.target.value)}
+                className="input-field !py-2 !w-28 !text-sm font-mono"
+                data-testid="accent-color-hex"
+              />
+            </label>
+          </div>
+        </div>
+
+        <div className="card p-6">
+          <h3 className="font-display font-semibold text-vs-text-primary">Hero Image</h3>
+          <p className="text-xs text-vs-text-secondary mt-1">
+            Shown behind the headline on the homepage.
+          </p>
+          <input
+            className="input-field mt-4"
+            placeholder="https://…"
+            value={form.image_url}
+            onChange={set("image_url")}
+            data-testid="hero-image-url"
+          />
+          {form.image_url && (
+            <div className="mt-3 rounded-lg overflow-hidden border border-vs-border aspect-[16/7]">
+              <img src={form.image_url} alt="Hero preview" className="w-full h-full object-cover" />
+            </div>
+          )}
+        </div>
+      </div>
+
+      <div className="lg:col-span-5">
+        <div className="card p-6 space-y-3 lg:sticky lg:top-24">
+          <h3 className="font-display font-semibold text-vs-text-primary">Hero Copy</h3>
+          <div>
+            <label className="label">Headline</label>
+            <input className="input-field" value={form.headline} onChange={set("headline")} data-testid="hero-headline-input" />
+          </div>
+          <div>
+            <label className="label">Sub-headline</label>
+            <textarea className="input-field min-h-[70px]" value={form.sub_headline} onChange={set("sub_headline")} data-testid="hero-subheadline-input" />
+          </div>
+          <div className="grid grid-cols-2 gap-3">
+            <div>
+              <label className="label">CTA text</label>
+              <input className="input-field" value={form.cta_text} onChange={set("cta_text")} data-testid="hero-cta-text" />
+            </div>
+            <div>
+              <label className="label">CTA link</label>
+              <input className="input-field" value={form.cta_link} onChange={set("cta_link")} data-testid="hero-cta-link" />
+            </div>
+          </div>
+          <button disabled={saving} type="submit" className="btn-primary w-full justify-center mt-2" data-testid="save-site-settings">
+            {saving ? <Loader2 size={15} className="animate-spin" /> : <Save size={15} />}
+            Save Settings
+          </button>
+        </div>
+      </div>
+    </form>
+  );
+};
+
 const Th = ({ children }) => <th className="text-left px-4 py-3 text-xs uppercase tracking-wider font-medium">{children}</th>;
 const Td = ({ children }) => <td className="px-4 py-3 align-top">{children}</td>;
-const Spin = () => <div className="py-12 flex justify-center"><Loader2 className="animate-spin text-[#78AFCF]" /></div>;
+const Spin = () => <div className="py-12 flex justify-center"><Loader2 className="animate-spin text-vs-gold" /></div>;
 
 export default AdminDashboard;

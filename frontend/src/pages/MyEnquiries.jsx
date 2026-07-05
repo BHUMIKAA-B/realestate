@@ -13,7 +13,7 @@ const STATUS_LABEL = {
 };
 
 const STATUS_COLOR = {
-  new: "bg-[#78AFCF] text-white",
+  new: "bg-vs-gold text-white",
   viewed: "bg-vs-bg text-vs-text-primary border border-vs-border",
   responded: "bg-[#171717] text-white",
   closed: "bg-vs-bg text-vs-text-secondary border border-vs-border",
@@ -39,7 +39,7 @@ const MyEnquiries = () => {
         </h1>
         {loading ? (
           <div className="py-12 flex justify-center">
-            <Loader2 className="animate-spin text-[#78AFCF]" />
+            <Loader2 className="animate-spin text-vs-gold" />
           </div>
         ) : items.length === 0 ? (
           <div className="mt-8 text-vs-text-secondary">No enquiries yet.</div>
@@ -49,7 +49,7 @@ const MyEnquiries = () => {
               <Link
                 key={e.id}
                 to={`/properties/${e.property_id}`}
-                className="card p-5 flex items-center justify-between gap-4 hover:border-[#78AFCF]"
+                className="card p-5 flex items-center justify-between gap-4 hover:border-vs-gold"
                 data-testid={`my-enquiry-${e.id}`}
               >
                 <div>

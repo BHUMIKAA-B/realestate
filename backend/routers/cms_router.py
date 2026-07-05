@@ -22,6 +22,7 @@ class HeroIn(BaseModel):
     sub_headline: Optional[str] = None
     cta_text: Optional[str] = None
     cta_link: Optional[str] = None
+    accent_color: Optional[str] = None
 
 
 @router.get("/hero")
@@ -38,6 +39,7 @@ async def get_hero():
         "sub_headline": "Buy property, pay no brokerage. We connect you directly to verified sellers.",
         "cta_text": "Explore Properties",
         "cta_link": "/properties",
+        "accent_color": "#78AFCF",
         "updated_at": now_iso(),
     }
 
